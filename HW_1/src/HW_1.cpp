@@ -605,9 +605,9 @@ double bisection(double l, double u)
 		double m = 0;
 
 					//Determines whether user provided bounds contains a root.
-		if((pow(l,2)-1)*(pow(u,2)-1) >= 0)
+		if((pow(l,2))*(pow(u,2)) >=0)
 			{
-				cout << "Invalid Bounds: Bounds must contain root" << endl;
+				cout << "Invalid Bounds: Bounds must contain single root" << endl;
 				return 0;
 			}
 
@@ -619,7 +619,7 @@ double bisection(double l, double u)
 			m = (l+u)/2;
 
 					//Found Root
-			if((pow(l,2)-1)*(pow(m,2)-1) == 0)
+			if((pow(l,2))*(pow(m,2)) == 0)
 			{
 				cout << "Found Zero @ " << m << endl;
 				l = m;
@@ -628,13 +628,13 @@ double bisection(double l, double u)
 			}
 
 					//Excludes upper bound from root search
-			if((pow(l,2)-1)*(pow(m,2)-1) < 0)
+			if((pow(l,2))*(pow(m,2)) < 0)
 			{
 				u = m;
 			}
 
 					//Excludes lower bound from root search
-			if((pow(l,2)-1)*(pow(m,2)-1) > 0)
+			if((pow(l,2))*(pow(m,2)) > 0)
 			{
 				l = m;
 			}
@@ -664,7 +664,7 @@ int main()
 
 		cout << "Machine Epsilon = " << epsilon() << endl;
 
-		fivePointsinln();
+	forwardDiffx2();
 		//cout << newRaph(3) << endl;
 		//bisection(0,5);
 		//forwardDiffx2();
