@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.1.29)  17 FEB 2013 12:45
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.1.29)  18 FEB 2013 11:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -66,35 +66,43 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
+(/usr/share/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen105
+\WF@size=\dimen106
+\c@WF@wrappedlines=\count89
+\WF@box=\box26
+\WF@everypar=\toks15
+Package: wrapfig 2003/01/31  v 3.6
+)
 (build/assignment1_2013.aux)
 \openout1 = `assignment1_2013.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
-LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
 
 (/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count89
-\scratchdimen=\dimen105
-\scratchbox=\box26
-\nofMPsegments=\count90
-\nofMParguments=\count91
-\everyMPshowfont=\toks15
-\MPscratchCnt=\count92
-\MPscratchDim=\dimen106
-\MPnumerator=\count93
-\makeMPintoPDFobject=\count94
-\everyMPtoPDFconversion=\toks16
+\scratchcounter=\count90
+\scratchdimen=\dimen107
+\scratchbox=\box27
+\nofMPsegments=\count91
+\nofMParguments=\count92
+\everyMPshowfont=\toks16
+\MPscratchCnt=\count93
+\MPscratchDim=\dimen108
+\MPnumerator=\count94
+\makeMPintoPDFobject=\count95
+\everyMPtoPDFconversion=\toks17
 ) (/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -144,33 +152,38 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 13.
+(Font)              <12> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 13.
+(Font)              <8> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 13.
+(Font)              <6> on input line 15.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 Chapter 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 20.
+(Font)              <7> on input line 23.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 20.
+(Font)              <5> on input line 23.
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--24
+Underfull \hbox (badness 10000) in paragraph at lines 20--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 18--24
+Underfull \hbox (badness 10000) in paragraph at lines 20--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--27
 
  []
 
 <trapezoid.png, id=10, 841.1425pt x 639.38875pt>
 File: trapezoid.png Graphic file (type png)
  <use trapezoid.png>
-Package pdftex.def Info: trapezoid.png used on input line 34.
+Package pdftex.def Info: trapezoid.png used on input line 37.
 (pdftex.def)             Requested size: 126.16592pt x 95.90416pt.
 Package epstopdf Info: Source file: <trapezoid.eps>
 (epstopdf)                    date: 2013-02-14 21:06:37
@@ -180,83 +193,83 @@ Package epstopdf Info: Source file: <trapezoid.eps>
 (epstopdf)                    size: 10895 bytes
 (epstopdf)             Command: <repstopdf --outfile=trapezoid-eps-converted-to
 .pdf trapezoid.eps>
-(epstopdf)             \includegraphics on input line 48.
+(epstopdf)             \includegraphics on input line 51.
 Package epstopdf Info: Output file is already uptodate.
 
 <trapezoid-eps-converted-to.pdf, id=12, 260.975pt x 169.63374pt>
 File: trapezoid-eps-converted-to.pdf Graphic file (type pdf)
 
 <use trapezoid-eps-converted-to.pdf>
-Package pdftex.def Info: trapezoid-eps-converted-to.pdf used on input line 48.
+Package pdftex.def Info: trapezoid-eps-converted-to.pdf used on input line 51.
 (pdftex.def)             Requested size: 247.92485pt x 161.15112pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Overfull \hbox (4.59596pt too wide) in paragraph at lines 29--63
+Overfull \hbox (4.59596pt too wide) in paragraph at lines 32--66
 \OT1/cmr/m/n/10 The max-i-mum amount of trun-ca-tion er-ror ($\OML/cmm/m/it/10 
 ^^X[]$\OT1/cmr/m/n/10 ) for the trape-zoid method
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--63
+Underfull \hbox (badness 10000) in paragraph at lines 32--66
 
  []
 
@@ -266,7 +279,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 29--63
 <simpson.png, id=41, 1190.4475pt x 1076.02pt>
 File: simpson.png Graphic file (type png)
  <use simpson.png>
-Package pdftex.def Info: simpson.png used on input line 69.
+Package pdftex.def Info: simpson.png used on input line 72.
 (pdftex.def)             Requested size: 119.05171pt x 107.6083pt.
 Package epstopdf Info: Source file: <trapezoidsimpson.eps>
 (epstopdf)                    date: 2013-02-14 21:06:45
@@ -276,7 +289,7 @@ Package epstopdf Info: Source file: <trapezoidsimpson.eps>
 (epstopdf)                    size: 10853 bytes
 (epstopdf)             Command: <repstopdf --outfile=trapezoidsimpson-eps-conve
 rted-to.pdf trapezoidsimpson.eps>
-(epstopdf)             \includegraphics on input line 85.
+(epstopdf)             \includegraphics on input line 88.
 Package epstopdf Info: Output file is already uptodate.
 
 <trapezoidsimpson-eps-converted-to.pdf, id=42, 260.975pt x 171.64125pt>
@@ -284,106 +297,106 @@ File: trapezoidsimpson-eps-converted-to.pdf Graphic file (type pdf)
 
 <use trapezoidsimpson-eps-converted-to.pdf>
 Package pdftex.def Info: trapezoidsimpson-eps-converted-to.pdf used on input li
-ne 85.
+ne 88.
 (pdftex.def)             Requested size: 247.92485pt x 163.05824pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--99
+Underfull \hbox (badness 10000) in paragraph at lines 68--102
 
  []
 
-[3 <./simpson.png (PNG copy)>]
-Overfull \hbox (2.1523pt too wide) in paragraph at lines 101--109
+[3 <./simpson.png (PNG copy)>] [4 <./trapezoidsimpson-eps-converted-to.pdf>]
+Overfull \hbox (2.1523pt too wide) in paragraph at lines 104--112
 \OT1/cmr/m/n/10 meth-ods dis-cussed, GQ ob-tains the most ac-cu-rate ap-prox-i-
 ma-tions or equiv-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--109
+Underfull \hbox (badness 10000) in paragraph at lines 104--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--109
+Underfull \hbox (badness 10000) in paragraph at lines 104--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--109
+Underfull \hbox (badness 10000) in paragraph at lines 104--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 101--109
+Underfull \hbox (badness 10000) in paragraph at lines 104--112
 
  []
 
 
-Overfull \hbox (23.03815pt too wide) in paragraph at lines 101--109
+Overfull \hbox (23.03815pt too wide) in paragraph at lines 104--112
 \OML/cmm/m/it/10 x[] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OM
 L/cmm/m/it/10 :\OT1/cmr/m/n/10 7746\OML/cmm/m/it/10 ; x[] \OT1/cmr/m/n/10 = 0\O
 ML/cmm/m/it/10 ; x[] \OT1/cmr/m/n/10 = 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 7746$
@@ -392,99 +405,98 @@ r/m/n/10 555[]\OML/cmm/m/it/10 ; c[] \OT1/cmr/m/n/10 = 0\OML/cmm/m/it/10 :\OT1/
 cmr/m/n/10 888[]\OML/cmm/m/it/10 andc[] \OT1/cmr/m/n/10 =
  []
 
-[4 <./trapezoidsimpson-eps-converted-to.pdf>]
 <forwardDiff.jpeg, id=63, 578.16pt x 366.36874pt>
 File: forwardDiff.jpeg Graphic file (type jpg)
  <use forwardDiff.jpeg>
-Package pdftex.def Info: forwardDiff.jpeg used on input line 132.
+Package pdftex.def Info: forwardDiff.jpeg used on input line 135.
 (pdftex.def)             Requested size: 289.07928pt x 183.18391pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--136
+Underfull \hbox (badness 10000) in paragraph at lines 119--139
 
  []
 
 [5] <centralDiff.jpeg, id=67, 578.16pt x 366.36874pt>
 File: centralDiff.jpeg Graphic file (type jpg)
  <use centralDiff.jpeg>
-Package pdftex.def Info: centralDiff.jpeg used on input line 146.
+Package pdftex.def Info: centralDiff.jpeg used on input line 149.
 (pdftex.def)             Requested size: 289.07928pt x 183.18391pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--147
+Underfull \hbox (badness 10000) in paragraph at lines 139--150
 
  []
 
@@ -492,58 +504,266 @@ Underfull \hbox (badness 10000) in paragraph at lines 136--147
 File: fivePoint.jpeg Graphic file (type jpg)
 
 <use fivePoint.jpeg>
-Package pdftex.def Info: fivePoint.jpeg used on input line 157.
+Package pdftex.def Info: fivePoint.jpeg used on input line 160.
 (pdftex.def)             Requested size: 289.07928pt x 183.18391pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--158
+Underfull \hbox (badness 10000) in paragraph at lines 150--161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--158
+Underfull \hbox (badness 10000) in paragraph at lines 150--161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--158
+Underfull \hbox (badness 10000) in paragraph at lines 150--161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--158
+Underfull \hbox (badness 10000) in paragraph at lines 150--161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 147--158
+Underfull \hbox (badness 10000) in paragraph at lines 150--161
 
  []
 
-[7 <./centralDiff.jpeg> <./fivePoint.jpeg>] (build/assignment1_2013.aux) ) 
+Package epstopdf Info: Source file: <bisection.eps>
+(epstopdf)                    date: 2013-02-17 13:29:17
+(epstopdf)                    size: 145170 bytes
+(epstopdf)             Output file: <bisection-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-17 13:31:07
+(epstopdf)                    size: 11400 bytes
+(epstopdf)             Command: <repstopdf --outfile=bisection-eps-converted-to
+.pdf bisection.eps>
+(epstopdf)             \includegraphics on input line 166.
+Package epstopdf Info: Output file is already uptodate.
+<bisection-eps-converted-to.pdf, id=73, 260.975pt x 168.63pt>
+File: bisection-eps-converted-to.pdf Graphic file (type pdf)
+
+<use bisection-eps-converted-to.pdf>
+Package pdftex.def Info: bisection-eps-converted-to.pdf used on input line 166.
+
+(pdftex.def)             Requested size: 339.26746pt x 219.21896pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Overfull \hbox (19.26749pt too wide) in paragraph at lines 162--183
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--183
+
+ []
+
+[7 <./centralDiff.jpeg> <./fivePoint.jpeg>] [8 <./bisection-eps-converted-to.pd
+f>]
+Package epstopdf Info: Source file: <newtonraphson.eps>
+(epstopdf)                    date: 2013-02-17 22:07:42
+(epstopdf)                    size: 30467 bytes
+(epstopdf)             Output file: <newtonraphson-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-17 22:34:22
+(epstopdf)                    size: 9274 bytes
+(epstopdf)             Command: <repstopdf --outfile=newtonraphson-eps-converte
+d-to.pdf newtonraphson.eps>
+(epstopdf)             \includegraphics on input line 193.
+Package epstopdf Info: Output file is already uptodate.
+ <newtonraphson-eps-converted-to.pdf, id=96, 260.975pt x 181.67876pt>
+File: newtonraphson-eps-converted-to.pdf Graphic file (type pdf)
+
+<use newtonraphson-eps-converted-to.pdf>
+Package pdftex.def Info: newtonraphson-eps-converted-to.pdf used on input line 
+193.
+(pdftex.def)             Requested size: 313.16844pt x 218.0134pt.
+Package epstopdf Info: Source file: <divergence.eps>
+(epstopdf)                    date: 2013-02-18 11:08:32
+(epstopdf)                    size: 101402 bytes
+(epstopdf)             Output file: <divergence-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-18 11:08:43
+(epstopdf)                    size: 11384 bytes
+(epstopdf)             Command: <repstopdf --outfile=divergence-eps-converted-t
+o.pdf divergence.eps>
+(epstopdf)             \includegraphics on input line 204.
+Package epstopdf Info: Output file is already uptodate.
+
+<divergence-eps-converted-to.pdf, id=97, 260.975pt x 185.69376pt>
+File: divergence-eps-converted-to.pdf Graphic file (type pdf)
+
+<use divergence-eps-converted-to.pdf>
+Package pdftex.def Info: divergence-eps-converted-to.pdf used on input line 204
+.
+(pdftex.def)             Requested size: 169.63174pt x 120.69951pt.
+Package epstopdf Info: Source file: <rootskipping.eps>
+(epstopdf)                    date: 2013-02-18 11:14:18
+(epstopdf)                    size: 1236398 bytes
+(epstopdf)             Output file: <rootskipping-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-02-18 11:14:21
+(epstopdf)                    size: 44919 bytes
+(epstopdf)             Command: <repstopdf --outfile=rootskipping-eps-converted
+-to.pdf rootskipping.eps>
+(epstopdf)             \includegraphics on input line 204.
+Package epstopdf Info: Output file is already uptodate.
+
+<rootskipping-eps-converted-to.pdf, id=98, 324.21124pt x 199.74625pt>
+File: rootskipping-eps-converted-to.pdf Graphic file (type pdf)
+
+<use rootskipping-eps-converted-to.pdf>
+Package pdftex.def Info: rootskipping-eps-converted-to.pdf used on input line 2
+04.
+(pdftex.def)             Requested size: 210.7348pt x 129.83351pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Overfull \hbox (62.58879pt too wide) in paragraph at lines 183--209
+[] [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--209
+
+ []
+
+[9] [10 <./newtonraphson-eps-converted-to.pdf>] [11 <./divergence-eps-converted
+-to.pdf> <./rootskipping-eps-converted-to.pdf>] (build/assignment1_2013.aux) ) 
 Here is how much of TeX's memory you used:
- 1548 strings out of 493488
- 21957 string characters out of 3146892
- 80873 words of memory out of 3000000
- 4856 multiletter control sequences out of 15000+200000
+ 1634 strings out of 493488
+ 23413 string characters out of 3146892
+ 83073 words of memory out of 3000000
+ 4934 multiletter control sequences out of 15000+200000
  8669 words of font info for 31 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  37i,8n,23p,810b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pf
-b></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on build/assignment1_2013.pdf (8 pages, 310307 bytes).
+<
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on build/assignment1_2013.pdf (12 pages, 378525 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 80 compressed objects within 1 object stream
+ 187 PDF objects out of 1000 (max. 8388607)
+ 126 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

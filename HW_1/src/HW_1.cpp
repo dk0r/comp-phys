@@ -572,8 +572,35 @@ double fivePointsinln()
 }
 
 
+double newRaph1(double x_0)
+
+{
+	double x_i = x_0;
+	double x_iPlus1 = 0;
+	double error = 0;
+
+	for(int i=0; i<10000000; i++)
+	{
+		x_iPlus1 = (  x_i - (pow(x_i,2)+2) / 2*(x_i)  );
+		cout << "x_i = " << x_i;
+		cout << "  x_iPlus1 = " << x_iPlus1;
+
+		error = fabs(    ( (x_iPlus1)-(x_i) )/(x_iPlus1)    );
+		cout << "    error = " << error*100 << "%" << endl;
+		x_i = x_iPlus1;
+
+		if(error < 0.000000001)
+			break;
+
+	}
+
+
+	return error*100;
+
+}
 
 double newRaph(double x_0)
+
 {
 	double x_i = x_0;
 	double x_iPlus1 = 0;
@@ -605,7 +632,7 @@ double bisection(double l, double u)
 		double m = 0;
 
 					//Determines whether user provided bounds contains a root.
-		if((pow(l,2))*(pow(u,2)) >=0)
+		if((pow(l,3)-2)*(pow(u,3)-2) >=0)
 			{
 				cout << "Invalid Bounds: Bounds must contain single root" << endl;
 				return 0;
@@ -619,26 +646,26 @@ double bisection(double l, double u)
 			m = (l+u)/2;
 
 					//Found Root
-			if((pow(l,2))*(pow(m,2)) == 0)
+			if((pow(l,3)-2)*(pow(m,3)-2) == 0)
 			{
-				cout << "Found Zero @ " << m << endl;
+				cout << setprecision(18) << "Found Zero @ " << m << endl;
 				l = m;
 
 				break;
 			}
 
 					//Excludes upper bound from root search
-			if((pow(l,2))*(pow(m,2)) < 0)
+			if((pow(l,3)-2)*(pow(m,3)-2) < 0)
 			{
 				u = m;
 			}
 
 					//Excludes lower bound from root search
-			if((pow(l,2))*(pow(m,2)) > 0)
+			if((pow(l,3)-2)*(pow(m,3)-2) > 0)
 			{
 				l = m;
 			}
-
+			cout << i << endl;
 		}
 
 	return 0;
@@ -664,7 +691,7 @@ int main()
 
 		cout << "Machine Epsilon = " << epsilon() << endl;
 
-	forwardDiffx2();
+	newRaph(5);
 		//cout << newRaph(3) << endl;
 		//bisection(0,5);
 		//forwardDiffx2();

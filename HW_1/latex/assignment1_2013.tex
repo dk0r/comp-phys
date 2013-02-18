@@ -1,5 +1,7 @@
 \documentclass{report}
 \usepackage{graphicx}
+\usepackage{wrapfig}
+
 
 
 \begin{document}
@@ -16,6 +18,7 @@
 \section{Sources of Error}
 \begin{enumerate}
 \item Roundoff vs Truncation
+\\
 \\
 \\Two sources of error in numerical methods are Round-off and Truncation errors. Round-off errors are the result of systems having a finite quantity of significant figures to represent numbers. For example, if a computer is capable of can store three significant figures, then it could approximate $ \frac{1}{3}$ as $0.333$. Because the computer is not representing $ \frac{1}{3}$ $exactly$ as $0.\overline{3}$, a round-off error ($\xi_{max_{T}}$) occurs. 
 \\In this case, $\displaystyle \xi_{max_{T}} = \frac{1}{3} - 0.333 = 0.000\overline{3} $
@@ -158,7 +161,7 @@ FDD Error:
 
 \item Bisection Method
 \\
-\\The bisection method is an order n ??? algorithm which can pinpoint the root of most functions. Several conditions must be satisfied in order for the method to prove successful. First, the user must know an approximate location of the root. This is necessary because the algorithm requires an upper and lower bound containing the root be provided. The principle function must also be real, continuous and have opposite signs at the initial upper and lower bounds as depicted below. If these preconditions are met, the bisection is guaranteed to converge on a root.
+\\The bisection method is an order n ??? algorithm which can pinpoint the root of most functions. Several conditions must be satisfied in order for the method to prove successful. First, the user must have determined an approximate location for the root. This is necessary because the algorithm requires an interval whose upper and lower bound must contain the root. The principle function must also be real, continuous (within the interval) and have opposite signs at the initial upper and lower bounds as depicted below. If these preconditions are met, the bisection is guaranteed to converge on a root.
 \\
 \\\includegraphics[scale=1.3]{bisection.eps}
 \\
@@ -176,8 +179,32 @@ Considerations:
 \\ Depending on the choice of boundaries, bisection can require excessive iterations. If one of the boundaries is chosen sufficiently close to the root while the other is not, it will take many iterations before of $\frac{\left|upper-lower\right|}{2}$ before the algorithm can converge. The number of iterations increase as ($upper$) is chosen further from the root and ($lower$) is chosen closer.  
 \\
 \\The maximum error of the bisection method may be controlled by the initial selection of the boundaries. That is, the true error can be no larger then $(upper-lower)$. Due to the implementation of the midpoint, the error is halved for each iteration. 
-
+\\
+\item The Newton Raphson Method (NRM)
+\\
+The Newton Raphson method is an order n ??? algorithm which can locate the root of most functions. Unlike the bisection algorithm with its many preconditions, the NRM requires only a single guess (seed) from the user from the user from which it begins its search. While NRM does not require previous knowledge of the location of the root, it is also not guaranteed to converge on a root.
+\\
+\\
+\\\\Algorithm:  
+\\
+\\NRM is implemented by recursively comparing positions on the x-axis until the relative error between them meets some user specified tolerance or maximum iteration. The method is depicted as follows:
+\\
+\\
+\\\includegraphics[scale=1.2]{newtonraphson.eps}
+\\
+\\The initial guess is the first point ($x_0$). It is provided as a seed by the user from which the method begins its search. To determine the second point, the tangent of the function at $f(x_0)$ is extended out to $x_1$ on the x-axis. 
+\\.\hspace{30 mm} Here, $\displaystyle x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}$  
+\\
+\\ The above process is repeated until a specified number of iterations are reached or the relative error between two points, $\displaystyle \xi = \frac{\left|x_1-x_0\right|}{x_1}$, is less then a specified accuracy. Once the maximum iteration or accuracy is met, $x_i$ is determined to be the root.
+\\
+Considerations: 
+\\
+\\While the NRM requires little input from the user, it is not guaranteed that the method will converge on any or all roots of a function. For example, note how in the depictions below, $x^2+2$ may diverge and $sin(x)$ may fail to find all roots:
+\\
+\\\includegraphics[scale=.65]{divergence.eps} \includegraphics[scale=.65]{rootskipping.eps}
+\\
+\\
+\\
+\\
 \end{enumerate}
-
-
 \end{document}
