@@ -163,15 +163,12 @@ FDD Error:
 \\\includegraphics[scale=1.3]{bisection.eps}
 \\
 \\Algorithm:  
-\\
 \\The method is implemented by recursive comparison of the sign of the function at a specified lower (or upper) boundary with the sign of the function at a calculated midpoint between the upper and lower boundaries. If the product of the signs are negative, then the midpoints value is assigned to the the upper boundary and a new midpoint is calculated for the next iteration. If the product of lower bound and the newly calculated midpoint is positive, then the value of midpoint is assigned to the lower boundary and another midpoint is calculated for the next iteration. This process is repeated until the product of the lower bound and the midpoint is $0$. The zero product indicates discovery of the root: $f(midpoint)=0$.
-\\
-\\
 \\
 \\
 Considerations: 
 \\
-\\While the bisection method is guaranteed to work, its preconditions are stringent and its application may be limited for certain functions. For example, $f(x)=x^2$. Here, since the function is $\geq0$ $\forall x$, the bisection methods preconditions cannot be satisfied. The precondition are unmet because the value of the function at the initial boundaries have identical signs. By definition, the bisection method requires opposite signs and so the routine goes uninitialized.
+\\While the bisection method is guaranteed to work, its precondition are stringent and its application may be limited on certain function types. For example, $f(x)=x^2$. Here, since the function is $\geq0$ $\forall x$, the bisection methods preconditions cannot be satisfied. This is because the value of the function at the initial values have like signs and the method requires opposite signs by definition.
 \\
 \\ Depending on the choice of boundaries, bisection can require excessive iterations. If one of the boundaries is chosen sufficiently close to the root while the other is not, it will take many iterations before of $\frac{\left|upper-lower\right|}{2}$ before the algorithm can converge. The number of iterations increase as ($upper$) is chosen further from the root and ($lower$) is chosen closer.  
 \\
