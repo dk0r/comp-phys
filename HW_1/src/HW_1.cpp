@@ -689,9 +689,9 @@ int main()
 
 		//forwardDiffsinln();
 
-		cout << "Machine Epsilon = " << epsilon() << endl;
+		cout << "Machine Epsilon = " << setprecision(25) << epsilon() << endl;
 
-	newRaph(5);
+
 		//cout << newRaph(3) << endl;
 		//bisection(0,5);
 		//forwardDiffx2();
