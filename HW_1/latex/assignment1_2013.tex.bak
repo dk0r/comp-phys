@@ -113,7 +113,8 @@ The accuracy of numerically computing $\displaystyle\int^5_1x^2\,dx$ will vary w
 \\
 \\$\displaystyle \int^b_a f(x)\,dx  \approx c_1f(x_1)+c_2f(x_2)+c_3f(x_3)$, where 
 \\$x_1=-0.7746, x_2=0, x_3=0.7746$ and weights $c_1=0.555\overline{6}, c_2=0.888\overline{9} and c_3=0.555\overline{6}$
-\\Note: GQ is not limited to only three-points. 
+\\
+\\Note: GQ is not limited to only three-point calculations. 
 \end{enumerate}
 
 
@@ -126,6 +127,7 @@ Forward difference is a numerical method of differentiation. It employs the fami
 \\
 \\
 . \hspace{7 mm} $\displaystyle f'(x) \approx \frac{f(x+\Delta x)-f(x)}{\Delta x}$ where $\Delta x$ is a finite term ($h$).
+\\
 \\
 \\
 \\
@@ -144,9 +146,9 @@ FDD Error:
 \\. \hspace{15 mm}$\displaystyle\xi_{max} \approx \frac{\left|f_{FDD}'(\epsilon)-f'(x)\right|}{f'(x)} \approx \frac{\left|0-f'(x)\right|}{f'(x)} \approx 1$ 
 \\. \hspace{15 mm} Note: $f'(x)$ is the exact analytical derviative.
 \\
-\\Notice that if $h$ is chosen to be $\geq \epsilon$ then $\xi_{max}$ will be $\geq 1$. Therefore, to minimize error, and thereby maximize accuracy, an $h$ should be chosen such that the truncation error and round-off error or approximately the same.
+\\Notice that if $h$ is chosen to be $\geq \epsilon$ then $\xi_{max}$ will be $\geq 1$. Therefore, to minimize error, and thereby maximize accuracy, an $h$ should be chosen such that the truncation error and round-off error are approximately the same.
 \\
-\\The following $LogLog$-plot depicts the relative error($\epsilon$) versus step size ($h$) of the FDD approximations for: $x^2(blue)$, $x^3(red)$, $e^{-x}(green)$ and $sin(x)ln(x)(brown)$
+\\The following $LogLog$-plot depicts the relative error($\epsilon$) versus step size ($h$) of the FDD approximations for: $x^2(\textcolor{blue}{blue})$, $x^3(\textcolor{red}{red})$, $e^{-x}(\textcolor{green}{green})$ and $sin(x)ln(x)(\textcolor{brown}{brown})$
 \\
 \\
 \\.\hspace{6 mm} \includegraphics[scale=.5]{forwardDiff.jpeg}
@@ -164,23 +166,23 @@ FDD Error:
 \\\\The following $LogLog$-plot depicts the relative error($\epsilon$) versus step size ($h$) of the CDD approximations for: $x^2(\textcolor{blue}{blue})$, $x^3(\textcolor{red}{red})$, $e^{-x}(\textcolor{green}{green})$ and $sin(x)ln(x)(\textcolor{brown}{brown})$
 \\
 \\.\hspace{6 mm} \includegraphics[scale=.5]{centralDiff.jpeg}
-\item Five Point Stencil (FPS)y
+\\\item Five Point Stencil (FPS)
 \\The formula for the FPS method is as follows:
 \\
 \\$\displaystyle f'(x) \approx \frac{-f(x+\Delta x)+8f(x+\Delta x)-8f(x-\Delta x)+f(x-2\Delta x)}{12\Delta x}$ 
 \\where $\Delta x$ is a finite term ($h$).
 \\
-\\Truncation error due to the FPS may be estimated as follows:
+\\The truncation error due to FPS may be estimated as follows:
 \\
 \\.\hspace{25 mm}$\xi_{max} = f'(x)-\frac{1}{30}f^5(x)h^4+O(h^5)$
-\\\\The following $LogLog$-plot depicts the relative error($\epsilon$) versus step size ($h$) of the FPS approximations for: $x^2(blue)$, $x^3(red)$, $e^{-x}(green)$ and $sin(x)ln(x)(brown)$
+\\\\The following $LogLog$-plot depicts the relative error($\epsilon$) versus step size ($h$) of the FPS approximations for: $x^2(\textcolor{blue}{blue})$, $x^3(\textcolor{red}{red})$, $e^{-x}(\textcolor{green}{green})$ and $sin(x)ln(x)(\textcolor{brown}{brown})$
 \\\\.\hspace{6 mm} \includegraphics[scale=.5]{fivePoint.jpeg}
 \end{enumerate}
 \section{Methods of Root Finding}
 \begin{enumerate}
 \item The Bisection Method
 \\
-\\The bisection method is an order n ??? algorithm which can pinpoint the root of most functions. Several conditions must be satisfied in order for the method to prove successful. First, the user must have determined an approximate location for the root. This is necessary because the algorithm requires an interval whose upper and lower bound must contain the root. The principle function must also be real, continuous (within the interval) and have opposite signs at the initial upper and lower bounds as depicted below. If these preconditions are met, the bisection is guaranteed to converge on a root.
+\\The bisection method is an algorithm which can pinpoint the root of most functions. Several conditions must be satisfied in order for the method to prove successful. First, the user must have determined an approximate location for the root. This is necessary because the algorithm requires an interval whose upper and lower bound must contain the root. The principle function must also be real, continuous (within the interval) and have opposite signs at the initial upper and lower bounds as depicted below. If these preconditions are met, the bisection is guaranteed to converge on a root.
 \\
 \\\includegraphics[scale=1.3]{bisection.eps}
 \\
@@ -198,7 +200,7 @@ Considerations:
 \\
 \item The Newton Raphson Method (NRM)
 \\
-\\The Newton Raphson method is an order n ??? algorithm which is capable but not guaranteed to locate the root of most functions. Unlike the bisection algorithm with its many preconditions, NRM requires only a single guess (seed) from the user and generally requires less iterations to converge at a root.
+\\The Newton Raphson method is an algorithm which is capable but not guaranteed to locate the root of most functions. Unlike the bisection algorithm with its many preconditions, NRM requires only a single guess (seed) from the user and generally requires less iterations to converge at a root.
 \\
 \\Algorithm:  
 \\

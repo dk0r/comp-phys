@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.1.29)  18 FEB 2013 20:16
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.1.29)  18 FEB 2013 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -827,7 +827,7 @@ msfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
 pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on build/assignment1_2013.pdf (13 pages, 382313 bytes).
+Output written on build/assignment1_2013.pdf (13 pages, 382098 bytes).
 PDF statistics:
  191 PDF objects out of 1000 (max. 8388607)
  129 compressed objects within 2 object streams
