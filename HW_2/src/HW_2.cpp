@@ -1,34 +1,35 @@
 #include <iostream>
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <ctime>
+#include <cstdlib>
+#include <cstdio>
 #include <fstream>
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 
-double defaultPRNG(double seed)
+double powerResidue(double seed)
 {
 
 	ofstream of;
-	of.open("defaultPRNG.csv");
+	of.open("powerResidue.csv");
 
 	double r_i = seed;
-	double a = 4, c = 1, M = 9;
+	double a = 57, c = 1, M = 256;
 
 	of << "i,defaultPRNG" << endl;
-					///cout << "r1 = " << r1/9 << endl;
+					///cout << "r_i = " << r_i/M << endl;
 
-	for(int i=0; i<100; i++)
+	for(int i=0; i<15000; i++)
 	{
 		r_i = fmod(( a*(r_i)+c),M);
-					///cout << "r1 = " << r1/9 << endl;
-		of << i << "," << r_i/9 << endl;
+					///cout << "r_i = " << r_i/M << endl;
+		of << i << "," << r_i/M << endl;
 	}
 
 	of.close();
 	return 0;
 }
+
 
 double dRand()
 {
@@ -44,9 +45,26 @@ double dRand()
 	of.close();
 	return 0;
 }
+
+double defaultPRNG()
+{
+	ofstream of;
+	of.open("defaultPRNG.csv");
+	of << "i,defaultPRNG" << endl;
+
+	for(int i=0; i<10000; i++)
+	{
+		of << i << "," << (double)rand() / RAND_MAX << endl;
+				///cout << "i=" << i << "defaultPRNG="<< (double)rand() / RAND_MAX << endl;
+	}
+	return 0;
+}
+
+
 int main()
 {
-	defaultPRNG(3);
+
+	powerResidue(10);
 
 	return 0;
 }
