@@ -1,0 +1,15 @@
+00:20:17 **** Incremental Build of configuration Debug for project HW_2 ****
+make all 
+Building file: ../src/HW_2.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HW_2.d" -MT"src/HW_2.d" -o "src/HW_2.o" "../src/HW_2.cpp"
+Finished building: ../src/HW_2.cpp
+ 
+Building target: HW_2
+Invoking: GCC C++ Linker
+g++  -o "HW_2"  ./src/HW_2.o   
+Finished building target: HW_2
+ 
+
+00:20:17 Build Finished (took 309ms)
+

@@ -1,0 +1,65 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fstream>
+#include <math.h>
+
+using namespace std;
+
+double powerResidue(double seed)
+{
+
+	ofstream of;
+	of.open("defaultPRNG.csv");
+
+	double r_i = seed;
+	double a = 4, c = 1, M = 9;
+
+	of << "i,defaultPRNG" << endl;
+					///cout << "r1 = " << r1/9 << endl;
+
+	for(int i=0; i<15000; i++)
+	{
+		r_i = fmod(( a*(r_i)+c),M);
+					///cout << "r1 = " << r1/9 << endl;
+		of << i << "," << r_i/9 << endl;
+	}
+
+	of.close();
+	return 0;
+}
+
+
+double dRand()
+{
+	ofstream of;
+	of.open("drand48().csv");
+	of << "i,drand48()" << endl;
+
+	for(int i=0; i<15000; i++)
+	{
+		of << i << "," << drand48() << endl;
+	}
+
+	of.close();
+	return 0;
+}
+
+double defaultPRNG()
+{
+	for(int i=0; i<100; i++)
+	{
+		cout << (double)rand() / RAND_MAX << endl;
+	}
+	return 0;
+}
+
+
+int main()
+{
+
+	defaultPRNG();
+
+	return 0;
+}

@@ -1,0 +1,16 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fstream>
+#include <math.h>
+
+using namespace std;
+
+
+int main()
+{
+	double temp =0;
+	temp = srand(0);
+	return 0;
+}

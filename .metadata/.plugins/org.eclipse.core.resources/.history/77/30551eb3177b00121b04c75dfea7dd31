@@ -1,0 +1,15 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fstream>
+#include <math.h>
+
+using namespace std;
+
+main()
+{
+	srand(0);
+	return 0;
+}
+
