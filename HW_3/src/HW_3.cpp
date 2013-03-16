@@ -21,14 +21,12 @@ double GM = 2.95912208e-4;
 
 
 
-
-
 void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 {
 	dydx[0] = y[1];
-	dydx[1] =  ((-G*M) *  y[0]) / (pow( (y[0]*y[0] + y[2]*y[2]) , (1.5)));
+	dydx[1] = (-GM * y[0]) / pow( (y[0]*y[0] + y[2]*y[2]) , 1.5 );
 	dydx[2] = y[3];
-	dydx[3] = ((-G*M) *  y[2]) / pow( y[0]*y[0] + y[2]*y[2] , 1.5);
+	dydx[3] = (-GM * y[2]) / pow( (y[0]*y[0] + y[2]*y[2]) , 1.5 );
 }
 
 
@@ -37,7 +35,7 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 int main ()
 {
 	VecDoub y(4),dydx(4); //
-	Doub x, xmin, kmax=5000, h=0.001;
+	Doub x, xmin, kmax=365, h=1;
 
 	VecDoub yout(4);
 	int k;
@@ -45,10 +43,10 @@ int main ()
 	xmin = 0;
 
 	//Initial Conditions:  If using GM [NOT G*M] in derivs(), units are kg, au and days
-	y[0] = 0.5;  //units: au_x
-	y[1] = 0;    //units: au_x/day
-	y[2] = 0;    //units au_y
-	y[3] = 1.63; //units au_u/day
+	y[0] = 0.98329;       //X-Position          (units: au)
+	y[1] = 0;                      //X-Velocity (units: au/day)
+	y[2] = 0;             //Y- Position         (units: au)
+	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
 
 	derivs(xmin, y, dydx);
 
@@ -58,6 +56,7 @@ int main ()
 	ofX.open("x-components.csv");
 	ofY.open("y-components.csv");
 	ofXY.open("x-y-position.csv");
+
 
 
 	for(k=0; k < kmax; k++)
@@ -89,9 +88,16 @@ int main ()
 	ofXY.close();
 }
 
-/*
 
-//Last Working w/ NumericalMethodsGuy
+
+
+
+
+
+
+
+/*
+//Last Working w/ N.M.G. example.
 
 void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 {
@@ -99,8 +105,6 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 	dydx[1]= ( 11*exp((-1)*x) - 3*y[1] - 5*y[0] ) / 2;
 
 }
-
-
 
 
 int main (int argc, char * const argv[])
@@ -134,6 +138,5 @@ int main (int argc, char * const argv[])
 	}
 
 }
-
 */
 
