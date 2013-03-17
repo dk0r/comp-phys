@@ -11,10 +11,10 @@ using namespace std;
 ////Physical Constants////
 
 //Gravitational Constant (SI-units:  m^3 / kg*s^2)
-double G  = 1; //6.67398e-11;
+//double G  = 1; //6.67398e-11;
 
 //Solar Mass (SI-units: kg)
-double M  = 1; //1.9891e30;
+//double M  = 1; //1.9891e30;
 
 //Heliocentric Gravitational Constant (Astro-units: au^3/days^2)
 double GM = 2.95912208e-4;
@@ -33,7 +33,7 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 
 	//Jupiter
 	dydx[4] = y[5];
-	dydx[5] = (-GM * y[6]) / pow( (y[4]*y[4] + y[6]*y[6]) , 1.5 );
+	dydx[5] = (-GM * y[4]) / pow( (y[4]*y[4] + y[6]*y[6]) , 1.5 );
 
 	dydx[6] = y[7];
 	dydx[7] = (-GM * y[6]) / pow( (y[4]*y[4] + y[6]*y[6]) , 1.5 );
@@ -41,19 +41,20 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 }
 
 
-int earth()
+int main()
 {
-	VecDoub y(8),dydx(8); //
-	Doub x;
-	Doub xmin;
-	Doub kmax=365;  //maximum itterations
-	Doub h=1; //time step size
+	VecDoub y(8);
+	VecDoub dydx(8); //vector of positions & velocities for earth and
+	VecDoub yout(8);
 
-	VecDoub yout(4);
+	Doub x;
+	Doub xmin;      //minimum starting position (units: au)
+	Doub kmax=3865;  //max iterations (units: days)
+	Doub h=1;       //time step size (units: days)
 
 	xmin = 0;
 
-	//Initial Conditions:  If using GM [NOT G*M] in derivs(), units are kg, au and days
+	///Initial Conditions:
 
 	//Earth
 	y[0] = 0.98329;       //X-Position          (units: au)
@@ -62,22 +63,19 @@ int earth()
 	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
 
 	//Jupiter
-	y[4] = 0.98329;       //X-Position          (units: au)
+	y[4] = 4.950429;      //X-Position          (units: au)
 	y[5] = 0;                      //X-Velocity (units: au/day)
 	y[6] = 0;             //Y- Position         (units: au)
-	y[7] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
-
+	y[7] = 7.92396305e-3; 		   //Y-Velocity (units: au/day)  !!!!!!!! e-6 original
 
 
 	derivs(xmin, y, dydx);
 
 	//file output streams
-	ofstream ofALL, ofX, ofY, ofXY;
-	ofALL.open("all-data.csv");
-	ofX.open("x-components.csv");
-	ofY.open("y-components.csv");
-	ofXY.open("x-y-position.csv");
-
+	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
+	ofAllData.open("all-data.csv");
+	ofPositionEarth.open("x-y-positionEarth.csv");
+	ofPositionJupiter.open("x-y-positionJupiter.csv");
 
 
 	for(int k=0; k < kmax; k++)
@@ -88,14 +86,16 @@ int earth()
 
 			//display output
 			cout << "k = " << k
-				 << "    x = " << yout[0] << "    x'= " << yout[1]
-				 << "    y = " << yout[2] << "    y'= " << yout[3] << endl;
+				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
+				 << "    Ye = " << yout[2] << "    Y'e= " << yout[3] << endl
+
+				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
+				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
 
 			//file output streams
-			ofALL << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << endl;
-			ofX << yout[0] << "," << yout[1] << endl;
-			ofY << yout[2] << "," << yout[3] << endl;
-			ofXY << yout[0] << "," << yout[2] << endl;
+			ofAllData << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
+			ofPositionEarth << yout[0] << "," << yout[2] << endl;
+			ofPositionJupiter << yout[4] << "," << yout[6] << endl;
 
 			y = yout;
 
@@ -103,83 +103,12 @@ int earth()
 	}
 
 	//closes file output streams
-	ofALL.close();
-	ofX.close();
-	ofY.close();
-	ofXY.close();
+	ofAllData.close();
+	ofPositionEarth.close();
+	ofPositionJupiter.close();
 
 	return 0;
 }
-
-
-
-int jupiter()
-{
-	VecDoub y(4),dydx(4); //
-	Doub x, xmin, kmax=365, h=1;
-
-	VecDoub yout(4);
-	int k;
-
-	xmin = 0;
-
-	//Initial Conditions:  If using GM [NOT G*M] in derivs(), units are kg, au and days
-	y[0] = 0.98329;       //X-Position          (units: au)
-	y[1] = 0;                      //X-Velocity (units: au/day)
-	y[2] = 0;             //Y- Position         (units: au)
-	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
-
-	derivs(xmin, y, dydx);
-
-	//file output streams
-	ofstream ofALL, ofX, ofY, ofXY;
-	ofALL.open("all-data.csv");
-	ofX.open("x-components.csv");
-	ofY.open("y-components.csv");
-	ofXY.open("x-y-position.csv");
-
-
-
-	for(k=0; k < kmax; k++)
-	{
-			x=xmin+k*h;
-
-			rk4(y, dydx,  x, h, yout, derivs);
-
-			//display output
-			cout << "k = " << k
-				 << "    x = " << yout[0] << "    x'= " << yout[1]
-				 << "    y = " << yout[2] << "    y'= " << yout[3] << endl;
-
-			//file output streams
-			ofALL << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << endl;
-			ofX << yout[0] << "," << yout[1] << endl;
-			ofY << yout[2] << "," << yout[3] << endl;
-			ofXY << yout[0] << "," << yout[2] << endl;
-
-			y = yout;
-
-			derivs(x,y,dydx);
-	}
-
-	//closes file output streams
-	ofALL.close();
-	ofX.close();
-	ofY.close();
-	ofXY.close();
-
-	return 0;
-}
-
-
-
-int main ()
-{
-
-	return 0;
-
-}
-
 
 
 
