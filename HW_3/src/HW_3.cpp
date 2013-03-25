@@ -85,6 +85,529 @@ double Re(double x, double y, double exp)
 
 
 
+//Relativistic orbit of Mercury in Solar System
+void GRmercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+
+{
+	//exponents for radius calculation in R(i,j,exp)
+	double exp1 = 1.5;
+	double exp2 = 2;
+
+	//coefficient of relativity correction
+	double a = 0.01; //units: au^2 ?
+
+
+///Mercury------------------------------------------------------------------------------------
+
+	//Mercury x and y indices for y[]
+	int i = 0;
+	int j = 2;
+
+
+		//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+		 double Rsun = R(y[i]       , y[j]);
+		 double Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+		 double Rven = R(y[i]-y[4]  , y[j]-y[6]);
+		 double Rear = R(y[i]-y[8]  , y[j]-y[10]);
+		 double Rmar = R(y[i]-y[12] , y[j]-y[14]);
+		 double Rjup = R(y[i]-y[16] , y[j]-y[18]);
+		 double Rsat = R(y[i]-y[20] , y[j]-y[22]);
+		 double Rura = R(y[i]-y[24] , y[j]-y[26]);
+		 double Rplu = R(y[i]-y[28] , y[j]-y[30]);
+		 double Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+	//X-components
+	dydx[i]   = y[i+1];
+	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+
+			  + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+			  + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+			  + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+	//Y-components
+	dydx[j]   = y[j+1];
+	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+
+			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+
+
+
+///Venus--------------------------------------------------------------------------------------
+
+	//position indices
+	i = 4;
+	j = 6;
+
+	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+	 Rsun = R(y[i]       , y[j]);
+	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+
+	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
+	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
+	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
+	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
+	 Rura = R(y[i]-y[24] , y[j]-y[26]);
+	 Rplu = R(y[i]-y[28] , y[j]-y[30]);
+	 Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+	//X-components
+	dydx[i]   = y[i+1];
+	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+
+		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+		      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+		      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+	//Y-components
+	dydx[j]   = y[j+1];
+	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+
+			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Earth---------------------------------------------------------------------------------------
+i = 8;
+j = 10;
+
+
+//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+ Rsun = R(y[i]       , y[j]);
+ Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+ Rven = R(y[i]-y[4]  , y[j]-y[6]);
+
+ Rmar = R(y[i]-y[12] , y[j]-y[14]);
+ Rjup = R(y[i]-y[16] , y[j]-y[18]);
+ Rsat = R(y[i]-y[20] , y[j]-y[22]);
+ Rura = R(y[i]-y[24] , y[j]-y[26]);
+ Rplu = R(y[i]-y[28] , y[j]-y[30]);
+ Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+//X-components
+dydx[i]   = y[i+1];
+dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+
+	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+//Y-components
+dydx[j]   = y[j+1];
+dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+
+		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Mars-----------------------------------------------------------------------------------------
+i = 12;
+j = 14;
+
+
+
+//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+ Rsun = R(y[i]       , y[j]);
+ Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+ Rven = R(y[i]-y[4]  , y[j]-y[6]);
+ Rear = R(y[i]-y[8]  , y[j]-y[10]);
+
+ Rjup = R(y[i]-y[16] , y[j]-y[18]);
+ Rsat = R(y[i]-y[20] , y[j]-y[22]);
+ Rura = R(y[i]-y[24] , y[j]-y[26]);
+ Rplu = R(y[i]-y[28] , y[j]-y[30]);
+ Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+//X-components
+dydx[i]   = y[i+1];
+dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+
+	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+//Y-components
+dydx[j]   = y[j+1];
+dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+
+		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Jupiter---------------------------------------------------------------------------------------
+i = 16;
+j = 18;
+
+
+
+//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+ Rsun = R(y[i]       , y[j]);
+ Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+ Rven = R(y[i]-y[4]  , y[j]-y[6]);
+ Rear = R(y[i]-y[8]  , y[j]-y[10]);
+ Rmar = R(y[i]-y[12] , y[j]-y[14]);
+
+ Rsat = R(y[i]-y[20] , y[j]-y[22]);
+ Rura = R(y[i]-y[24] , y[j]-y[26]);
+ Rplu = R(y[i]-y[28] , y[j]-y[30]);
+ Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+//X-components
+dydx[i]   = y[i+1];
+dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+
+	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+//Y-components
+dydx[j]   = y[j+1];
+dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+
+		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Saturn---------------------------------------------------------------------------------------
+i = 20;
+j = 22;
+
+
+
+//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+ Rsun = R(y[i]       , y[j]);
+ Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+ Rven = R(y[i]-y[4]  , y[j]-y[6]);
+ Rear = R(y[i]-y[8]  , y[j]-y[10]);
+ Rmar = R(y[i]-y[12] , y[j]-y[14]);
+ Rjup = R(y[i]-y[16] , y[j]-y[18]);
+
+ Rura = R(y[i]-y[24] , y[j]-y[26]);
+ Rplu = R(y[i]-y[28] , y[j]-y[30]);
+ Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+//X-components
+dydx[i]   = y[i+1];
+dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+
+	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+//Y-components
+dydx[j]   = y[j+1];
+dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+
+		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Uranus---------------------------------------------------------------------------------------
+i = 24;
+j = 26;
+
+
+//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+ Rsun = R(y[i]       , y[j]);
+ Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+ Rven = R(y[i]-y[4]  , y[j]-y[6]);
+ Rear = R(y[i]-y[8]  , y[j]-y[10]);
+ Rmar = R(y[i]-y[12] , y[j]-y[14]);
+ Rjup = R(y[i]-y[16] , y[j]-y[18]);
+ Rsat = R(y[i]-y[20] , y[j]-y[22]);
+
+ Rplu = R(y[i]-y[28] , y[j]-y[30]);
+ Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+//X-components
+dydx[i]   = y[i+1];
+dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+
+	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
+	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+//Y-components
+dydx[j]   = y[j+1];
+dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+
+		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
+		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Pluto---------------------------------------------------------------------------------------
+	i = 28;
+	j = 30;
+
+
+
+	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+	 Rsun = R(y[i]       , y[j]);
+	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+	 Rven = R(y[i]-y[4]  , y[j]-y[6]);
+	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
+	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
+	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
+	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
+	 Rura = R(y[i]-y[24] , y[j]-y[26]);
+
+	 Rnep = R(y[i]-y[32] , y[j]-y[34]);
+
+	//X-components
+	dydx[i]   = y[i+1];
+	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+		      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+
+		      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
+
+	//Y-components
+	dydx[j]   = y[j+1];
+	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+
+			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
+
+///Neptune---------------------------------------------------------------------------------------
+	i = 32;
+	j = 34;
+
+	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+	 Rsun = R(y[i]       , y[j]);
+	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
+	 Rven = R(y[i]-y[4]  , y[j]-y[6]);
+	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
+	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
+	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
+	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
+	 Rura = R(y[i]-y[24] , y[j]-y[26]);
+	 Rplu = R(y[i]-y[28] , y[j]-y[30]);
+	 //
+
+	//X-components
+	dydx[i]   = y[i+1];
+	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
+		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
+		      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
+		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
+		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
+		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
+		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
+		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
+		      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1);
+		      //
+
+	//Y-components
+	dydx[j]   = y[j+1];
+	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
+			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
+			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
+			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
+			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
+			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
+			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
+			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
+			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1);
+			  //
+}
+
+int GRmercury()
+{
+		cout << "Started GR.Mercury -- GR.Started Mercury -- GR.Started Mercury" << "\n";
+
+
+		VecDoub y(36);
+		VecDoub dydx(36); //vector of positions & velocities for earth and
+		VecDoub yout(36);
+
+
+		double x;
+		double xmin = 0;       //minimum starting position (units: au)
+		double kmax = 226*87.969;  //max iterations (units: days)
+		double h = .0005;          //time step size (units: days)
+
+
+		///Initial Conditions:
+
+		//Mercury
+		y[0] = Pmer;   //X-Position          (units: au)
+		y[1] = 0;                      //X-Velocity (units: au/day)
+		y[2] = 0;             //Y- Position         (units: au)
+		y[3] = Vmer; 		   //Y-Velocity (units: au/day)
+
+		//Venus
+		y[4] = Pven;   //X-Position          (units: au)
+		y[5] = 0;                      //X-Velocity (units: au/day)
+		y[6] = 0;             //Y- Position         (units: au)
+		y[7] = Vven; 		   //Y-Velocity (units: au/day)
+
+		//Earth
+		y[8] = Pear;   //X-Position          (units: au)
+		y[9] = 0;                      //X-Velocity (units: au/day)
+		y[10] = 0;             //Y- Position         (units: au)
+		y[11] = Vear; 		   //Y-Velocity (units: au/day)
+
+		//Mars
+		y[12] = Pmar;   //X-Position          (units: au)
+		y[13] = 0;                      //X-Velocity (units: au/day)
+		y[14] = 0;             //Y- Position         (units: au)
+		y[15] = Vmar; 		   //Y-Velocity (units: au/day)
+
+		//Jupiter
+		y[16] = Pjup;   //X-Position          (units: au)
+		y[17] = 0;                      //X-Velocity (units: au/day)
+		y[18] = 0;             //Y- Position         (units: au)
+		y[19] = Vjup; 		   //Y-Velocity (units: au/day)
+
+		//Saturn
+		y[20] = Psat;   //X-Position          (units: au)
+		y[21] = 0;                      //X-Velocity (units: au/day)
+		y[22] = 0;             //Y- Position         (units: au)
+		y[23] = Vsat; 		   //Y-Velocity (units: au/day)
+
+		//Uranus
+		y[24] = Pura;   //X-Position          (units: au)
+		y[25] = 0;                      //X-Velocity (units: au/day)
+		y[26] = 0;             //Y- Position         (units: au)
+		y[27] = Vura; 		   //Y-Velocity (units: au/day)
+
+		//Pluto
+		y[28] = Pplu;   //X-Position          (units: au)
+		y[29] = 0;                      //X-Velocity (units: au/day)
+		y[30] = 0;             //Y- Position         (units: au)
+		y[31] = Vplu; 		   //Y-Velocity (units: au/day)
+
+		//Neptune
+		y[32] = Pnep;   //X-Position          (units: au)
+		y[33] = 0;                      //X-Velocity (units: au/day)
+		y[34] = 0;             //Y- Position         (units: au)
+		y[35] = Vnep; 		   //Y-Velocity (units: au/day)
+
+
+		GRmercDerivs(xmin, y, dydx);
+
+			//file output stream
+			ofstream ofPositionMercury;
+			ofPositionMercury.open("position.GR_Mercury.csv");
+
+
+
+		for(int k=0; k < kmax; k++)
+			{
+					x=xmin+k*h;
+
+					rk4(y, dydx,  x, h, yout, GRmercDerivs);
+
+
+					///debug output
+					//cout << "k = " << k
+					//	 << "    Xm = " << yout[0] << "    X'm= " << yout[1]
+					//	 << "    Ym = " << yout[2] << "    Y'm= " << yout[3] << endl;
+
+
+					//file output stream
+					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
+
+					y = yout;
+
+					GRmercDerivs(x,y,dydx);
+			}
+
+			//closes file output stream
+			ofPositionMercury.close();
+
+
+		cout << "\n" << "CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe" << "\n";
+
+	return 0;
+}
+
+
+
+
 
 //Non-relativistic orbit in Solar System
 void mercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
@@ -92,7 +615,7 @@ void mercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 {
 	//exponents for radius calculation in R(i,j,exp)
 	double exp1 = 1.5;
-	double exp2 = 2.5;
+
 
 ///Mercury------------------------------------------------------------------------------------
 int i = 0;
@@ -509,556 +1032,6 @@ int mercury()
 
 
 
-//Relativistic orbit of Mercury in Solar System
-void GRmercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
-
-{
-	//exponents for radius calculation in R(i,j,exp)
-	double exp1 = 1.5;
-	double exp2 = 2;
-
-	//coefficient of relativity correction
-	double a = 0.01; //units: au^2 ?
-
-
-///Mercury------------------------------------------------------------------------------------
-
-	//Mercury x and y indices for y[]
-	int i = 0;
-	int j = 2;
-
-
-		//Radicand's of radius (x^2+y^2) between section and subscript bodies.
-		 double Rsun = R(y[i]       , y[j]);
-
-		 double Rven = R(y[i]-y[4]  , y[j]-y[6]);
-		 double Rear = R(y[i]-y[8]  , y[j]-y[10]);
-		 double Rmar = R(y[i]-y[12] , y[j]-y[14]);
-		 double Rjup = R(y[i]-y[16] , y[j]-y[18]);
-		 double Rsat = R(y[i]-y[20] , y[j]-y[22]);
-		 double Rura = R(y[i]-y[24] , y[j]-y[26]);
-		 double Rplu = R(y[i]-y[28] , y[j]-y[30]);
-		 double Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-	//X-components
-	dydx[i]   = y[i+1];
-	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-
-			  + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-			  + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-			  + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-	//Y-components
-	dydx[j]   = y[j+1];
-	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-
-			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-
-
-
-///Venus--------------------------------------------------------------------------------------
-
-	//position indices
-	i = 4;
-	j = 6;
-
-	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
-	 Rsun = R(y[i]       , y[j]);
-	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
-
-	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
-	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
-	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
-	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
-	 Rura = R(y[i]-y[24] , y[j]-y[26]);
-	 Rplu = R(y[i]-y[28] , y[j]-y[30]);
-	 Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-	//X-components
-	dydx[i]   = y[i+1];
-	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-
-		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-		      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-		      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-	//Y-components
-	dydx[j]   = y[j+1];
-	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-
-			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Earth---------------------------------------------------------------------------------------
-i = 8;
-j = 10;
-
-
-//Radicand's of radius (x^2+y^2) between section and subscript bodies.
- Rsun = R(y[i]       , y[j]);
- Rmer = R(y[i]-y[0]  , y[j]-y[2]);
- Rven = R(y[i]-y[4]  , y[j]-y[6]);
-
- Rmar = R(y[i]-y[12] , y[j]-y[14]);
- Rjup = R(y[i]-y[16] , y[j]-y[18]);
- Rsat = R(y[i]-y[20] , y[j]-y[22]);
- Rura = R(y[i]-y[24] , y[j]-y[26]);
- Rplu = R(y[i]-y[28] , y[j]-y[30]);
- Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-//X-components
-dydx[i]   = y[i+1];
-dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-
-	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-//Y-components
-dydx[j]   = y[j+1];
-dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-
-		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Mars-----------------------------------------------------------------------------------------
-i = 12;
-j = 14;
-
-
-
-//Radicand's of radius (x^2+y^2) between section and subscript bodies.
- Rsun = R(y[i]       , y[j]);
- Rmer = R(y[i]-y[0]  , y[j]-y[2]);
- Rven = R(y[i]-y[4]  , y[j]-y[6]);
- Rear = R(y[i]-y[8]  , y[j]-y[10]);
-
- Rjup = R(y[i]-y[16] , y[j]-y[18]);
- Rsat = R(y[i]-y[20] , y[j]-y[22]);
- Rura = R(y[i]-y[24] , y[j]-y[26]);
- Rplu = R(y[i]-y[28] , y[j]-y[30]);
- Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-//X-components
-dydx[i]   = y[i+1];
-dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-
-	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-//Y-components
-dydx[j]   = y[j+1];
-dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-
-		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Jupiter---------------------------------------------------------------------------------------
-i = 16;
-j = 18;
-
-
-
-//Radicand's of radius (x^2+y^2) between section and subscript bodies.
- Rsun = R(y[i]       , y[j]);
- Rmer = R(y[i]-y[0]  , y[j]-y[2]);
- Rven = R(y[i]-y[4]  , y[j]-y[6]);
- Rear = R(y[i]-y[8]  , y[j]-y[10]);
- Rmar = R(y[i]-y[12] , y[j]-y[14]);
-
- Rsat = R(y[i]-y[20] , y[j]-y[22]);
- Rura = R(y[i]-y[24] , y[j]-y[26]);
- Rplu = R(y[i]-y[28] , y[j]-y[30]);
- Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-//X-components
-dydx[i]   = y[i+1];
-dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-
-	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-//Y-components
-dydx[j]   = y[j+1];
-dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-
-		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Saturn---------------------------------------------------------------------------------------
-i = 20;
-j = 22;
-
-
-
-//Radicand's of radius (x^2+y^2) between section and subscript bodies.
- Rsun = R(y[i]       , y[j]);
- Rmer = R(y[i]-y[0]  , y[j]-y[2]);
- Rven = R(y[i]-y[4]  , y[j]-y[6]);
- Rear = R(y[i]-y[8]  , y[j]-y[10]);
- Rmar = R(y[i]-y[12] , y[j]-y[14]);
- Rjup = R(y[i]-y[16] , y[j]-y[18]);
-
- Rura = R(y[i]-y[24] , y[j]-y[26]);
- Rplu = R(y[i]-y[28] , y[j]-y[30]);
- Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-//X-components
-dydx[i]   = y[i+1];
-dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-
-	      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-//Y-components
-dydx[j]   = y[j+1];
-dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-
-		  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Uranus---------------------------------------------------------------------------------------
-i = 24;
-j = 26;
-
-
-//Radicand's of radius (x^2+y^2) between section and subscript bodies.
- Rsun = R(y[i]       , y[j]);
- Rmer = R(y[i]-y[0]  , y[j]-y[2]);
- Rven = R(y[i]-y[4]  , y[j]-y[6]);
- Rear = R(y[i]-y[8]  , y[j]-y[10]);
- Rmar = R(y[i]-y[12] , y[j]-y[14]);
- Rjup = R(y[i]-y[16] , y[j]-y[18]);
- Rsat = R(y[i]-y[20] , y[j]-y[22]);
-
- Rplu = R(y[i]-y[28] , y[j]-y[30]);
- Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-//X-components
-dydx[i]   = y[i+1];
-dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-	      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-	      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-	      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-	      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-	      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-	      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-
-	      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-	      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-//Y-components
-dydx[j]   = y[j+1];
-dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-		  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-		  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-		  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-		  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-		  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-		  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-
-		  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-		  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Pluto---------------------------------------------------------------------------------------
-	i = 28;
-	j = 30;
-
-
-
-	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
-	 Rsun = R(y[i]       , y[j]);
-	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
-	 Rven = R(y[i]-y[4]  , y[j]-y[6]);
-	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
-	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
-	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
-	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
-	 Rura = R(y[i]-y[24] , y[j]-y[26]);
-
-	 Rnep = R(y[i]-y[32] , y[j]-y[34]);
-
-	//X-components
-	dydx[i]   = y[i+1];
-	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-		      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-
-		      + (1+a/pow(Rnep,exp2)) * (-GMnep * y[i]) / pow(Rnep,exp1);
-
-	//Y-components
-	dydx[j]   = y[j+1];
-	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-
-			  + (1+a/pow(Rnep,exp2)) * (-GMnep * y[j]) / pow(Rnep,exp1);
-
-///Neptune---------------------------------------------------------------------------------------
-	i = 32;
-	j = 34;
-
-	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
-	 Rsun = R(y[i]       , y[j]);
-	 Rmer = R(y[i]-y[0]  , y[j]-y[2]);
-	 Rven = R(y[i]-y[4]  , y[j]-y[6]);
-	 Rear = R(y[i]-y[8]  , y[j]-y[10]);
-	 Rmar = R(y[i]-y[12] , y[j]-y[14]);
-	 Rjup = R(y[i]-y[16] , y[j]-y[18]);
-	 Rsat = R(y[i]-y[20] , y[j]-y[22]);
-	 Rura = R(y[i]-y[24] , y[j]-y[26]);
-	 Rplu = R(y[i]-y[28] , y[j]-y[30]);
-	 //
-
-	//X-components
-	dydx[i]   = y[i+1];
-	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1)
-		      + (1+a/pow(Rmer,exp2)) * (-GMmer * y[i]) / pow(Rmer,exp1)
-		      + (1+a/pow(Rven,exp2)) * (-GMven * y[i]) / pow(Rven,exp1)
-		      + (1+a/pow(Rear,exp2)) * (-GMear * y[i]) / pow(Rear,exp1)
-		      + (1+a/pow(Rmar,exp2)) * (-GMmar * y[i]) / pow(Rmar,exp1)
-		      + (1+a/pow(Rjup,exp2)) * (-GMjup * y[i]) / pow(Rjup,exp1)
-		      + (1+a/pow(Rsat,exp2)) * (-GMsat * y[i]) / pow(Rsat,exp1)
-		      + (1+a/pow(Rura,exp2)) * (-GMura * y[i]) / pow(Rura,exp1)
-		      + (1+a/pow(Rplu,exp2)) * (-GMplu * y[i]) / pow(Rplu,exp1)
-		      //
-
-	//Y-components
-	dydx[j]   = y[j+1];
-	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
-			  + (1+a/pow(Rmer,exp2)) * (-GMmer * y[j]) / pow(Rmer,exp1)
-			  + (1+a/pow(Rven,exp2)) * (-GMven * y[j]) / pow(Rven,exp1)
-			  + (1+a/pow(Rear,exp2)) * (-GMear * y[j]) / pow(Rear,exp1)
-			  + (1+a/pow(Rmar,exp2)) * (-GMmar * y[j]) / pow(Rmar,exp1)
-			  + (1+a/pow(Rjup,exp2)) * (-GMjup * y[j]) / pow(Rjup,exp1)
-			  + (1+a/pow(Rsat,exp2)) * (-GMsat * y[j]) / pow(Rsat,exp1)
-			  + (1+a/pow(Rura,exp2)) * (-GMura * y[j]) / pow(Rura,exp1)
-			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1)
-			  //
-}
-
-int GRmercury()
-{
-		cout << "Started Mercury -- Started Mercury -- Started Mercury" << "\n";
-
-
-
-		VecDoub y(36);
-		VecDoub dydx(36); //vector of positions & velocities for earth and
-		VecDoub yout(36);
-
-
-		double x;
-		double xmin = 0;       //minimum starting position (units: au)
-		double kmax = 10000*87.969;  //max iterations (units: days)
-		double h = .5;          //time step size (units: days)
-
-
-		///Initial Conditions:
-
-		//Mercury
-		y[0] = Pmer;   //X-Position          (units: au)
-		y[1] = 0;                      //X-Velocity (units: au/day)
-		y[2] = 0;             //Y- Position         (units: au)
-		y[3] = Vmer; 		   //Y-Velocity (units: au/day)
-
-		//Venus
-		y[4] = Pven;   //X-Position          (units: au)
-		y[5] = 0;                      //X-Velocity (units: au/day)
-		y[6] = 0;             //Y- Position         (units: au)
-		y[7] = Vven; 		   //Y-Velocity (units: au/day)
-
-		//Earth
-		y[8] = Pear;   //X-Position          (units: au)
-		y[9] = 0;                      //X-Velocity (units: au/day)
-		y[10] = 0;             //Y- Position         (units: au)
-		y[11] = Vear; 		   //Y-Velocity (units: au/day)
-
-		//Mars
-		y[12] = Pmar;   //X-Position          (units: au)
-		y[13] = 0;                      //X-Velocity (units: au/day)
-		y[14] = 0;             //Y- Position         (units: au)
-		y[15] = Vmar; 		   //Y-Velocity (units: au/day)
-
-		//Jupiter
-		y[16] = Pjup;   //X-Position          (units: au)
-		y[17] = 0;                      //X-Velocity (units: au/day)
-		y[18] = 0;             //Y- Position         (units: au)
-		y[19] = Vjup; 		   //Y-Velocity (units: au/day)
-
-		//Saturn
-		y[20] = Psat;   //X-Position          (units: au)
-		y[21] = 0;                      //X-Velocity (units: au/day)
-		y[22] = 0;             //Y- Position         (units: au)
-		y[23] = Vsat; 		   //Y-Velocity (units: au/day)
-
-		//Uranus
-		y[24] = Pura;   //X-Position          (units: au)
-		y[25] = 0;                      //X-Velocity (units: au/day)
-		y[26] = 0;             //Y- Position         (units: au)
-		y[27] = Vura; 		   //Y-Velocity (units: au/day)
-
-		//Pluto
-		y[28] = Pplu;   //X-Position          (units: au)
-		y[29] = 0;                      //X-Velocity (units: au/day)
-		y[30] = 0;             //Y- Position         (units: au)
-		y[31] = Vplu; 		   //Y-Velocity (units: au/day)
-
-		//Neptune
-		y[32] = Pnep;   //X-Position          (units: au)
-		y[33] = 0;                      //X-Velocity (units: au/day)
-		y[34] = 0;             //Y- Position         (units: au)
-		y[35] = Vnep; 		   //Y-Velocity (units: au/day)
-
-
-		GRmercDerivs(xmin, y, dydx);
-
-			//file output stream
-			ofstream ofPositionMercury, ofPerihelion;
-			ofPositionMercury.open("x-y-positionMercury.csv");
-			ofPerihelion.open("perihleionMercury.csv");
-
-
-		for(int k=0; k < kmax; k++)
-			{
-					x=xmin+k*h;
-
-					rk4(y, dydx,  x, h, yout, GRmercDerivs);
-
-
-					//display output
-					//cout << "k = " << k
-					//	 << "    Xm = " << yout[0] << "    X'm= " << yout[1]
-					//	 << "    Ym = " << yout[2] << "    Y'm= " << yout[3] << endl;
-
-
-					//file output stream
-					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
-
-/*
-
-					//Perihelion Tracker
-					//P-mercury = 0.307491008
-					double a = 0.307491000;
-					double b = 0.30749101;
-						if(y[0]>a && y[0]<b)
-						{
-							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  y[0]=" << y[0] << endl;
-							ofPerihelion << yout[0] << "," << yout[2] << "\n";
-						}
-
-
-						if(y[2]>a && y[2]<b)
-						{
-							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  y[2]=" << y[2] << endl;
-							ofPerihelion << yout[0] << "," << yout[2] << "\n";
-						}
-
-
-						if(pow((pow(y[0],2)+pow(y[2],2)),0.5)>a && pow((pow(y[0],2)+pow(y[2],2)),0.5)<b)
-						{
-							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  pow(...,2)=" << pow((pow(y[0],2)+pow(y[2],2)),0.5) << endl;
-							ofPerihelion << yout[0] << "," << yout[2] << "\n";
-						}
-
-*/
-
-					y = yout;
-
-					GRmercDerivs(x,y,dydx);
-			}
-
-			//closes file output stream
-			ofPositionMercury.close();
-			ofPerihelion.close();
-
-		cout << "\n" << "CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe" << "\n";
-
-	return 0;
-}
-
-
 
 //Two-body Earth/Jupiter about Sun
 void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
@@ -1169,7 +1142,7 @@ int main()
 
 
 
-	mercury();
+	GRmercury();
 	return 0;
 }
 

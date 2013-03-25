@@ -1,0 +1,145 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      4928,        136]
+NotebookOptionsPosition[      4330,        111]
+NotebookOutlinePosition[      4667,        126]
+CellTagsIndexPosition[      4624,        123]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"test1", " ", "=", " ", 
+   RowBox[{
+   "Import", "[", 
+    "\"\</home/dk0r/git/comp-phys/HW_3/perihleionMercury.csv\>\"", "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.573073592667429*^9, 3.573073626328828*^9}, {
+   3.57307564101655*^9, 3.57307565746532*^9}, {3.5731362128362503`*^9, 
+   3.5731362324580173`*^9}, 3.573138908193453*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", "test", "]"}]], "Input",
+ CellChangeTimes->{{3.573073628572722*^9, 3.573073660442017*^9}, {
+  3.5730763240960083`*^9, 3.573076331402227*^9}, {3.5730766785031652`*^9, 
+  3.573076680994645*^9}, {3.573138950026328*^9, 3.5731389652914553`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    PointBox[{{0.3071, 0.0170247}, {0.3071, 0.0170247}, {0.307273, 
+     0.0132792}, {0.307324, 0.0127752}, {0.307495, 0.00794704}, {0.307541, 
+     0.00600343}, {0.307506, -0.00447256}, {0.307396, -0.00925732}, {
+     0.307583, -0.00302204}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0.3071, 0.},
+  Method->{},
+  PlotRange->{{0.3071, 0.307583}, {-0.00925732, 0.0170247}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{9.660000000000224*^-6, 9.660000000000224*^-6}, {
+   0.0005256404, 0.0005256404}}]], "Output",
+ CellChangeTimes->{
+  3.573077000957262*^9, {3.5730770653467083`*^9, 3.573077083932643*^9}, {
+   3.5730771214056*^9, 3.573077175214408*^9}, {3.573077240294709*^9, 
+   3.573077268787116*^9}, 3.5730773069291286`*^9, {3.573077348617725*^9, 
+   3.573077516641419*^9}, 3.5730775591663923`*^9, 3.573077616875389*^9, 
+   3.573077795631418*^9, 3.573077856177073*^9, 3.573077897694089*^9, 
+   3.573077941793552*^9, 3.5730780063055983`*^9, 3.5730781224975977`*^9, {
+   3.573078173743698*^9, 3.573078180677246*^9}, 3.573078282817932*^9, 
+   3.573078324240284*^9, {3.573078505605792*^9, 3.573078510996285*^9}, 
+   3.57307886079781*^9, 3.573078928296955*^9, 3.573078964426805*^9, 
+   3.573079057346301*^9, 3.573079109030834*^9, 3.573079220131628*^9, 
+   3.573136237443782*^9, 3.573136314011599*^9, 3.573137553740836*^9, {
+   3.573138955030953*^9, 3.573138965983573*^9}}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.5730769216757517`*^9, 3.573076921762919*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.5730766703351717`*^9, 3.573076670424893*^9}}],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.573076618937706*^9, 3.5730766190165854`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", "test1", "]"}]], "Input",
+ CellChangeTimes->{{3.5730758887190943`*^9, 3.573075888759388*^9}, {
+  3.573136329614554*^9, 3.573136332104937*^9}, {3.5731389004351387`*^9, 
+  3.573138917896922*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    PointBox[{{0.3071, 0.0170247}, {0.3071, 0.0170247}, {0.307273, 
+     0.0132792}, {0.307324, 0.0127752}, {0.307495, 0.00794704}, {0.307541, 
+     0.00600343}, {0.307506, -0.00447256}, {0.307396, -0.00925732}, {
+     0.307583, -0.00302204}, {0.307144, -0.0156124}, {0.306955, -0.0190103}, {
+     0.306434, -0.0264157}, {0.306494, -0.0259405}, {0.305976, -0.031137}, {
+     0.30581, -0.0327995}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0.30581, 0.},
+  Method->{},
+  PlotRange->{{0.30581, 0.307583}, {-0.0327995, 0.0170247}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.00003545999999999938, 0.00003545999999999938}, {
+   0.000996484, 0.000996484}}]], "Output",
+ CellChangeTimes->{3.573138919216916*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.573075636550173*^9, 3.5730756365881147`*^9}}]
+},
+WindowSize->{760, 1000},
+WindowMargins->{{Automatic, 0}, {Automatic, 500}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (January 25, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 375, 9, 33, "Input"],
+Cell[CellGroupData[{
+Cell[957, 33, 280, 4, 30, "Input"],
+Cell[1240, 39, 1537, 28, 250, "Output"]
+}, Open  ]],
+Cell[2792, 70, 94, 1, 30, "Input"],
+Cell[2889, 73, 94, 1, 30, "Input"],
+Cell[2986, 76, 94, 1, 30, "Input"],
+Cell[CellGroupData[{
+Cell[3105, 81, 233, 4, 30, "Input"],
+Cell[3341, 87, 876, 18, 222, "Output"]
+}, Open  ]],
+Cell[4232, 108, 94, 1, 30, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
