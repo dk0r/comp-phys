@@ -27,12 +27,12 @@ double Mplu =    0.0125e24;
 double Mnep =  102.43e24;
 
 //Solar distances @ Perihelion   //(Astro-units:  au)
-double Pmer = 0.307491008;
-double Pven = 0.718459424;
-double Pear = 0.98323592;
-double Pmar = 1.38116939;
-double Pjup = 4.95007046;
-double Psat = 9.04123831;
+double Pmer =  0.307491008;
+double Pven =  0.718459424;
+double Pear =  0.98323592;
+double Pmar =  1.38116939;
+double Pjup =  4.95007046;
+double Psat =  9.04123831;
 double Pura = 18.3244587;
 double Pplu = 29.6583098;
 double Pnep = 29.7093132;
@@ -62,249 +62,305 @@ double GMnep = Gastro*Mnep;
 
 
 
+//Calculates radius raised to some power (exp)
+double R(double x, double y, double exp)
+{
+	double r;
+
+	r = pow( pow(x,2)+pow(y,2) , exp );
+
+	return r;
+}
+
+
+
+
+
 
 void mercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 
 {
+	//exponents for radius calculation in R(i,j,exp)
+	double exp1 = 1.5;
+	double exp2 = 2.5;
+
 ///Mercury------------------------------------------------------------------------------------
+int i = 0;
+int j = 2;
 
 //X-components
 dydx[0] = y[1];
-dydx[1] = (-GMsun * y[0]) / pow(  pow(y[0],2)       + pow(y[2],2) , 1.5 )
-		+ (-GMven * y[0]) / pow(  pow(y[0]-y[4],2)  + pow(y[2]-y[6],2) , 1.5 )
-		+ (-GMear * y[0]) / pow(  pow(y[0]-y[8],2)  + pow(y[2]-y[10],2) , 1.5 )
-		+ (-GMmar * y[0]) / pow(  pow(y[0]-y[12],2) + pow(y[2]-y[14],2) , 1.5 )
-		+ (-GMjup * y[0]) / pow(  pow(y[0]-y[16],2) + pow(y[2]-y[18],2) , 1.5 )
-		+ (-GMsat * y[0]) / pow(  pow(y[0]-y[20],2) + pow(y[2]-y[22],2) , 1.5 )
-		+ (-GMura * y[0]) / pow(  pow(y[0]-y[24],2) + pow(y[2]-y[26],2) , 1.5 )
-		+ (-GMplu * y[0]) / pow(  pow(y[0]-y[28],2) + pow(y[2]-y[30],2) , 1.5 )
-		+ (-GMnep * y[0]) / pow(  pow(y[0]-y[32],2) + pow(y[2]-y[34],2) , 1.5 );
+dydx[1] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[2] = y[3];
-dydx[3] = (-GMsun * y[2]) / pow(  pow(y[0],2)       + pow(y[2],2) , 1.5 )
-		+ (-GMven * y[2]) / pow(  pow(y[0]-y[4],2)  + pow(y[2]-y[6],2) , 1.5 )
-		+ (-GMear * y[2]) / pow(  pow(y[0]-y[8],2)  + pow(y[2]-y[10],2) , 1.5 )
-		+ (-GMmar * y[2]) / pow(  pow(y[0]-y[12],2) + pow(y[2]-y[14],2) , 1.5 )
-		+ (-GMjup * y[2]) / pow(  pow(y[0]-y[16],2) + pow(y[2]-y[18],2) , 1.5 )
-		+ (-GMsat * y[2]) / pow(  pow(y[0]-y[20],2) + pow(y[2]-y[22],2) , 1.5 )
-		+ (-GMura * y[2]) / pow(  pow(y[0]-y[24],2) + pow(y[2]-y[26],2) , 1.5 )
-		+ (-GMplu * y[2]) / pow(  pow(y[0]-y[28],2) + pow(y[2]-y[30],2) , 1.5 )
-		+ (-GMnep * y[2]) / pow(  pow(y[0]-y[32],2) + pow(y[2]-y[34],2) , 1.5 );
+dydx[3] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Venus--------------------------------------------------------------------------------------
+i = 4;
+j = 6;
 
 //X-components
 dydx[4] = y[5];
-dydx[5] = (-GMsun * y[4]) / pow(  pow(y[4],2)       + pow(y[6],2) , 1.5 )
-		+ (-GMmer * y[4]) / pow(  pow(y[4]-y[0],2)  + pow(y[6]-y[2],2) , 1.5 )
-		+ (-GMear * y[4]) / pow(  pow(y[4]-y[8],2)  + pow(y[6]-y[10],2) , 1.5 )
-		+ (-GMmar * y[4]) / pow(  pow(y[4]-y[12],2) + pow(y[6]-y[14],2) , 1.5 )
-		+ (-GMjup * y[4]) / pow(  pow(y[4]-y[16],2) + pow(y[6]-y[18],2) , 1.5 )
-		+ (-GMsat * y[4]) / pow(  pow(y[4]-y[20],2) + pow(y[6]-y[22],2) , 1.5 )
-		+ (-GMura * y[4]) / pow(  pow(y[4]-y[24],2) + pow(y[6]-y[26],2) , 1.5 )
-		+ (-GMplu * y[4]) / pow(  pow(y[4]-y[28],2) + pow(y[6]-y[30],2) , 1.5 )
-		+ (-GMnep * y[4]) / pow(  pow(y[4]-y[32],2) + pow(y[6]-y[34],2) , 1.5 );
+dydx[5] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[6] = y[7];
-dydx[7] = (-GMsun * y[6]) / pow(  pow(y[4],2)       + pow(y[6],2) , 1.5 )
-		+ (-GMmer * y[6]) / pow(  pow(y[4]-y[0],2)  + pow(y[6]-y[2],2) , 1.5 )
-		+ (-GMear * y[6]) / pow(  pow(y[4]-y[8],2)  + pow(y[6]-y[10],2) , 1.5 )
-		+ (-GMmar * y[6]) / pow(  pow(y[4]-y[12],2) + pow(y[6]-y[14],2) , 1.5 )
-		+ (-GMjup * y[6]) / pow(  pow(y[4]-y[16],2) + pow(y[6]-y[18],2) , 1.5 )
-		+ (-GMsat * y[6]) / pow(  pow(y[4]-y[20],2) + pow(y[6]-y[22],2) , 1.5 )
-		+ (-GMura * y[6]) / pow(  pow(y[4]-y[24],2) + pow(y[6]-y[26],2) , 1.5 )
-		+ (-GMplu * y[6]) / pow(  pow(y[4]-y[28],2) + pow(y[6]-y[30],2) , 1.5 )
-		+ (-GMnep * y[6]) / pow(  pow(y[4]-y[32],2) + pow(y[6]-y[34],2) , 1.5 );
+dydx[7] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Earth---------------------------------------------------------------------------------------
+i = 8;
+j = 10;
 
 //X-components
 dydx[8] = y[9];
-dydx[9] = (-GMsun * y[8]) / pow(  pow(y[8],2)       + pow(y[10],2) , 1.5 )
-		+ (-GMmer * y[8]) / pow(  pow(y[8]-y[0],2)  + pow(y[10]-y[2],2) , 1.5 )
-		+ (-GMven * y[8]) / pow(  pow(y[8]-y[4],2)  + pow(y[10]-y[6],2) , 1.5 )
-		+ (-GMmar * y[8]) / pow(  pow(y[8]-y[12],2) + pow(y[10]-y[14],2) , 1.5 )
-		+ (-GMjup * y[8]) / pow(  pow(y[8]-y[16],2) + pow(y[10]-y[18],2) , 1.5 )
-		+ (-GMsat * y[8]) / pow(  pow(y[8]-y[20],2) + pow(y[10]-y[22],2) , 1.5 )
-		+ (-GMura * y[8]) / pow(  pow(y[8]-y[24],2) + pow(y[10]-y[26],2) , 1.5 )
-		+ (-GMplu * y[8]) / pow(  pow(y[8]-y[28],2) + pow(y[10]-y[30],2) , 1.5 )
-		+ (-GMnep * y[8]) / pow(  pow(y[8]-y[32],2) + pow(y[10]-y[34],2) , 1.5 );
+dydx[9] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[10] = y[11];
-dydx[11] = (-GMsun * y[10]) / pow(  pow(y[8],2)       + pow(y[10],2) , 1.5 )
-		+ (-GMmer * y[10]) / pow(  pow(y[8]-y[0],2)  + pow(y[10]-y[2],2) , 1.5 )
-		+ (-GMven * y[10]) / pow(  pow(y[8]-y[4],2)  + pow(y[10]-y[6],2) , 1.5 )
-		+ (-GMmar * y[10]) / pow(  pow(y[8]-y[12],2) + pow(y[10]-y[14],2) , 1.5 )
-		+ (-GMjup * y[10]) / pow(  pow(y[8]-y[16],2) + pow(y[10]-y[18],2) , 1.5 )
-		+ (-GMsat * y[10]) / pow(  pow(y[8]-y[20],2) + pow(y[10]-y[22],2) , 1.5 )
-		+ (-GMura * y[10]) / pow(  pow(y[8]-y[24],2) + pow(y[10]-y[26],2) , 1.5 )
-		+ (-GMplu * y[10]) / pow(  pow(y[8]-y[28],2) + pow(y[10]-y[30],2) , 1.5 )
-		+ (-GMnep * y[10]) / pow(  pow(y[8]-y[32],2) + pow(y[10]-y[34],2) , 1.5 );
+dydx[11] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Mars-----------------------------------------------------------------------------------------
+i = 12;
+j = 14;
 
 //X-components
 dydx[12] = y[13];
-dydx[13] = (-GMsun * y[12]) / pow(  pow(y[12],2)       + pow(y[14],2) , 1.5 )
-		+ (-GMmer * y[12]) / pow(  pow(y[12]-y[0],2)  + pow(y[14]-y[2],2) , 1.5 )
-		+ (-GMven * y[12]) / pow(  pow(y[12]-y[4],2)  + pow(y[14]-y[6],2) , 1.5 )
-		+ (-GMear * y[12]) / pow(  pow(y[12]-y[8],2)  + pow(y[14]-y[10],2) , 1.5 )
-		+ (-GMjup * y[12]) / pow(  pow(y[12]-y[16],2) + pow(y[14]-y[18],2) , 1.5 )
-		+ (-GMsat * y[12]) / pow(  pow(y[12]-y[20],2) + pow(y[14]-y[22],2) , 1.5 )
-		+ (-GMura * y[12]) / pow(  pow(y[12]-y[24],2) + pow(y[14]-y[26],2) , 1.5 )
-		+ (-GMplu * y[12]) / pow(  pow(y[12]-y[28],2) + pow(y[14]-y[30],2) , 1.5 )
-		+ (-GMnep * y[12]) / pow(  pow(y[12]-y[32],2) + pow(y[14]-y[34],2) , 1.5 );
+dydx[13] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[14] = y[15];
-dydx[15] = (-GMsun * y[14]) / pow(  pow(y[12],2)       + pow(y[14],2) , 1.5 )
-		+ (-GMmer * y[14]) / pow(  pow(y[12]-y[0],2)  + pow(y[14]-y[2],2) , 1.5 )
-		+ (-GMven * y[14]) / pow(  pow(y[12]-y[4],2)  + pow(y[14]-y[6],2) , 1.5 )
-		+ (-GMear * y[14]) / pow(  pow(y[12]-y[8],2)  + pow(y[14]-y[10],2) , 1.5 )
-		+ (-GMjup * y[14]) / pow(  pow(y[12]-y[16],2) + pow(y[14]-y[18],2) , 1.5 )
-		+ (-GMsat * y[14]) / pow(  pow(y[12]-y[20],2) + pow(y[14]-y[22],2) , 1.5 )
-		+ (-GMura * y[14]) / pow(  pow(y[12]-y[24],2) + pow(y[14]-y[26],2) , 1.5 )
-		+ (-GMplu * y[14]) / pow(  pow(y[12]-y[28],2) + pow(y[14]-y[30],2) , 1.5 )
-		+ (-GMnep * y[14]) / pow(  pow(y[12]-y[32],2) + pow(y[14]-y[34],2) , 1.5 );
+dydx[15] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Jupiter---------------------------------------------------------------------------------------
-
+i = 16;
+j = 18;
 
 //X-components
 dydx[16] = y[17];
-dydx[17] = (-GMsun * y[16]) / pow(  pow(y[16],2)       + pow(y[18],2) , 1.5 )
-		+ (-GMmer * y[16]) / pow(  pow(y[16]-y[0],2)  + pow(y[18]-y[2],2) , 1.5 )
-		+ (-GMven * y[16]) / pow(  pow(y[16]-y[4],2)  + pow(y[18]-y[6],2) , 1.5 )
-		+ (-GMear * y[16]) / pow(  pow(y[16]-y[8],2)  + pow(y[18]-y[10],2) , 1.5 )
-		+ (-GMmar * y[16]) / pow(  pow(y[16]-y[12],2) + pow(y[18]-y[14],2) , 1.5 )
-		+ (-GMsat * y[16]) / pow(  pow(y[16]-y[20],2) + pow(y[18]-y[22],2) , 1.5 )
-		+ (-GMura * y[16]) / pow(  pow(y[16]-y[24],2) + pow(y[18]-y[26],2) , 1.5 )
-		+ (-GMplu * y[16]) / pow(  pow(y[16]-y[28],2) + pow(y[18]-y[30],2) , 1.5 )
-		+ (-GMnep * y[16]) / pow(  pow(y[16]-y[32],2) + pow(y[18]-y[34],2) , 1.5 );
+dydx[17] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 //jupiter removed
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[18] = y[19];
-dydx[19] = (-GMsun * y[18]) / pow(  pow(y[16],2)       + pow(y[18],2) , 1.5 )
-		+ (-GMmer * y[18]) / pow(  pow(y[16]-y[0],2)  + pow(y[18]-y[2],2) , 1.5 )
-		+ (-GMven * y[18]) / pow(  pow(y[16]-y[4],2)  + pow(y[18]-y[6],2) , 1.5 )
-		+ (-GMear * y[18]) / pow(  pow(y[16]-y[8],2)  + pow(y[18]-y[10],2) , 1.5 )
-		+ (-GMmar * y[18]) / pow(  pow(y[16]-y[12],2) + pow(y[18]-y[14],2) , 1.5 )
-		+ (-GMsat * y[18]) / pow(  pow(y[16]-y[20],2) + pow(y[18]-y[22],2) , 1.5 )
-		+ (-GMura * y[18]) / pow(  pow(y[16]-y[24],2) + pow(y[18]-y[26],2) , 1.5 )
-		+ (-GMplu * y[18]) / pow(  pow(y[16]-y[28],2) + pow(y[18]-y[30],2) , 1.5 )
-		+ (-GMnep * y[18]) / pow(  pow(y[16]-y[32],2) + pow(y[18]-y[34],2) , 1.5 );
+dydx[19] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+	   	 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		//jupiter removed
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Saturn---------------------------------------------------------------------------------------
-
+i = 20;
+j = 22;
 
 //X-components
 dydx[20] = y[21];
-dydx[21] = (-GMsun * y[20]) / pow(  pow(y[20],2)       + pow(y[22],2) , 1.5 )
-		+ (-GMmer * y[20]) / pow(  pow(y[20]-y[0],2)  + pow(y[22]-y[2],2) , 1.5 )
-		+ (-GMven * y[20]) / pow(  pow(y[20]-y[4],2)  + pow(y[22]-y[6],2) , 1.5 )
-		+ (-GMear * y[20]) / pow(  pow(y[20]-y[8],2)  + pow(y[22]-y[10],2) , 1.5 )
-		+ (-GMmar * y[20]) / pow(  pow(y[20]-y[12],2) + pow(y[22]-y[14],2) , 1.5 )
-		+ (-GMjup * y[20]) / pow(  pow(y[20]-y[16],2) + pow(y[22]-y[18],2) , 1.5 )
-		+ (-GMura * y[20]) / pow(  pow(y[20]-y[24],2) + pow(y[22]-y[26],2) , 1.5 )
-		+ (-GMplu * y[20]) / pow(  pow(y[20]-y[28],2) + pow(y[22]-y[30],2) , 1.5 )
-		+ (-GMnep * y[20]) / pow(  pow(y[20]-y[32],2) + pow(y[22]-y[34],2) , 1.5 );
+dydx[21] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 //saturn removed
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[22] = y[23];
-dydx[23] = (-GMsun * y[22]) / pow(  pow(y[20],2)       + pow(y[22],2) , 1.5 )
-		+ (-GMmer * y[22]) / pow(  pow(y[20]-y[0],2)  + pow(y[22]-y[2],2) , 1.5 )
-		+ (-GMven * y[22]) / pow(  pow(y[20]-y[4],2)  + pow(y[22]-y[6],2) , 1.5 )
-		+ (-GMear * y[22]) / pow(  pow(y[20]-y[8],2)  + pow(y[22]-y[10],2) , 1.5 )
-		+ (-GMmar * y[22]) / pow(  pow(y[20]-y[12],2) + pow(y[22]-y[14],2) , 1.5 )
-		+ (-GMjup * y[22]) / pow(  pow(y[20]-y[16],2) + pow(y[22]-y[18],2) , 1.5 )
-		+ (-GMura * y[22]) / pow(  pow(y[20]-y[24],2) + pow(y[22]-y[26],2) , 1.5 )
-		+ (-GMplu * y[22]) / pow(  pow(y[20]-y[28],2) + pow(y[22]-y[30],2) , 1.5 )
-		+ (-GMnep * y[22]) / pow(  pow(y[20]-y[32],2) + pow(y[22]-y[34],2) , 1.5 );
+dydx[23] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		//saturn removed
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
+
 ///Uranus---------------------------------------------------------------------------------------
+i = 24;
+j = 26;
 
 //X-components
 dydx[24] = y[25];
-dydx[25] = (-GMsun * y[24]) / pow(  pow(y[24],2)       + pow(y[26],2) , 1.5 )
-		+ (-GMmer * y[24]) / pow(  pow(y[24]-y[0],2)  + pow(y[26]-y[2],2) , 1.5 )
-		+ (-GMven * y[24]) / pow(  pow(y[24]-y[4],2)  + pow(y[26]-y[6],2) , 1.5 )
-		+ (-GMear * y[24]) / pow(  pow(y[24]-y[8],2)  + pow(y[26]-y[10],2) , 1.5 )
-		+ (-GMmar * y[24]) / pow(  pow(y[24]-y[12],2) + pow(y[26]-y[14],2) , 1.5 )
-		+ (-GMjup * y[24]) / pow(  pow(y[24]-y[16],2) + pow(y[26]-y[18],2) , 1.5 )
-		+ (-GMsat * y[24]) / pow(  pow(y[24]-y[20],2) + pow(y[26]-y[22],2) , 1.5 )
-		+ (-GMplu * y[24]) / pow(  pow(y[24]-y[28],2) + pow(y[26]-y[30],2) , 1.5 )
-		+ (-GMnep * y[24]) / pow(  pow(y[24]-y[32],2) + pow(y[26]-y[34],2) , 1.5 );
+dydx[25] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 //uranus removed
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[26] = y[27];
-dydx[27] = (-GMsun * y[26]) / pow(  pow(y[24],2)       + pow(y[26],2) , 1.5 )
-		+ (-GMmer * y[26]) / pow(  pow(y[24]-y[0],2)  + pow(y[26]-y[2],2) , 1.5 )
-		+ (-GMven * y[26]) / pow(  pow(y[24]-y[4],2)  + pow(y[26]-y[6],2) , 1.5 )
-		+ (-GMear * y[26]) / pow(  pow(y[24]-y[8],2)  + pow(y[26]-y[10],2) , 1.5 )
-		+ (-GMmar * y[26]) / pow(  pow(y[24]-y[12],2) + pow(y[26]-y[14],2) , 1.5 )
-		+ (-GMjup * y[26]) / pow(  pow(y[24]-y[16],2) + pow(y[26]-y[18],2) , 1.5 )
-		+ (-GMsat * y[26]) / pow(  pow(y[24]-y[20],2) + pow(y[26]-y[22],2) , 1.5 )
-		+ (-GMplu * y[26]) / pow(  pow(y[24]-y[28],2) + pow(y[26]-y[30],2) , 1.5 )
-		+ (-GMnep * y[26]) / pow(  pow(y[24]-y[32],2) + pow(y[26]-y[34],2) , 1.5 );
+dydx[27] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 //uranus removed
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1)
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Pluto---------------------------------------------------------------------------------------
+i = 28;
+j = 30;
 
 //X-components
 dydx[28] = y[29];
-dydx[29] = (-GMsun * y[28]) / pow(  pow(y[28],2)       + pow(y[30],2) , 1.5 )
-		+ (-GMmer * y[28]) / pow(  pow(y[28]-y[0],2)  + pow(y[30]-y[2],2) , 1.5 )
-		+ (-GMven * y[28]) / pow(  pow(y[28]-y[4],2)  + pow(y[30]-y[6],2) , 1.5 )
-		+ (-GMear * y[28]) / pow(  pow(y[28]-y[8],2)  + pow(y[30]-y[10],2) , 1.5 )
-		+ (-GMmar * y[28]) / pow(  pow(y[28]-y[12],2) + pow(y[30]-y[14],2) , 1.5 )
-		+ (-GMjup * y[28]) / pow(  pow(y[28]-y[16],2) + pow(y[30]-y[18],2) , 1.5 )
-		+ (-GMsat * y[28]) / pow(  pow(y[28]-y[20],2) + pow(y[30]-y[22],2) , 1.5 )
-		+ (-GMura * y[28]) / pow(  pow(y[28]-y[24],2) + pow(y[30]-y[26],2) , 1.5 )
-		+ (-GMnep * y[28]) / pow(  pow(y[28]-y[32],2) + pow(y[30]-y[34],2) , 1.5 );
+dydx[29] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 //pluto removed
+		 + (-GMnep * y[i]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 //Y-components
 dydx[30] = y[31];
-dydx[31] = (-GMsun * y[30]) / pow(  pow(y[28],2)       + pow(y[30],2) , 1.5 )
-		+ (-GMmer * y[30]) / pow(  pow(y[28]-y[0],2)  + pow(y[30]-y[2],2) , 1.5 )
-		+ (-GMven * y[30]) / pow(  pow(y[28]-y[4],2)  + pow(y[30]-y[6],2) , 1.5 )
-		+ (-GMear * y[30]) / pow(  pow(y[28]-y[8],2)  + pow(y[30]-y[10],2) , 1.5 )
-		+ (-GMmar * y[30]) / pow(  pow(y[28]-y[12],2) + pow(y[30]-y[14],2) , 1.5 )
-		+ (-GMjup * y[30]) / pow(  pow(y[28]-y[16],2) + pow(y[30]-y[18],2) , 1.5 )
-		+ (-GMsat * y[30]) / pow(  pow(y[28]-y[20],2) + pow(y[30]-y[22],2) , 1.5 )
-		+ (-GMura * y[30]) / pow(  pow(y[28]-y[24],2) + pow(y[30]-y[26],2) , 1.5 )
-		+ (-GMnep * y[30]) / pow(  pow(y[28]-y[32],2) + pow(y[30]-y[34],2) , 1.5 );
+dydx[31] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 //pluto removed
+		 + (-GMnep * y[j]) / R(y[i]-y[32] , y[j]-y[34] , exp1);
 
 ///Neptune---------------------------------------------------------------------------------------
+i = 32;
+j = 34;
 
 //X-components
 dydx[32] = y[33];
-dydx[33] = (-GMsun * y[32]) / pow(  pow(y[32],2)       + pow(y[34],2) , 1.5 )
-		+ (-GMmer * y[32]) / pow(  pow(y[32]-y[0],2)  + pow(y[34]-y[2],2) , 1.5 )
-		+ (-GMven * y[32]) / pow(  pow(y[32]-y[4],2)  + pow(y[34]-y[6],2) , 1.5 )
-		+ (-GMear * y[32]) / pow(  pow(y[32]-y[8],2)  + pow(y[34]-y[10],2) , 1.5 )
-		+ (-GMmar * y[32]) / pow(  pow(y[32]-y[12],2) + pow(y[34]-y[14],2) , 1.5 )
-		+ (-GMjup * y[32]) / pow(  pow(y[32]-y[16],2) + pow(y[34]-y[18],2) , 1.5 )
-		+ (-GMsat * y[32]) / pow(  pow(y[32]-y[20],2) + pow(y[34]-y[22],2) , 1.5 )
-		+ (-GMura * y[32]) / pow(  pow(y[32]-y[24],2) + pow(y[34]-y[26],2) , 1.5 )
-		+ (-GMplu * y[32]) / pow(  pow(y[32]-y[28],2) + pow(y[34]-y[30],2) , 1.5 );
+dydx[33] = (-GMsun * y[i]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[i]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[i]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[i]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[i]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[i]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[i]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[i]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[i]) / R(y[i]-y[28] , y[j]-y[30] , exp1);
+		//neptune removed
 
 //Y-components
 dydx[34] = y[35];
-dydx[35] = (-GMsun * y[34]) / pow(  pow(y[32],2)       + pow(y[34],2) , 1.5 )
-		+ (-GMmer * y[34]) / pow(  pow(y[32]-y[0],2)  + pow(y[34]-y[2],2) , 1.5 )
-		+ (-GMven * y[34]) / pow(  pow(y[32]-y[4],2)  + pow(y[34]-y[6],2) , 1.5 )
-		+ (-GMear * y[34]) / pow(  pow(y[32]-y[8],2)  + pow(y[34]-y[10],2) , 1.5 )
-		+ (-GMmar * y[34]) / pow(  pow(y[32]-y[12],2) + pow(y[34]-y[14],2) , 1.5 )
-		+ (-GMjup * y[34]) / pow(  pow(y[32]-y[16],2) + pow(y[34]-y[18],2) , 1.5 )
-		+ (-GMsat * y[34]) / pow(  pow(y[32]-y[20],2) + pow(y[34]-y[22],2) , 1.5 )
-		+ (-GMura * y[34]) / pow(  pow(y[32]-y[24],2) + pow(y[34]-y[26],2) , 1.5 )
-		+ (-GMplu * y[34]) / pow(  pow(y[32]-y[28],2) + pow(y[34]-y[30],2) , 1.5 );
+dydx[35] = (-GMsun * y[j]) / R(y[i]       , y[j]       , exp1)
+		 + (-GMmer * y[j]) / R(y[i]-y[0]  , y[j]-y[2]  , exp1)
+		 + (-GMven * y[j]) / R(y[i]-y[4]  , y[j]-y[6]  , exp1)
+		 + (-GMear * y[j]) / R(y[i]-y[8]  , y[j]-y[10] , exp1)
+		 + (-GMmar * y[j]) / R(y[i]-y[12] , y[j]-y[14] , exp1)
+		 + (-GMjup * y[j]) / R(y[i]-y[16] , y[j]-y[18] , exp1)
+		 + (-GMsat * y[j]) / R(y[i]-y[20] , y[j]-y[22] , exp1)
+		 + (-GMura * y[j]) / R(y[i]-y[24] , y[j]-y[26] , exp1)
+		 + (-GMplu * y[j]) / R(y[i]-y[28] , y[j]-y[30] , exp1);
+		//neptune removed
 
 }
 
 int mercury()
 {
+		cout << "Started Mercury -- Started Mercury -- Started Mercury" << "\n";
+
+
 
 		VecDoub y(36);
 		VecDoub dydx(36); //vector of positions & velocities for earth and
@@ -313,8 +369,8 @@ int mercury()
 
 		double x;
 		double xmin = 0;       //minimum starting position (units: au)
-		double kmax = 2914*87.969;  //max iterations (units: days)
-		double h = 2;          //time step size (units: days)
+		double kmax = 10000*87.969;  //max iterations (units: days)
+		double h = .5;          //time step size (units: days)
 
 
 		///Initial Conditions:
@@ -374,13 +430,12 @@ int mercury()
 		y[35] = Vnep; 		   //Y-Velocity (units: au/day)
 
 
-
-
 		mercDerivs(xmin, y, dydx);
 
 			//file output stream
-			ofstream ofPositionMercury;
+			ofstream ofPositionMercury, ofPerihelion;
 			ofPositionMercury.open("x-y-positionMercury.csv");
+			ofPerihelion.open("perihleionMercury.csv");
 
 
 		for(int k=0; k < kmax; k++)
@@ -397,7 +452,35 @@ int mercury()
 
 
 					//file output stream
-					ofPositionMercury << yout[0] << "," << yout[2] << endl;
+					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
+
+/*
+
+					//Perihelion Tracker
+					//P-mercury = 0.307491008
+					double a = 0.307491000;
+					double b = 0.30749101;
+						if(y[0]>a && y[0]<b)
+						{
+							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  y[0]=" << y[0] << endl;
+							ofPerihelion << yout[0] << "," << yout[2] << "\n";
+						}
+
+
+						if(y[2]>a && y[2]<b)
+						{
+							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  y[2]=" << y[2] << endl;
+							ofPerihelion << yout[0] << "," << yout[2] << "\n";
+						}
+
+
+						if(pow((pow(y[0],2)+pow(y[2],2)),0.5)>a && pow((pow(y[0],2)+pow(y[2],2)),0.5)<b)
+						{
+							cout << "k=" <<k<< "  Perihelion @ (" << y[0] << ", " << y[2] << ")  pow(...,2)=" << pow((pow(y[0],2)+pow(y[2],2)),0.5) << endl;
+							ofPerihelion << yout[0] << "," << yout[2] << "\n";
+						}
+
+*/
 
 					y = yout;
 
@@ -406,9 +489,13 @@ int mercury()
 
 			//closes file output stream
 			ofPositionMercury.close();
+			ofPerihelion.close();
+
+		cout << "\n" << "CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe" << "\n";
 
 	return 0;
 }
+
 
 
 
