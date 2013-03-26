@@ -18,7 +18,7 @@ double Mmer =    0.3302e24;
 double Mven =    4.8685e24;
 double Mear =    5.9736e24;
 double Mmar =    0.64185e24;
-double Mjup = 1898.6e24;
+double Mjup = 1898.6e24; //1898.6e24
 double Msat =  568.46e24;
 double Mura =   86.832e24;
 double Mplu =    0.0125e24;
@@ -85,7 +85,232 @@ double Re(double x, double y, double exp)
 
 
 
-//Relativistic orbit of Mercury in Solar System
+
+//Two-body Earth/Jupiter about Sun
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	///Earth
+
+	//X-components
+	dydx[0] = y[1];
+	dydx[1] = (-GMsun * y[0]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
+			+ (-GMjup * y[0]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+	//Y-components
+	dydx[2] = y[3];
+	dydx[3] = (-GMsun * y[2]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
+			+ (-GMjup * y[2]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+
+
+	///Jupiter
+
+	//X-components
+	dydx[4] = y[5];
+	dydx[5] =   (-GMsun * y[4]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
+			  + (-GMear * y[4]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+	//Y-components
+	dydx[6] = y[7];
+	dydx[7] =   (-GMsun * y[6]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
+			  + (-GMear * y[6]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+}
+
+int sunEarthJupiter()
+{
+	//cout << "GMs =" << GMs << ",  G_astro*M_s = " << G_astro*M_s << endl;
+	//cout << "GMe =" << GMe << ",  G_astro*M_e = " << G_astro*M_e << endl;
+	//cout << "GMj =" << GMj << ",  G_astro*M_j = " << G_astro*M_j << endl;
+
+	VecDoub y(8);
+	VecDoub dydx(8); //vector of positions & velocities for earth and
+	VecDoub yout(8);
+
+	double x;
+	double xmin;      //minimum starting position (units: au)
+	double kmax=365*12;  //max iterations (units: days)
+	double h=1;       //time step size (units: days)
+
+	xmin = 0;
+
+	///Initial Conditions:
+
+	//Earth
+	y[0] = 0.98329;       //X-Position          (units: au)
+	y[1] = 0;                      //X-Velocity (units: au/day)
+	y[2] = 0;             //Y- Position         (units: au)
+	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
+
+	//Jupiter
+	y[4] = 4.950429;      //X-Position          (units: au)
+	y[5] = 0;                      //X-Velocity (units: au/day)
+	y[6] = 0;             //Y- Position         (units: au)
+	y[7] = 7.92396305e-3; 		   //Y-Velocity (units: au/day)  !!!!!!!! e-6 original
+
+
+	derivs(xmin, y, dydx);
+
+	//file output streams
+	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
+	ofAllData.open("all-data.csv");
+	ofPositionEarth.open("x-y-positionEarth.csv");
+	ofPositionJupiter.open("x-y-positionJupiter.csv");
+
+
+	for(int k=0; k < kmax; k++)
+	{
+			x=xmin+k*h;
+
+			rk4(y, dydx,  x, h, yout, derivs);
+
+			//display output
+			cout << "k = " << k
+				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
+				 << "    Ye = " << yout[2] << "    Y'e= " << yout[3] << endl
+
+				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
+				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
+
+			//file output streams
+			ofAllData << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
+			ofPositionEarth << yout[0] << "," << yout[2] << endl;
+			ofPositionJupiter << yout[4] << "," << yout[6] << endl;
+
+			y = yout;
+
+			derivs(x,y,dydx);
+	}
+
+	//closes file output streams
+	ofAllData.close();
+	ofPositionEarth.close();
+	ofPositionJupiter.close();
+
+return 0;
+
+}
+
+
+
+
+void GRmercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+
+{
+	//exponents for radius calculation in R(i,j,exp)
+	double exp1 = 1.5;
+	double exp2 = 2;
+
+	//coefficient of relativity correction
+	double a = 0.0001;//6.4e-7; //units: au^2 ?
+
+
+///Mercury------------------------------------------------------------------------------------
+
+	//Indices for Mercury's x and y positions in y[]
+	int i = 0;
+	int j = 2;
+
+	//Radicand's of radius (x^2+y^2) between section and subscript bodies.
+	 double Rsun = R(y[i],y[j]);
+
+	//X-components
+	dydx[i]   = y[i+1];
+	dydx[i+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[i]) / pow(Rsun,exp1);
+
+	//Y-components
+	dydx[j]   = y[j+1];
+	dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1);
+
+}
+
+int GRmercury()
+{
+		cout << "Started GR.Mercury -- Started GR.Mercury -- Started GR.Mercury" << "\n";
+
+
+		VecDoub y(36);
+		VecDoub dydx(36); //vector of positions & velocities for earth and
+		VecDoub yout(36);
+
+
+		double x;
+		double xmin = 0;       //minimum starting position (units: au)
+		double kmax = 20*87.969;  //max iterations (units: days)
+		double h = 0.05;          //time step size (units: days)
+
+		double constraint = (kmax-1518)/kmax;
+
+
+		///Initial Conditions:
+
+		//Mercury
+		y[0] = Pmer;   //X-Position          (units: au)
+		y[1] = 0;                      //X-Velocity (units: au/day)
+		y[2] = 0;             //Y- Position         (units: au)
+		y[3] = Vmer; 		   //Y-Velocity (units: au/day)
+
+		GRmercDerivs(xmin, y, dydx);
+
+			//file output stream
+			ofstream ofPositionMercury;
+			ofPositionMercury.open("40.csv");
+
+		for(int k=0; k < kmax; k++)
+			{
+					x=xmin+k*h;
+
+					rk4(y, dydx,  x, h, yout, GRmercDerivs);
+
+
+					///debug output
+					//cout << "k = " << k
+					//	 << "    Xm = " << yout[0] << "    X'm= " << yout[1]
+					//	 << "    Ym = " << yout[2] << "    Y'm= " << yout[3] << endl;
+
+
+					//file output stream
+					//if(k/kmax >= constraint)
+					//{
+					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
+					//}
+					y = yout;
+
+					GRmercDerivs(x,y,dydx);
+			}
+
+			//closes file output stream
+			ofPositionMercury.close();
+
+
+		cout << "\n" << "CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe CoMpLeTe" << "\n";
+
+	return 0;
+}
+
+
+
+
+
+int main()
+{
+	GRmercury();
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////THE WHOLE SOLAR SYSTEM////////////////////////
+
+//////Relativistic orbit of Mercury in Solar System
+/*
 void GRmercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 
 {
@@ -493,7 +718,9 @@ dydx[j+1] = (1+a/pow(Rsun,exp2)) * (-GMsun * y[j]) / pow(Rsun,exp1)
 			  + (1+a/pow(Rplu,exp2)) * (-GMplu * y[j]) / pow(Rplu,exp1);
 			  //
 }
+*/
 
+/*
 int GRmercury()
 {
 		cout << "Started GR.Mercury -- GR.Started Mercury -- GR.Started Mercury" << "\n";
@@ -604,12 +831,13 @@ int GRmercury()
 
 	return 0;
 }
+*/
 
 
 
+//--------/////Non-relativistic orbit in Solar System/////---------
 
-
-//Non-relativistic orbit in Solar System
+/*
 void mercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 
 {
@@ -888,7 +1116,9 @@ dydx[35] = (-GMsun * y[j]) / Re(y[i]       , y[j]       , exp1)
 		//neptune removed
 
 }
+*/
 
+/*
 int mercury()
 {
 		cout << "Started Mercury -- Started Mercury -- Started Mercury" << "\n";
@@ -987,7 +1217,7 @@ int mercury()
 					//file output stream
 					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
 
-/*
+
 
 					//Perihelion Tracker
 					//P-mercury = 0.307491008
@@ -1013,7 +1243,7 @@ int mercury()
 							ofPerihelion << yout[0] << "," << yout[2] << "\n";
 						}
 
-*/
+
 
 					y = yout;
 
@@ -1028,133 +1258,9 @@ int mercury()
 
 	return 0;
 }
+*/
 
-
-
-
-
-//Two-body Earth/Jupiter about Sun
-void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
-{
-	///Earth
-
-	//X-components
-	dydx[0] = y[1];
-	dydx[1] = (-GMsun * y[0]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
-			+ (-GMjup * y[0]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
-	//Y-components
-	dydx[2] = y[3];
-	dydx[3] = (-GMsun * y[2]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
-			+ (-GMjup * y[2]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
-
-
-	///Jupiter
-
-	//X-components
-	dydx[4] = y[5];
-	dydx[5] =   (-GMsun * y[4]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
-			  + (-GMear * y[4]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
-	//Y-components
-	dydx[6] = y[7];
-	dydx[7] =   (-GMsun * y[6]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
-			  + (-GMear * y[6]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
-}
-
-int sunEarthJupiter()
-{
-	//cout << "GMs =" << GMs << ",  G_astro*M_s = " << G_astro*M_s << endl;
-	//cout << "GMe =" << GMe << ",  G_astro*M_e = " << G_astro*M_e << endl;
-	//cout << "GMj =" << GMj << ",  G_astro*M_j = " << G_astro*M_j << endl;
-
-	VecDoub y(8);
-	VecDoub dydx(8); //vector of positions & velocities for earth and
-	VecDoub yout(8);
-
-	double x;
-	double xmin;      //minimum starting position (units: au)
-	double kmax=365*12;  //max iterations (units: days)
-	double h=1;       //time step size (units: days)
-
-	xmin = 0;
-
-	///Initial Conditions:
-
-	//Earth
-	y[0] = 0.98329;       //X-Position          (units: au)
-	y[1] = 0;                      //X-Velocity (units: au/day)
-	y[2] = 0;             //Y- Position         (units: au)
-	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
-
-	//Jupiter
-	y[4] = 4.950429;      //X-Position          (units: au)
-	y[5] = 0;                      //X-Velocity (units: au/day)
-	y[6] = 0;             //Y- Position         (units: au)
-	y[7] = 7.92396305e-3; 		   //Y-Velocity (units: au/day)  !!!!!!!! e-6 original
-
-
-	derivs(xmin, y, dydx);
-
-	//file output streams
-	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
-	ofAllData.open("all-data.csv");
-	ofPositionEarth.open("x-y-positionEarth.csv");
-	ofPositionJupiter.open("x-y-positionJupiter.csv");
-
-
-	for(int k=0; k < kmax; k++)
-	{
-			x=xmin+k*h;
-
-			rk4(y, dydx,  x, h, yout, derivs);
-
-			//display output
-			cout << "k = " << k
-				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
-				 << "    Ye = " << yout[2] << "    Y'e= " << yout[3] << endl
-
-				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
-				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
-
-			//file output streams
-			ofAllData << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
-			ofPositionEarth << yout[0] << "," << yout[2] << endl;
-			ofPositionJupiter << yout[4] << "," << yout[6] << endl;
-
-			y = yout;
-
-			derivs(x,y,dydx);
-	}
-
-	//closes file output streams
-	ofAllData.close();
-	ofPositionEarth.close();
-	ofPositionJupiter.close();
-
-return 0;
-
-}
-
-
-
-
-int main()
-{
-
-
-
-	GRmercury();
-	return 0;
-}
-
-
-
-
-
-
-
-
-
-
+////////////////////THE WHOLE SOLAR SYSTEM////////////////////////
 
 
 
