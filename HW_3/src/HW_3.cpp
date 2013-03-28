@@ -18,7 +18,7 @@ double Mmer =    0.3302e24;
 double Mven =    4.8685e24;
 double Mear =    5.9736e24;
 double Mmar =    0.64185e24;
-double Mjup = 1898.6e24; //1898.6e24
+double Mjup = 1898.6e24; //actual: 1898.6e24
 double Msat =  568.46e24;
 double Mura =   86.832e24;
 double Mplu =    0.0125e24;
@@ -58,7 +58,16 @@ double GMura = Gastro*Mura;
 double GMplu = Gastro*Mplu;
 double GMnep = Gastro*Mnep;
 
+//Pi
+double Pi = atan(1)*4;
 
+double g = 9.8; //gravitational acceleration near earth's surface
+//Mass1
+double M1 = 1;   //mass of Mass1
+double R1 = 1; //pendulum length
+//Mass2
+double M2 = 1;	 //mass of Mass1
+double R2 = 1; //pendulum length
 
 //Returns the radicand of the radius (x^2+y^2) between bodies
 double R(double x, double y)
@@ -77,11 +86,112 @@ double Re(double x, double y, double exp)
 {
 	double r;
 
-	r = fabs(   pow( (pow(x,2)+pow(y,2)),2)   );
+	r = fabs(   pow( (pow(x,2)+pow(y,2)),exp)   );
 
 	return r;
 }
 
+
+
+void pendDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	dydx[0] = y[1];
+	dydx[1] = (  -g*(2*M1+M2)*sin(y[0])-M2*g*sin(y[0]-2*y[2])-2*sin(y[0]-y[2])*M2*(y[3]*y[3]*R2+y[1]*y[1]*R1*cos(y[0]-y[2]))  )
+			/ (  R1*(2*M1+M2-M2*cos(2*y[0]-2*y[2]))  );
+
+
+	dydx[2] = y[3];
+	dydx[3] = (  2*sin(y[0]-y[2])*(y[1]*y[1]*R1*(M1+M2)+g*(M1+M2)*cos(y[0])+y[3]*y[3]*R2*M2*cos(y[0]-y[2]) ) )
+			/ (  R2*(2*M1+M2-M2*cos(2*y[0]-2*y[2])) );
+
+
+	/*
+	dydx[0] = y[1];
+	dydx[1] = ((-sin(y[0]-y[0]))*(y[1]*y[1]*A+y[3]*y[3])+w*(-2*sin(y[0])+sin(y[2])*A))/(2-A*A);
+
+	dydx[2] = y[3];
+	dydx[3] = ((-sin(y[0]-y[0]))*(2*y[1]*y[1]+y[3]*y[3]*A)+2*w*(-sin(y[2])+sin(y[0])*A))/(2-A*A);
+	 */
+
+
+	/*
+	//////Theta-1
+	//Angular Velocity
+	dydx[0] = y[1];
+	//Angular Acceleration
+	dydx[1] = g*M1*R1*sin(y[0])+g*M2*R1*sin(y[0])+M2*R1*R2*sin(y[0]-y[2])*pow(y[3],2)
+			+ M1*pow(R1,2)*;
+
+
+	//////Theta-2
+	//Angular Velocity
+	dydx[2] = y[3];
+	//Angular Acceleration
+	dydx[3] =   (-GMsun * y[4]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
+			  + (-GMear * y[4]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+	 */
+}
+
+void doublePend()
+{
+		VecDoub y(4);
+		VecDoub dydx(4); //vector of positions & velocities for earth and
+		VecDoub yout(4);
+
+		double x;
+		double xmin = 0;      //minimum starting position (units: au)
+		double kmax=1000;  //max iterations (units: days)
+		double h=0.01;       //time step size (units: days)
+
+		///Initial Conditions:
+
+		//Mass1
+		y[0] = 0.17*atan(1)+0.008;       //Angular-Position
+		y[1] = 0;        //Angular-Velocity
+
+		//Mass2
+		y[2] = 4*atan(1);        //Angular-Position
+		y[3] = 0; 		 //Angular-Velocity
+
+
+		pendDerivs(xmin, y, dydx);
+
+		//file output streams
+		ofstream ofPositionM1, ofPositionM2;
+		ofPositionM1.open("x-y_position.M1.csv");
+		ofPositionM2.open("x-y_position.M2.csv");
+
+
+		for(int k=0; k < kmax; k++)
+		{
+			x=xmin+k*h;
+
+			rk4(y, dydx,  x, h, yout, pendDerivs);
+
+			/*
+			//display output
+			cout << "k = " << k
+				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
+				 << "    Ye = " << yout[2] << "    Y'e= " << yout[3] << endl
+
+				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
+				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
+			 */
+
+			//file output streams
+			ofPositionM1 << R1*sin(y[0]) << "," << -R1*cos(y[0]) << endl;
+			ofPositionM2 << R1*sin(y[0]) + R2*sin(y[2]) << "," << (-R1*cos(y[0]) - R2*cos(y[2])) << endl;
+
+
+			y = yout;
+
+			pendDerivs(x,y,dydx);
+		}
+
+		//closes file output streams
+		ofPositionM1.close();
+		ofPositionM2.close();
+}
 
 
 
@@ -125,8 +235,8 @@ int sunEarthJupiter()
 
 	double x;
 	double xmin;      //minimum starting position (units: au)
-	double kmax=365*12;  //max iterations (units: days)
-	double h=1;       //time step size (units: days)
+	double kmax=10*2*365;  //max iterations (units: days)
+	double h=0.5;       //time step size (units: days)
 
 	xmin = 0;
 
@@ -149,10 +259,17 @@ int sunEarthJupiter()
 
 	//file output streams
 	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
-	ofAllData.open("all-data.csv");
-	ofPositionEarth.open("x-y-positionEarth.csv");
-	ofPositionJupiter.open("x-y-positionJupiter.csv");
+	ofAllData.open("x-y_velocity.Earth.csv");
+	ofPositionEarth.open("x-y_position.Earth.csv");
+	ofPositionJupiter.open("x-y_position.Jupiter.csv");
 
+	//variables for verifying Keppler's 2nd law
+	double area;
+	double oldx;
+	double oldy;
+	double radius;
+	double velocity;
+	double analytic;
 
 	for(int k=0; k < kmax; k++)
 	{
@@ -160,6 +277,7 @@ int sunEarthJupiter()
 
 			rk4(y, dydx,  x, h, yout, derivs);
 
+			/*
 			//display output
 			cout << "k = " << k
 				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
@@ -167,11 +285,39 @@ int sunEarthJupiter()
 
 				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
 				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
-
+			 */
 			//file output streams
-			ofAllData << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
+			ofAllData << yout[1] << "," << yout[3] << endl; // << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
 			ofPositionEarth << yout[0] << "," << yout[2] << endl;
 			ofPositionJupiter << yout[4] << "," << yout[6] << endl;
+
+
+
+			/*
+			//Verifies Keppler's 2nd Law
+			//Outputs areas swept out in 1st and 52nd week of Earth's orbit
+			if(k==0 || k==338)
+			{
+			oldx = y[0];
+			oldy = y[2];
+			}
+
+			if(k==13 || k==351)
+			{
+				cout << " a=" << oldx << "  d=" << y[2] << "  b=" << oldy << "  c=" << y[0] << endl;
+				area =  fabs( oldx*y[2]-oldy*y[0] ) / 2;
+				cout << "Calculated Area at " << k*h/7 << "-weeks =" << area << endl;
+
+				radius = Re(y[0],y[2],0.5);
+				cout << "radius=" << radius << endl;
+				velocity = Re(y[1],y[3],0.5);
+				cout << "velocity=" << velocity << endl;
+				analytic = radius*velocity/2;
+				cout << "Analytical Area = " << analytic << endl;
+				cout <<"Error = " << (100*(area-analytic))/analytic << "%" << endl << endl;
+			}
+			 */
+
 
 			y = yout;
 
@@ -290,7 +436,9 @@ int GRmercury()
 
 int main()
 {
-	GRmercury();
+	doublePend();
+	//GRmercury();
+	//sunEarthJupiter();
 	return 0;
 }
 
