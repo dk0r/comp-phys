@@ -140,17 +140,17 @@ void doublePend()
 
 		double x;
 		double xmin = 0;      //minimum starting position (units: au)
-		double kmax=1000;  //max iterations (units: days)
-		double h=0.01;       //time step size (units: days)
+		double kmax=5000;  //max iterations (units: days)
+		double h=0.02;       //time step size (units: days)
 
 		///Initial Conditions:
 
 		//Mass1
-		y[0] = 0.17*atan(1)+0.008;       //Angular-Position
+		y[0] = (4*atan(1))+0.011;       //Angular-Position
 		y[1] = 0;        //Angular-Velocity
 
 		//Mass2
-		y[2] = 4*atan(1);        //Angular-Position
+		y[2] = (4*atan(1))+0.011;        //Angular-Position
 		y[3] = 0; 		 //Angular-Velocity
 
 
@@ -204,11 +204,11 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 	//X-components
 	dydx[0] = y[1];
 	dydx[1] = (-GMsun * y[0]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
-			+ (-GMjup * y[0]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+	        + (-GMjup * y[0]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
 	//Y-components
 	dydx[2] = y[3];
 	dydx[3] = (-GMsun * y[2]) / pow( pow(y[0],2) + pow(y[2],2) , 1.5 )
-			+ (-GMjup * y[2]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+		    + (-GMjup * y[2]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
 
 
 	///Jupiter
@@ -216,11 +216,11 @@ void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 	//X-components
 	dydx[4] = y[5];
 	dydx[5] =   (-GMsun * y[4]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
-			  + (-GMear * y[4]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+		    +   (-GMear * y[4]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
 	//Y-components
 	dydx[6] = y[7];
 	dydx[7] =   (-GMsun * y[6]) / pow( pow(y[4],2) + pow(y[6],2) , 1.5 )
-			  + (-GMear * y[6]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
+		    +   (-GMear * y[6]) / pow( pow(y[0]-y[4],2) + pow(y[2]-y[6],2) , 1.5 );
 }
 
 int sunEarthJupiter()
@@ -235,7 +235,7 @@ int sunEarthJupiter()
 
 	double x;
 	double xmin;      //minimum starting position (units: au)
-	double kmax=10*2*365;  //max iterations (units: days)
+	double kmax=12*2*365;  //max iterations (units: days)
 	double h=0.5;       //time step size (units: days)
 
 	xmin = 0;
@@ -259,9 +259,9 @@ int sunEarthJupiter()
 
 	//file output streams
 	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
-	ofAllData.open("x-y_velocity.Earth.csv");
-	ofPositionEarth.open("x-y_position.Earth.csv");
-	ofPositionJupiter.open("x-y_position.Jupiter.csv");
+	ofAllData.open("xy_velocity.Earth.csv");
+	ofPositionEarth.open("xy_sej.Earth.csv");
+	ofPositionJupiter.open("xy_sej.Jupiter.csv");
 
 	//variables for verifying Keppler's 2nd law
 	double area;
@@ -335,7 +335,6 @@ return 0;
 
 
 
-
 void GRmercDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 
 {
@@ -378,7 +377,7 @@ int GRmercury()
 
 		double x;
 		double xmin = 0;       //minimum starting position (units: au)
-		double kmax = 20*87.969;  //max iterations (units: days)
+		double kmax = 20*87.969/4;  //max iterations (units: days)
 		double h = 0.05;          //time step size (units: days)
 
 		double constraint = (kmax-1518)/kmax;
@@ -396,7 +395,7 @@ int GRmercury()
 
 			//file output stream
 			ofstream ofPositionMercury;
-			ofPositionMercury.open("40.csv");
+			ofPositionMercury.open("tracker.csv");
 
 		for(int k=0; k < kmax; k++)
 			{
@@ -411,10 +410,18 @@ int GRmercury()
 					//	 << "    Ym = " << yout[2] << "    Y'm= " << yout[3] << endl;
 
 
+					double a = 0.307491000;
+					double b = 0.30749101;
 					//file output stream
+					if(Re(y[0],y[2],0.5) >= a && Re(y[0],y[2],0.5) <= b  )
+					{
+						ofPositionMercury << acos(y[0]/Re(y[0],y[2],0.5)) << "," << 20*k << "\n";
+					}
+
+
 					//if(k/kmax >= constraint)
 					//{
-					ofPositionMercury << yout[0] << "," << yout[2] << "\n";
+					//ofPositionMercury << yout[0] << "," << yout[2] << "\n";
 					//}
 					y = yout;
 
@@ -439,6 +446,7 @@ int main()
 	doublePend();
 	//GRmercury();
 	//sunEarthJupiter();
+	//GRmercury();
 	return 0;
 }
 
@@ -1296,7 +1304,8 @@ int mercury()
 		y[4] = Pven;   //X-Position          (units: au)
 		y[5] = 0;                      //X-Velocity (units: au/day)
 		y[6] = 0;             //Y- Position         (units: au)
-		y[7] = Vven; 		   //Y-Velocity (units: au/day)
+		y[7] = Vven; 		   //Y-Velocity (units: au/day)double a = 0.307491000;
+					double b = 0.30749101;
 
 		//Earth
 		y[8] = Pear;   //X-Position          (units: au)
