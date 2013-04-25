@@ -6,6 +6,7 @@
 #include "ludcmp.h"
 
 using namespace std;
+cant' commit. wth!
 
 int r = 1; //resistance (ohms) of all resistors
 
@@ -48,7 +49,7 @@ int gaussJordan(int m, int n)
 
   cout<<"Finished"<<endl;
 
-  return 0;
+  return 2;
 }
 */
 
