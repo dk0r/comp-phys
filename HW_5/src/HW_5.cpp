@@ -4,6 +4,8 @@
 #include "nr3.h"
 #include "gaussj.h"
 #include "ludcmp.h"
+#include <chrono>
+#include <vector>
 
 using namespace std;
 
@@ -367,7 +369,7 @@ int currentSolver(int m, int n)
 
 
 
-
+/*
 
 
   //Solves for current via Gauss-Jordan
@@ -456,7 +458,7 @@ int currentSolver(int m, int n)
 			 }
 				t.close();
 
-
+*/
 
 		//LU Decomposition
 
@@ -491,12 +493,15 @@ int currentSolver(int m, int n)
 
 				//solve problem
 				alu.solve(b,xx);
+
+			/*
+
 				cout << "LU Solution is: \n";
 				for (int i=0;i<size;i++){
 				cout << i << ":\t" << xx[i] << endl;
 				}
 				cout<<"Finished LU Decomposition"<<endl;
-
+*/
 
 
 
@@ -507,6 +512,25 @@ int currentSolver(int m, int n)
 
 int main()
 {
-	currentSolver(5,3);
+
+	for(int i=2; i<21; i++)
+	{
+		for(int j=2; j<21; j++)
+		{
+
+		    std::chrono::time_point<std::chrono::system_clock> start, end;
+		    start = std::chrono::system_clock::now();
+
+			currentSolver(i,j);
+
+		    end = std::chrono::system_clock::now();
+		    int64_t elapsed_seconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+		    std::cout << "Vector allocations took " << elapsed_seconds << " microseconds;" << std::endl;
+
+
+		}
+	}
+
+
 	return 0;
 }
