@@ -53,17 +53,19 @@ int gaussJordan(int m, int n)
 }
 */
 
-
+/*
 int luDecomp()
 {
-	int size=3;
+	int size=refCount;
 
 	MatDoub_IO A(size,size);
 	VecDoub b(size), x(size);
 
-	double test[size][size];
 
-	//fill test[][] with arbitrary values
+
+	MatDoub_IO test(size,size);
+
+	//fills test[][] with arbitrary values
 	for(int i=0; i<size; i++)
 	{
 		for(int j=0; j<size; j++)
@@ -72,36 +74,14 @@ int luDecomp()
 		}
 	}
 
+	//attempts to copy values from test into A
 	for(int i=0; i<size; i++)
 	{
 		for(int j=0; j<size; j++)
 		{
-			A(i,j) = test[i][j];    //This is the line that doesn't work.
+			A[i][j] = test[i][j];    //This is the line that doesn't work.
 		}
 	}
-
-
-	//Define LHS
-
-	//first row
-	A[0][0]=1;
-	A[0][1]=0;
-	A[0][2]=4;
-
-	//second row
-	A[1][0]=0;
-	A[1][1]=2;
-	A[1][2]=4;
-
-	//third row
-	A[2][0]=1;
-	A[2][1]=1;
-	A[2][2]=-1;
-
-	//Define RHS
-	b[0]=1;
-	b[1]=2;
-	b[2]=0;
 
 	//Solves for currents via LU Decomposition
 	LUdcmp alu(A);
@@ -116,6 +96,43 @@ int luDecomp()
 
 	return 0;
 }
+*/
+
+
+
+int luDecomp()
+{
+	int size = 3;
+	MatDoub_IO A(size,size);
+	VecDoub b(size), x(size);
+
+
+
+	MatDoub_IO test(size,size);
+
+	//attempts to copy values from test into A
+	for(int i=0; i<size; i++)
+	{
+		for(int j=0; j<size; j++)
+		{
+			A[i][j] = test[i][j];    //This is the line that doesn't work.
+		}
+	}
+
+	//Solves for currents via LU Decomposition
+	LUdcmp alu(A);
+
+	//solve problem
+	alu.solve(b,x);
+	cout << "LU Solution is: \n";
+	for (int i=0;i<3;i++){
+	cout << i << ":\t" << x[i] << endl;
+	}
+	cout<<"Finished"<<endl;
+
+	return 0;
+}
+
 
 
 
@@ -308,20 +325,47 @@ int currentSolver(int m, int n)
 
 
 
-/*
+
 
  	 //make copy of R matrix for LU DECOMP
-	MatDoub_IO A(refCount-1,refCount-1);
+	MatDoub_IO A(x,y);
  	 for(int i=0; i<x; i++)
  	 {
  		 for(int j=0; j<y; j++)
  		 {
- 			A(i,j) = (MatDoub_IO)R[i][j];
+ 			A[i][j] = R[i][j];
  		 }
  	 }
 
+ 	  //data output of Resistance matrix;
+ 	  		  of.open("AresistanceA.csv" );
+ 	  	      //int elements = 0;
 
-*/
+ 	  				for(int i=0; i<x ;i++)
+ 	  				 {
+ 	  					 for(int j=0; j<y ;j++)
+ 	  					 {
+ 	  			//			 elements++;
+
+ 	  						 if((j+1)%y == 0)
+ 	  						 {
+ 	  							 of << A[i][j] << "\n";
+ 	  						 }
+
+ 	  						 if((j+1)%y != 0)
+ 	  						 {
+ 	  							 of << A[i][j] <<",";
+ 	  						 }
+ 	  					 }
+ 	  				 }
+
+ 	  				//make_filename( "body", ".txt" ).c_str()
+
+ 	  				 of << "\n" << "\n";
+ 	  				 of.close();
+
+
+
 
 
 
@@ -413,36 +457,47 @@ int currentSolver(int m, int n)
 				t.close();
 
 
-/*
+
 		//LU Decomposition
-		int size = refCount-1;
 
+				int size= refCount-1;
 
-			VecDoub b(size), xx(size);
+	//			MatDoub_IO A(size,size);
+				VecDoub b(size), xx(size);
 
-		  	 ///Define b voltage vector
-			 for(int i=0; i<x; i++)
-			 {
-				 b[i] = 0;
-			 }
+				//defines b voltage
+				  //initializes potential drop matrix
+				  for(int i=0; i<x; i++)
+				  {
+					  	 b[i]=0;
+				  }
 
-		 	 b[0] = voltage;
+				  b[0]= voltage;
 
-			//Define LHS
-
-
-			//Solves for currents via LU Decomposition
-			LUdcmp alu(A);
-
-			//solve problem
-			alu.solve(b,xx);
-			cout << "LU Solution is: \n";
-			for (int i=0;i<(refCount-1);i++){
-			cout << i << ":\t" << xx[i] << endl;
-			}
-			cout<<"Finished"<<endl;
-
+				MatDoub_IO res(size,size);
+/*
+				//attempts to copy values from test into A
+				for(int i=0; i<size; i++)
+				{
+					for(int j=0; j<size; j++)
+					{
+						A[i][j] = R[i][j];    //This is the line that doesn't work.
+						cout << A[i][j] << endl;
+					}
+				}
 */
+				//Solves for currents via LU Decomposition
+				LUdcmp alu(A);
+
+				//solve problem
+				alu.solve(b,xx);
+				cout << "LU Solution is: \n";
+				for (int i=0;i<size;i++){
+				cout << i << ":\t" << xx[i] << endl;
+				}
+				cout<<"Finished LU Decomposition"<<endl;
+
+
 
 
 
