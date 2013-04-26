@@ -6,9 +6,9 @@
 #include "ludcmp.h"
 
 using namespace std;
-cant' commit. wth!
 
 int r = 1; //resistance (ohms) of all resistors
+int voltage = 1;
 
 /*
 int gaussJordan(int m, int n)
@@ -53,13 +53,33 @@ int gaussJordan(int m, int n)
 }
 */
 
-/*
+
 int luDecomp()
 {
 	int size=3;
 
 	MatDoub_IO A(size,size);
 	VecDoub b(size), x(size);
+
+	double test[size][size];
+
+	//fill test[][] with arbitrary values
+	for(int i=0; i<size; i++)
+	{
+		for(int j=0; j<size; j++)
+		{
+			test[i][j] = i+j;
+		}
+	}
+
+	for(int i=0; i<size; i++)
+	{
+		for(int j=0; j<size; j++)
+		{
+			A(i,j) = test[i][j];    //This is the line that doesn't work.
+		}
+	}
+
 
 	//Define LHS
 
@@ -97,7 +117,7 @@ int luDecomp()
 	return 0;
 }
 
-*/
+
 
 int currentSolver(int m, int n)
 {
@@ -174,8 +194,10 @@ int currentSolver(int m, int n)
   	/////////////Makes Resistance Matrix
 
   	//determines dimension of resistance matrix
-  	int x = refCount-1;
-  	int y = refCount-1;
+
+  			int x = refCount-1;
+  			int y = refCount-1;
+
 
     MatDoub_IO R(x,y);
     MatDoub_IO v(x,1);
@@ -281,7 +303,28 @@ int currentSolver(int m, int n)
 		 v[i][0]=0;
 	 }
 
- 	 v[0][0]=1;
+ 	 v[0][0]=voltage;
+
+
+
+
+/*
+
+ 	 //make copy of R matrix for LU DECOMP
+	MatDoub_IO A(refCount-1,refCount-1);
+ 	 for(int i=0; i<x; i++)
+ 	 {
+ 		 for(int j=0; j<y; j++)
+ 		 {
+ 			A(i,j) = (MatDoub_IO)R[i][j];
+ 		 }
+ 	 }
+
+
+*/
+
+
+
 
   //Solves for current via Gauss-Jordan
   gaussj(R,v);
@@ -296,13 +339,119 @@ int currentSolver(int m, int n)
 
 
 
+  //////Potential Drop!@!@#%!#^%!#^!#@!!!!!Remember to Adjust pot dimensions below!!@$!@$@!!@
+//@#^!#Q%H$%R^TH@W$^%QJ^HW$%^Q!$#%JHQ!$RA^EHGQW
+  double pot[9][7];
+
+  //initializes potential drop matrix
+  for(int i=0; i<9; i++)
+  {
+	  for(int j=0; j<7; j++)
+	  {
+		pot[i][j] = 0;
+	  }
+  }
+
+
+  //vertical resistors
+  pot[1][0] = v[4][0];
+  pot[3][0] = v[3][0];
+  pot[5][0] = v[2][0];
+  pot[7][0] = v[1][0];
+
+
+  pot[1][2] = v[8][0]-v[4][0];
+  pot[3][2] = v[7][0]-v[3][0];
+  pot[5][2] = v[6][0]-v[2][0];
+  pot[7][2] = v[5][0]-v[1][0];
+
+  pot[1][4] = v[8][0]-v[12][0];
+  pot[3][4] = v[7][0]-v[11][0];
+  pot[5][4] = v[6][0]-v[10][0];
+  pot[7][4] = v[5][0]-v[9][0];
+
+  pot[1][6] = v[12][0];
+  pot[3][6] = v[11][0];
+  pot[5][6] = v[10][0];
+  pot[7][6] = v[9][0];
+
+  //horiztonal resistors
+  pot[0][1] = v[4][0];
+  pot[0][3] = v[8][0];
+  pot[0][5] = v[12][0];
+
+  pot[2][1] = v[3][0]-v[4][0];
+  pot[2][3] = v[7][0]-v[8][0];
+  pot[2][5] = v[11][0]-v[12][0];
+
+  pot[4][1] = v[2][0]-v[3][0];
+  pot[4][3] = v[6][0]-v[7][0];
+  pot[4][5] = v[10][0]-v[11][0];
+
+  pot[6][1] = v[1][0]-v[2][0];
+  pot[6][3] = v[5][0]-v[6][0];
+  pot[6][5] = v[9][0]-v[10][0];
+
+  pot[8][1] = v[0][0]-v[1][0];
+  pot[8][3] = v[0][0]-v[5][0];
+  pot[8][5] = v[0][0]-v[9][0];
+
+	//data output of potential drop pot matrix
+  	  ofstream t;
+	  t.open("potentialDrop.csv" );
+
+			for(int i=0; i<9 ;i++)
+			 {
+				 for(int j=0; j<7 ;j++)
+				 {
+					 if(pot[i][j]!=0)
+					 {
+						 t << i << "," << j << "," << pot[i][j] << endl;
+					 }
+				 }
+			 }
+				t.close();
+
+
+/*
+		//LU Decomposition
+		int size = refCount-1;
+
+
+			VecDoub b(size), xx(size);
+
+		  	 ///Define b voltage vector
+			 for(int i=0; i<x; i++)
+			 {
+				 b[i] = 0;
+			 }
+
+		 	 b[0] = voltage;
+
+			//Define LHS
+
+
+			//Solves for currents via LU Decomposition
+			LUdcmp alu(A);
+
+			//solve problem
+			alu.solve(b,xx);
+			cout << "LU Solution is: \n";
+			for (int i=0;i<(refCount-1);i++){
+			cout << i << ":\t" << xx[i] << endl;
+			}
+			cout<<"Finished"<<endl;
+
+*/
+
+
+
   return 0;
 }
 
 
 int main()
 {
-	currentSolver(3,2);
-	//resistance(3,3);
+	currentSolver(5,3);
 	return 0;
 }
