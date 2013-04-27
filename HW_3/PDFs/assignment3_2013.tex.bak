@@ -1,0 +1,107 @@
+\documentclass{report}
+\usepackage{color}
+\begin{document}
+
+\title{\textbf{PHYS-4810 Project Proposal:} 
+\\Double Pendulum on a Cart}
+\author{A.L. Phillips II\\
+  Department of Physics, Astronomy, and Applied Physics,\\
+  Rensselaer Polytechnic Institute\\
+  \texttt{philla3@rpi.edu}}
+ \date{19 April 2013}
+ \renewcommand{\chaptername}{Assignment}
+ \setcounter {chapter}{2}
+\maketitle
+\section*{The Physics}
+
+\begin{enumerate}
+
+\item Consider the problem of planetary motion around 
+
+\item Write a \textsc{C++} code, using Runge-Kutta at fourth order 
+
+	\begin{itemize}
+
+\item First discuss the
+
+\item Then, turn on the Jupiter-Earth gravitational
+
+\item In both cases, use realistic numbers for the 
+
+\end{itemize}
+
+\end{enumerate}
+
+
+
+
+\section*{Algorithmic Considerations}
+
+\begin{enumerate}
+
+\item Consider the problem of planetary motion around 
+
+\item Write a \textsc{C++} code, using Runge-Kutta at fourth order 
+
+	\begin{itemize}
+
+\item First discuss the
+
+\item Then, turn on the Jupiter-Earth gravitational
+
+\item In both cases, use realistic numbers for the 
+
+\end{itemize}
+
+\end{enumerate}
+
+
+\section*{Obtaining a Solution}
+
+\begin{enumerate}
+
+\item Establish tolerance criterion of the model (Reaction times, maximum angular displacement. 
+
+\item Write a \textsc{C++} code, using Runge-Kutta at fourth order 
+
+	\begin{itemize}
+
+\item First discuss the
+
+\item Then, turn on the Jupiter-Earth gravitational
+
+\item In both cases, use realistic numbers for the 
+
+\end{itemize}
+
+\end{enumerate}
+
+
+
+
+
+
+\section*{The Goal}
+
+\begin{enumerate}
+
+\item To establish a thorough appreciation of the model. \\Display an understanding of the models:
+
+	\begin{itemize}
+
+\item Theoretical derivations.
+
+\item Physical limitations
+
+\item Usefulness in 'real-world' applications.
+
+\end{itemize}
+
+\end{enumerate}
+
+
+
+Make sure your report is self-contained with sufficient details and
+clear plots. Feel free to add listings of your codes (or use
+pseudo-code). 
+\end{document}

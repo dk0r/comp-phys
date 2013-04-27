@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <nr3.h>
+#include <rk4.h>
+
+using namespace std;
+
+
+int test()
+{
+	int x = 100;
+	int y = 100;
+	int n = 100;
+	int peridoic;
+
+	bool donotcompute[x][y];
+	double func[x][y];
+
+	 for(int ix=0;ix<n;ix++)
+	 {
+		 for (int iy=0;iy<n;iy++)
+		 {
+			 donotcompute[ix][iy]=false;
+			 func[ix][iy]=0.0;
+		 }
+	 }
+
+
+	 for(int iy=0;iy<n;iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy]=true;
+			 donotcompute[n-1][iy]=true;
+		 }
+
+		 func[0][iy]=0.0;
+		 func[n-1][iy]=0.0;
+	 }
+
+
+	 for(int ix=0;ix<n;ix++)
+	 {
+		 donotcompute[ix][0]=true;
+		 donotcompute[ix][n-1]=true;
+		 func[ix][0]=0.0;
+		 func[ix][n-1]=0.0;
+	 }
+
+	 return 0;
+}
+
+int main()
+{
+
+}

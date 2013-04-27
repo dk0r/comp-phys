@@ -26,6 +26,7 @@ org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" 
 pp_default=246,243,232
 pp_directive=138,198,242
 pp_header=149,228,84
+properties.manage.config.disable=true
 semanticHighlighting.class.color=202,230,130
 semanticHighlighting.class.enabled=true
 semanticHighlighting.enumerator.color=83,220,205

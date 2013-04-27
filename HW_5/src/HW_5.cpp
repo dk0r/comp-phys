@@ -9,6 +9,8 @@
 
 using namespace std;
 
+double global;
+
 int r = 1; //resistance (ohms) of all resistors
 int voltage = 1;
 
@@ -369,19 +371,32 @@ int currentSolver(int m, int n)
 
 
 
+
 /*
 
-
   //Solves for current via Gauss-Jordan
+
+
+
+
+  std::chrono::time_point<std::chrono::system_clock> start, end;
+  start = std::chrono::system_clock::now();
+
   gaussj(R,v);
 
-  cout << "Gauss Jordan solution is: \n";
+  end = std::chrono::system_clock::now();
+  int64_t elapsed_seconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+  global = elapsed_seconds;
+
+
+  //cout << "Gauss Jordan solution is: \n";
   for (int i=0;i<x;i++)
   {
-    cout << i << ":\t" << v[i][0]<<endl;
+    //cout << i << ":\t" << v[i][0]<<endl;
   }
 
-  cout<<"Finished Gauss Jordan"<<endl<<endl;
+  //cout<<"Finished Gauss Jordan"<<endl<<endl;
+
 
 
 
@@ -477,60 +492,70 @@ int currentSolver(int m, int n)
 				  b[0]= voltage;
 
 				MatDoub_IO res(size,size);
-/*
+
 				//attempts to copy values from test into A
 				for(int i=0; i<size; i++)
 				{
 					for(int j=0; j<size; j++)
 					{
 						A[i][j] = R[i][j];    //This is the line that doesn't work.
-						cout << A[i][j] << endl;
+						//cout << A[i][j] << endl;
 					}
 				}
-*/
+
 				//Solves for currents via LU Decomposition
-				LUdcmp alu(A);
 
-				//solve problem
-				alu.solve(b,xx);
+				  std::chrono::time_point<std::chrono::system_clock> start, end;
+				  start = std::chrono::system_clock::now();
 
-			/*
+					LUdcmp alu(A);
+
+					//solve problem
+					alu.solve(b,xx);
+
+				  end = std::chrono::system_clock::now();
+				  int64_t elapsed_seconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+				  global = elapsed_seconds;
+
+
+
 
 				cout << "LU Solution is: \n";
 				for (int i=0;i<size;i++){
-				cout << i << ":\t" << xx[i] << endl;
+			cout << i << ":\t" << xx[i] << endl;
 				}
 				cout<<"Finished LU Decomposition"<<endl;
-*/
-
-
 
 
   return 0;
+
 }
 
 
 int main()
 {
+	currentSolver(5,3);
+
+/*
+	ofstream ao;
+	double temp = 0;
+	ao.open("timeLUdecomp.csv");
+
 
 	for(int i=2; i<21; i++)
 	{
 		for(int j=2; j<21; j++)
 		{
 
-		    std::chrono::time_point<std::chrono::system_clock> start, end;
-		    start = std::chrono::system_clock::now();
+			temp = currentSolver(i,j);
 
-			currentSolver(i,j);
-
-		    end = std::chrono::system_clock::now();
-		    int64_t elapsed_seconds = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-		    std::cout << "Vector allocations took " << elapsed_seconds << " microseconds;" << std::endl;
+		    ao << i << "," << j << "," << global << endl;
 
 
 		}
 	}
 
-
+	ao.close();
+*/
 	return 0;
 }

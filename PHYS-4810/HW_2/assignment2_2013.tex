@@ -1,0 +1,82 @@
+\documentclass{report}
+\begin{document}
+
+\title{\textbf{Homework 2:} Random Numbers, Monte Carlo, and Multidimensional Integration}
+\author{C.F. Gauss\\
+  Department of Physics, Astronomy, and Applied Physics,\\
+  Rensselaer Polytechnic Institute\\
+  \texttt{gauss@rpi.edu}}
+ \date{02/25/2011}
+ \renewcommand{\chaptername}{Assignment}
+ \setcounter {chapter}{1}
+\maketitle
+\chapter{Random Numbers}
+\section{Assignment}
+\begin{enumerate}
+\item Use your computer's default pseudo-RNG to
+  generate a sequence $\{x_i\}_{i=1,N}$ of random numbers in the range between 0.0 and 1.0 (choose an
+  appropriate value for $N$, such as 10,000 or more).
+\begin{enumerate}
+\item Plot $x_i$ as a function of sequence number $i$. Comment on the
+  plot. Does it \textit{look} random and uniform?
+\item Plot $x_i$ as a function of $x_{i+k}$ for a small $k$ of your choice. What can you learn from this plot?
+\item Compute the $k^{th}$ moment of your distribution. Compare to the theoretical value and comment.
+\item Calculate the auto-correlation between $x_i$ and $x_{i+k}$ for a few values of $k$. Comment and discuss.
+\item Prepare a plot with \textit{bins} to assess the uniformity of the sequence. Use a reasonable number of bins (10, for instance). What does this plot tell you about the sequence?
+\item Using the information in (a)-(e), comment on the quality of your sequence of random numbers.
+\item Repeat with a sequence of numbers obtained from random.org.
+\end{enumerate} 
+\item Choose one of the two following problems:
+\begin{itemize}
+\item \textbf{Use random numbers to calculate the integral in five dimensions:}
+\begin{equation}
+\int_0^1 dx_1 \int_0^1 dx_2 \int_0^1 dx_3 \int_0^1 dx_4 \int_0^1 dx_5  (x_1+x_2+x_3+x_4+x_5)^3
+\end{equation}
+\begin{enumerate}
+\item Compare your result with the analytical result.
+\item Repeat the calculation for a varying number of random numbers. 
+\item Study how the error behaves as you change the number of
+  points. Plot this error and find if you can detect a $\sim
+  1/\sqrt{N}$ behavior of the error, where $N$ is the number of points.
+\item Compare the order of magnitude of your error with (numerically obtained):
+\begin{equation}
+\sigma^2=<f^2>-<f>^2
+\end{equation}
+where 
+\begin{equation}
+f=(x_1+x_2+x_3+x_4+x_5)^2
+\end{equation}
+\end{enumerate}
+\item \textbf{Random walk in 3D}
+  \begin{enumerate}
+\item Repeat the 2D work presented in class for an equivalent 3D random walk.
+\item At each step, consider a constant step size (i.e. of length 1.0,
+  thereby defining the unit of distance). This means you could use
+  spherical coordinates with constant $r=1$, while randomly picking
+  values for azimuthal angle $\theta \in [0,2\pi]$ and zenith angle
+  $\phi\in[0,\pi]$. Feel free to use Cartesian coordinates if you
+  prefer; but in that case make sure you normalize the displacement
+  vector.
+\item Vary the total number $N$ of steps and plot $\sqrt{<R^2>}$ as a
+  function of $\sqrt{N}$. $<R^2>$ could be computed by averaging over,
+  say, $n_{average}=16$ different random walks (choose a different
+  value for $n_{average}$ if you want). Comment on the general
+  behavior of the $\sqrt{<R^2>}$ versus $\sqrt{N}$ plot.
+\item Plot a few trajectories and discuss their shape.
+\end{enumerate}
+\end{itemize}
+\end{enumerate}
+
+Make sure your report is self-contained with sufficient details and
+clear plots. Feel free to add listings of your code (or use
+pseudo-code). Collaborative work is allowed but each student will turn
+in an individual report.
+
+Below is a suggestion for presentation. You can adapt it to your personal vision of the problem.
+\section{Algorithmic Considerations}
+\section{Implementation}
+\section{Results}
+\section{Discussion}
+\section{References (if any)}
+
+\end{document}

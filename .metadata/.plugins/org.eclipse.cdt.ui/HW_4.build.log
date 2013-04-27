@@ -1,0 +1,40 @@
+22:14:21 **** Incremental Build of configuration Debug for project HW_4 ****
+make all 
+Building file: ../src/HW_4.cpp
+Invoking: Cross G++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HW_4.d" -MT"src/HW_4.d" -o "src/HW_4.o" "../src/HW_4.cpp"
+../src/HW_4.cpp: In function ‘int jacobi()’:
+../src/HW_4.cpp:109:7: warning: unused variable ‘elements’ [-Wunused-variable]
+   int elements = 0;
+       ^
+../src/HW_4.cpp: In function ‘int gaussSeidel()’:
+../src/HW_4.cpp:174:9: warning: unused variable ‘accuracy’ [-Wunused-variable]
+  double accuracy = 0.0000000000001;
+         ^
+../src/HW_4.cpp:244:7: warning: unused variable ‘elements’ [-Wunused-variable]
+   int elements = 0;
+       ^
+../src/HW_4.cpp:246:10: warning: variable ‘stop’ set but not used [-Wunused-but-set-variable]
+   double stop = 0;
+          ^
+../src/HW_4.cpp: In function ‘double SOR(double)’:
+../src/HW_4.cpp:396:7: warning: unused variable ‘elements’ [-Wunused-variable]
+   int elements = 0;
+       ^
+../src/HW_4.cpp: In function ‘double leapFrog()’:
+../src/HW_4.cpp:553:9: warning: variable ‘original’ set but not used [-Wunused-but-set-variable]
+  double original[x][y];
+         ^
+../src/HW_4.cpp:611:10: warning: unused variable ‘sumofsquares’ [-Wunused-variable]
+   double sumofsquares = 0;
+          ^
+Finished building: ../src/HW_4.cpp
+ 
+Building target: HW_4
+Invoking: Cross G++ Linker
+g++  -o "HW_4"  ./src/HW_4.o   
+Finished building target: HW_4
+ 
+
+22:14:21 Build Finished (took 409ms)
+

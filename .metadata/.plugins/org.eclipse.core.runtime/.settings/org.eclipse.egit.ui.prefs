@@ -1,0 +1,2 @@
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\n<messages>\n<message>Timer Working\!</message>\n<message>working gaussJordan and luDecomposition methods\! </message>\n<message>LU decomposition still broken</message>\n<message>Working GJ Current Solver. Remove &quot;can&apos;t commit. wth\!&quot; below namespace</message>\n<message>working GJ current solver. No LU decomp implementation.</message>\n<message>submission commit</message>\n<message>submission commit.</message>\n</messages>
+eclipse.preferences.version=1

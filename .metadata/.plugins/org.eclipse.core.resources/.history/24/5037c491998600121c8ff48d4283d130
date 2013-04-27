@@ -1,0 +1,84 @@
+//============================================================================
+// Name        : HW_3.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include <math.h>
+#include <nr3.h>
+#include <rk4.h>
+
+
+
+
+using namespace std;
+
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	dydx[0]= y[1];
+	dydx[1]= ( 11*exp((-1)*x) - 3*y[1] - 5*y[0] ) / 2;
+
+}
+
+int main (int argc, char * const argv[])
+{
+	VecDoub y(2),dydx(2);
+	Doub x, xmin, xmax, kmax=4, h=0.25;
+	VecDoub yout(2);
+	int k;
+
+	xmin=0; xmax=2.;
+
+	y[0]=7;
+	y[1]=13;
+
+	derivs(xmin,y,dydx);
+
+	for(k=0;k<kmax;k++)
+	{
+		x=xmin+k*h;
+		rk4(y, dydx,  x, h, yout, derivs);
+		cout << yout[0] << " " << yout[1] << endl;
+//		cout << x << " " << yout[0] << " " << yout[1] << endl;
+		y[0]=yout[0];
+		y[1]=yout[1];
+		derivs(x,y,dydx);
+	}
+
+}
+
+
+
+/*
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	dydx[0]=y[1];
+	dydx[1]=((1.0-y[0]*y[0])*y[1]-y[0]);
+}
+
+int main (int argc, char * const argv[])
+{
+	VecDoub y(2),dydx(2);
+	Doub x,xmin,xmax,kmax=300000,h=0.0001;
+	VecDoub yout(2);
+	int k;
+
+	xmin=0; xmax=10000.;
+
+	y[0]=0;
+	y[1]=0.0001;
+	derivs(xmin,y,dydx);
+	for(k=0;k<kmax;k++){
+		x=xmin+k*h;
+		rk4(y, dydx,  x, h, yout, derivs);
+		cout << yout[0] << " " << yout[1] << endl;
+//		cout << x << " " << yout[0] << " " << yout[1] << endl;
+		y[0]=yout[0];
+		y[1]=yout[1];
+		derivs(x,y,dydx);
+	}
+}
+*/

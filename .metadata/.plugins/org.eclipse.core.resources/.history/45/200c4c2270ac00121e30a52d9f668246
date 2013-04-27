@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include "nr3.h"
+#include "gaussj.h"
+
+using namespace std;
+
+int m=3;
+int n=3;
+
+int gaussJordan()
+{
+
+  MatDoub_IO A(m,n);
+  MatDoub_IO b(m,1);
+
+  //Define LHS
+  //first row
+  A[0][0]=1;
+  A[0][1]=0;
+  A[0][2]=4;
+
+  //second row
+  A[1][0]=0;
+  A[1][1]=2;
+  A[1][2]=4;
+
+  //third row
+  A[2][0]=1;
+  A[2][1]=1;
+  A[2][2]=-1;
+
+  //Define RHS
+  b[0][0]=1;
+  b[1][0]=2;
+  b[2][0]=0;
+
+  //perform Gauss-Jordan
+  gaussj(A,b);
+
+  cout << "Solution is: \n";
+  for (int i=0;i<3;i++)
+  {
+    cout << i << ":\t" << b[i][0]<<endl;
+  }
+
+  cout<<"Finished"<<endl;
+
+  return 0;
+}
+
+int main()
+{
+	gaussJordan();
+	return 0;
+}

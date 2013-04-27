@@ -1,0 +1,26 @@
+18:51:06 **** Incremental Build of configuration Debug for project HW_5 ****
+make all 
+Building file: ../src/HW_5.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/dk0r/git/comp-phys/includes -O0 -g3 -Wall -c -fmessage-length=0 -std=c++0x -MMD -MP -MF"src/HW_5.d" -MT"src/HW_5.d" -o "src/HW_5.o" "../src/HW_5.cpp"
+In file included from ../src/HW_5.cpp:6:0:
+/home/dk0r/git/comp-phys/includes/ludcmp.h: In constructor ‘LUdcmp::LUdcmp(MatDoub_I&)’:
+/home/dk0r/git/comp-phys/includes/ludcmp.h:22:13: warning: ‘LUdcmp::aref’ will be initialized after [-Wreorder]
+  MatDoub_I &aref;
+             ^
+/home/dk0r/git/comp-phys/includes/ludcmp.h:14:9: warning:   ‘VecInt LUdcmp::indx’ [-Wreorder]
+  VecInt indx;
+         ^
+/home/dk0r/git/comp-phys/includes/ludcmp.h:24:1: warning:   when initialized here [-Wreorder]
+ LUdcmp::LUdcmp(MatDoub_I &a) : n(a.nrows()), lu(a), aref(a), indx(n) {
+ ^
+Finished building: ../src/HW_5.cpp
+ 
+Building target: HW_5
+Invoking: GCC C++ Linker
+g++  -o "HW_5"  ./src/HW_5.o   
+Finished building target: HW_5
+ 
+
+18:51:06 Build Finished (took 457ms)
+

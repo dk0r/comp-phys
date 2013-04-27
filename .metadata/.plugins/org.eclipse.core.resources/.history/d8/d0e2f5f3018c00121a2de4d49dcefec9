@@ -1,0 +1,142 @@
+//============================================================================
+// Name        : HW_3.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include <fstream>
+#include <math.h>
+#include <nr3.h>
+#include <rk4.h>
+
+
+using namespace std;
+
+//Astronomical Constants
+double G = ( 6.67398 *pow(10,-11) ),
+	   M = ( 1.9891 * pow(10,30) );
+
+ofstream ofi, ofj;
+
+/*
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydt)
+{
+	dydt[0] = y[1];
+	dydt[1] = (-G*M) * (x / pow( (pow(x,2) + y[0]*y[0]) , (3/2) ) );
+}
+
+
+
+int main (int argc, char * const argv[])
+{
+	VecDoub y(2),dydt(2);
+	Doub x, xmin, kmax=1000, h=0.1;
+
+	VecDoub yout(2);
+	int k;
+
+	xmin=0;
+
+
+	//-------------------------I_Components------------------------------------------
+
+	y[0]=0.5;
+	y[1]=0;
+
+	derivs(xmin,y,dydt);
+
+	ofi.open("i_components.csv");
+	ofi << "f_i(x+h),f'_i(x+h)" << endl;
+
+	for(k=0;k<kmax;k++)
+	{
+		x=xmin+k*h;
+		rk4(y, dydt,  x, h, yout, derivs);
+
+		cout << "k = " << k << "    f_i(x+h) = " << yout[0] << "    f'_i(x+h) = " << yout[1] << endl;
+		ofi << yout[0] << "," << yout[1] << endl;
+
+
+		y[0]=yout[0];
+		y[1]=yout[1];
+
+		derivs(x,y,dydt);
+	}
+
+	ofi.close();
+
+	//--------------------------J_Components-----------------------------------------
+
+	y[0]=0;
+	y[1]=1.63;
+
+	derivs(xmin,y,dydt);
+
+	ofj.open("j_components.csv");
+	ofj << "f_j(x+h),f'_j()x+h" << endl;
+
+	for(k=0;k<kmax;k++)
+	{
+		x=xmin+k*h;
+		rk4(y, dydt,  x, h, yout, derivs);
+
+		cout << "k = " << k << "    f_j(x+h) = " << yout[0] << "    f'_j(x+h) = " << yout[1] << endl;
+		ofj << yout[0] << "," << yout[1] << endl;
+
+		y[0]=yout[0];
+		y[1]=yout[1];
+		derivs(x,y,dydt);
+	}
+
+	ofj.close();
+
+
+}
+*/
+
+//Last Working w/ NumericalMethodsGuy
+
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	dydx[0]= y[1];
+	dydx[1]= ( 11*exp((-1)*x) - 3*y[1] - 5*y[0] ) / 2;
+
+}
+
+
+
+int main (int argc, char * const argv[])
+{
+	VecDoub y(2),dydx(2);
+	Doub x, xmin, xmax, kmax=1000, h=0.01;
+
+	VecDoub yout(2);
+	int k;
+
+	xmin=0;
+	//xmax=2; //appears to do nothing
+
+	y[0]=7;
+	y[1]=13;
+
+	derivs(xmin,y,dydx);
+
+	ofi.open(rk4TEST.csv)
+	ofi << "f(x+h),f'(x+h)" << endl;
+
+	for(k=0;k<kmax;k++)
+	{
+		x=xmin+k*h;
+		rk4(y, dydx,  x, h, yout, derivs);
+		cout << "k = " << k << "    f(x+h) = " << yout[0] << "    f'(x+h) = " << yout[1] << endl;
+		ofi << yout[0] << "," << yout[1] << endl;
+		y[0]=yout[0];
+		y[1]=yout[1];
+		derivs(x,y,dydx);
+	}
+
+}
+

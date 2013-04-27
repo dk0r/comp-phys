@@ -7,4 +7,6 @@
 		<item value="687" key="DIALOG_HEIGHT"/>
 		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
+	<section name="NewWizardAction">
+	</section>
 </section>

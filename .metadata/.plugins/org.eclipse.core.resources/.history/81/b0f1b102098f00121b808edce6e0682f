@@ -1,0 +1,163 @@
+
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <nr3.h>
+#include <rk4.h>
+
+using namespace std;
+
+
+////Physical Constants////
+
+//Gravitational Constant (SI-units:  m^3 / kg*s^2)
+//double G  = 1; //6.67398e-11;
+
+//Solar Mass (SI-units: kg)
+//double M  = 1; //1.9891e30;
+
+//Heliocentric Gravitational Constant (Astro-units: au^3/days^2)
+Doub GM = 2.95912208e-4;
+
+
+
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	//Earth
+	dydx[0] = y[1];
+	dydx[1] = (-GM * y[0]) / pow( (y[0]*y[0] + y[2]*y[2]) , 1.5 );
+
+	dydx[2] = y[3];
+	dydx[3] = (-GM * y[2]) / pow( (y[0]*y[0] + y[2]*y[2]) , 1.5 );
+
+
+	//Jupiter
+	dydx[4] = y[5];
+	dydx[5] = (-GM * y[4]) / pow( (y[4]*y[4] + y[6]*y[6]) , 1.5 );
+
+	dydx[6] = y[7];
+	dydx[7] = (-GM * y[6]) / pow( (y[4]*y[4] + y[6]*y[6]) , 1.5 );
+
+}
+
+
+int main()
+{
+	VecDoub y(8);
+	VecDoub dydx(8); //vector of positions & velocities for earth and
+	VecDoub yout(8);
+
+	Doub x;
+	Doub xmin;      //minimum starting position (units: au)
+	Doub kmax=3865;  //max iterations (units: days)
+	Doub h=1;       //time step size (units: days)
+
+	xmin = 0;
+
+	///Initial Conditions:
+
+	//Earth
+	y[0] = 0.98329;       //X-Position          (units: au)
+	y[1] = 0;                      //X-Velocity (units: au/day)
+	y[2] = 0;             //Y- Position         (units: au)
+	y[3] = 1.74939488e-2; 		   //Y-Velocity (units: au/day)
+
+	//Jupiter
+	y[4] = 4.950429;      //X-Position          (units: au)
+	y[5] = 0;                      //X-Velocity (units: au/day)
+	y[6] = 0;             //Y- Position         (units: au)
+	y[7] = 7.92396305e-3; 		   //Y-Velocity (units: au/day)  !!!!!!!! e-6 original
+
+
+	derivs(xmin, y, dydx);
+
+	//file output streams
+	ofstream ofAllData, ofPositionEarth, ofPositionJupiter;
+	ofAllData.open("all-data.csv");
+	ofPositionEarth.open("x-y-positionEarth.csv");
+	ofPositionJupiter.open("x-y-positionJupiter.csv");
+
+
+	for(int k=0; k < kmax; k++)
+	{
+			x=xmin+k*h;
+
+			rk4(y, dydx,  x, h, yout, derivs);
+
+			//display output
+			cout << "k = " << k
+				 << "    Xe = " << yout[0] << "    X'e= " << yout[1]
+				 << "    Ye = " << yout[2] << "    Y'e= " << yout[3] << endl
+
+				 << "    Xj = " << yout[4] << "    X'j= " << yout[5]
+				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
+
+			//file output streams
+			ofAllData << yout[0] << "," << yout[1] << "," << yout[2] << "," << yout[3] << yout[4] << "," << yout[5] << "," << yout[6] << ","  << yout[7] << endl;
+			ofPositionEarth << yout[0] << "," << yout[2] << endl;
+			ofPositionJupiter << yout[4] << "," << yout[6] << endl;
+
+			y = yout;
+
+			derivs(x,y,dydx);
+	}
+
+	//closes file output streams
+	ofAllData.close();
+	ofPositionEarth.close();
+	ofPositionJupiter.close();
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+/*
+//Last Working w/ N.M.G. example.
+
+void derivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
+{
+	dydx[0]= y[1];
+	dydx[1]= ( 11*exp((-1)*x) - 3*y[1] - 5*y[0] ) / 2;
+
+}
+
+
+int main (int argc, char * const argv[])
+{
+	VecDoub y(2),dydx(2);
+	Doub x, xmin, xmax, kmax=1000, h=0.25;
+
+	VecDoub yout(2);
+	int k;
+
+	xmin=0;
+	//xmax=2; //appears to do nothing
+
+	y[0]=7;
+	y[1]=13;
+
+	derivs(xmin,y,dydx);
+
+	ofi.open("test.csv");
+	ofi << "f(x+h),f'(x+h)" << endl;
+
+	for(k=0;k<kmax;k++)
+	{
+		x=xmin+k*h;
+		rk4(y, dydx,  x, h, yout, derivs);
+		cout << "k = " << k << "    f(x+h) = " << yout[0] << "    f'(x+h) = " << yout[1] << endl;
+		ofi << yout[0] << "," << yout[1] << endl;
+		y[0]=yout[0];
+		y[1]=yout[1];
+		derivs(x,y,dydx);
+	}
+
+}
+*/
+

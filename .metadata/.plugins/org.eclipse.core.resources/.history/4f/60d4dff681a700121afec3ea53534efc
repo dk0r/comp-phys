@@ -1,0 +1,252 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cmath>
+#include <nr3.h>
+#include <rk4.h>
+
+using namespace std;
+int fileNamerCounter = 0;
+string make_filename( const string& basename, const string& ext )
+  {
+  ostringstream result;
+  result << basename << fileNamerCounter << ext;
+  fileNamerCounter++;
+  return result.str();
+  }
+
+int jacobi()
+{
+	int x = 7;
+	int y = 7;
+	int n = 7;
+	int periodic = 0;
+	double func[x][y];
+	double old[x][y];
+	double voltage = 10;
+
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+			 old[ix][iy] = 0.0;
+		 }
+	 }
+
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining non-boundaries
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 old[0][iy] = voltage;
+		 old[n-1][iy] = voltage;
+
+		 func[0][iy] = voltage;
+		 func[n-1][iy] = voltage;
+
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+
+		 old[ix][0] = voltage;
+		 old[ix][n-1] = voltage;
+
+		 func[ix][0] = voltage;
+		 func[ix][n-1] = voltage;
+	 }
+
+
+	 int elements = 0;
+	 int stop = 0;
+	 ofstream of;
+
+
+	while(voltage - stop > 0.000000001)
+	{
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 func[ix][iy] = 0.25*(old[ix+1][iy]+old[ix-1][iy]+old[ix][iy+1]+old[ix][iy-1]);
+							 }
+					 }
+
+				 }
+
+				 //writes complete func[][] values to old[][] for next iteration
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 {
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 old[ix][iy] = func[ix][iy];
+							 }
+					 }
+
+				 }
+
+
+				//data output
+				of.open(make_filename( "/home/dk0r/git/comp-phys/HW_4/csv/jacobi/jacobi", ".csv" ).c_str());
+
+				for(int i=0; i<n ;i++)
+				 {
+						 for(int j=0; j<n ;j++)
+						 {
+								 elements++;
+
+								 if(elements%n == 0)
+								 {
+									 of << old[i][j] << "\n";
+								 }
+
+								 if(elements%n != 0)
+								 {
+									 of << old[i][j] <<",";
+								 }
+						 }
+				 }
+
+				//make_filename( "body", ".txt" ).c_str()
+
+				 of << "\n" << "\n";
+				 of.close();
+
+				 stop = func[(int)(n/2)][(int)(n/2)];
+				 cout << "stop=" << stop << "  (int)func[(int)(n/2)][(int)(n/2)]=" << (int)func[(int)(n/2)][(int)(n/2)] << endl;
+
+	}
+	 return 0;
+}
+
+int gaussSeidel()
+{
+	int x = 7;
+	int y = 7;
+	int n = 7;
+	int periodic = 0;
+	double func[x][y];
+	double voltage = 10;
+
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+		 }
+	 }
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining non-boundaries
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 func[0][iy] = voltage;
+		 func[n-1][iy] = voltage;
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+		 func[ix][0] = voltage;
+		 func[ix][n-1] = voltage;
+	 }
+
+
+	 ofstream ofInitial;
+	 ofInitial.open("func.csv");
+	 int elements = 0;
+	 double stop = 0;
+	 int counter = 0;
+
+	while(voltage - stop > 0.000000000001)
+	{
+		counter++;
+
+				for(int iy=0; iy<n ;iy++)
+				 {
+	//				 cout <<"Back @ Top Loop" << endl;
+
+					 for(int ix=0; ix<n ;ix++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 func[ix][iy] = 0.25*(func[ix+1][iy]+func[ix-1][iy]+func[ix][iy+1]+func[ix][iy-1]);
+							 }
+					 }
+
+				 }
+
+		//data output
+		for(int i=0; i<n ;i++)
+		 {
+				 for(int j=0; j<n ;j++)
+				 {
+						 elements++;
+
+						 if(elements%n == 0)
+						 {
+							 ofInitial << func[i][j] << "\n";
+						 }
+
+						 if(elements%n != 0)
+						 {
+							 ofInitial << func[i][j] <<",";
+						 }
+				 }
+		 }
+		 ofInitial << "\n" << "\n";
+
+		 stop = func[(int)(n/2)][(int)(n/2)];
+		 cout << counter << ")  voltage=" << setprecision(10) << voltage << "   stop=" << setprecision(10) << stop << "  (int)func["<<(int)(n/2)<<"]["<<(int)(n/2)<<"]=" << setprecision(10) << func[(int)(n/2)][(int)(n/2)] << endl;
+
+		 //if(stop == stop)
+			// break;
+
+	}
+
+	cout << "AlLlLlLLllLL DoOoOOoOOOOOOOoOOOOoONe" << endl;
+	 ofInitial.close();
+	 return 0;
+}
+
+int main()
+{
+	jacobi();
+}

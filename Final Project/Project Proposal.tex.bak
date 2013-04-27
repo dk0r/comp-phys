@@ -1,0 +1,91 @@
+\documentclass{report}
+\usepackage{color}
+\begin{document}
+
+\title{\textbf{PHYS-4810 Project Proposal:} 
+\\A Double Pendulum on a Cart}
+\author{A.L. Phillips II\\
+  Department of Physics, Astronomy, and Applied Physics,\\
+  Rensselaer Polytechnic Institute\\
+  \texttt{philla3@rpi.edu}}
+ \date{19 April 2013}
+ \renewcommand{\chaptername}{Assignment}
+ \setcounter {chapter}{2}
+\maketitle
+\section*{The Physics}
+
+\begin{enumerate}
+
+\item Establish a force diagram and extract the component equations of the forces acting on each center of mass.
+
+\item Manipulate force equations via substitutions/simplifications in order to obtain the coupled second order differential equations of motion. 
+
+\end{itemize}
+
+\end{enumerate}
+
+
+
+
+\section*{Algorithmic Considerations}
+
+\begin{enumerate}
+
+\item The above system of second order ODE's must be transformed into canonical form in order to be solved numerically.   
+
+\item Remain aware of rounding errors and their affect upon solutions.
+
+\end{enumerate}
+
+
+\section*{Obtaining a Solution}
+
+\begin{enumerate}
+
+\item Establish tolerance criterion and assumptions for the model \\(Reaction times, maximum angular displacement, etc.)
+
+\item Implement a state space representation of the system  Free body diagram to obtain system of equations 
+
+	\begin{itemize}
+
+\item First discuss the
+
+\item Then, turn on the Jupiter-Earth gravitational
+
+\item In both cases, use realistic numbers for the 
+
+\end{itemize}
+
+\end{enumerate}
+
+
+
+
+
+
+\section*{The Goal}
+
+\begin{enumerate}
+
+\item To program a dynamic solution which manipulates a cart 
+\\into establishing and maintaining balance in a double pendulum
+
+\item Establish a thorough appreciation of the model by displaying an understanding of the:
+
+	\begin{itemize}
+
+\item Theoretical derivations
+
+\item Physical limitations
+
+\item Usefulness in 'real-world' applications
+
+\end{itemize}
+
+\item Produce an animation of the model
+
+\end{enumerate}
+
+
+
+\end{document}

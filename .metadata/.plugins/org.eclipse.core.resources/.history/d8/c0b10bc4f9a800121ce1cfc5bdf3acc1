@@ -1,0 +1,471 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cmath>
+#include <nr3.h>
+#include <rk4.h>
+#include <time.h>
+
+clock_t init, final;
+
+using namespace std;
+int fileNamerCounter = 0;
+string make_filename( const string& basename, const string& ext )
+  {
+  ostringstream result;
+  result << basename << fileNamerCounter << ext;
+  fileNamerCounter++;
+  return result.str();
+  }
+
+
+int jacobi()
+{
+	double accuracy = 0.0000000000001;
+	int x = 129;
+	int y = 129;
+	int n = 129;
+	int center = n/2;
+	int crossLeg = center/4;
+	int periodic = 0;
+	double func[x][y];
+	double old[x][y];
+	double boundaryVoltage = 0;
+	double innerVoltage = 10;
+
+	cout <<"The middle of the cross is @: " << center << " , " << center << endl;
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+			 old[ix][iy] = 0.0;
+		 }
+	 }
+
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining inner (non-boundary) values
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 old[0][iy] = boundaryVoltage;
+		 old[n-1][iy] = boundaryVoltage;
+
+		 func[0][iy] = boundaryVoltage;
+		 func[n-1][iy] = boundaryVoltage;
+
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+
+		 old[ix][0] = boundaryVoltage;
+		 old[ix][n-1] = boundaryVoltage;
+
+		 func[ix][0] = boundaryVoltage;
+		 func[ix][n-1] = boundaryVoltage;
+	 }
+
+	 //define cross of inner voltage
+	 for(int i=0; i<=crossLeg; i++)
+	 {
+		 //right&left horizontal inner voltage legs
+			 donotcompute[center][center+i] = true;
+			 donotcompute[center][center-i] = true;
+
+			 old[center][center+i] = innerVoltage;
+			 old[center][center-i] = innerVoltage;
+
+		 //upper&lower vertical inner voltage legs
+			 donotcompute[center+i][center] = true;
+			 donotcompute[center-i][center] = true;
+
+			 old[center+i][center] = innerVoltage;
+			 old[center-i][center] = innerVoltage;
+	 }
+
+
+	 int elements = 0;
+	 int jacobiCounter = 0;
+	 double stop = 0;
+	 ofstream of;
+
+
+	while(innerVoltage - stop > accuracy)
+	{
+
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 func[ix][iy] = 0.25*(old[ix+1][iy]+old[ix-1][iy]+old[ix][iy+1]+old[ix][iy-1]);
+							 }
+					 }
+
+				 }
+
+				 //writes complete func[][] values to old[][] for next iteration
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 {
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 old[ix][iy] = func[ix][iy];
+							 }
+					 }
+
+				 }
+
+
+				//data output
+				of.open(make_filename( "/home/dk0r/csv/jacobi", ".csv" ).c_str());
+
+
+				for(int i=0; i<n ;i++)
+				 {
+					 for(int j=0; j<n ;j++)
+					 {
+							of << i << "," << j << "," << old[i][j] << "\n";
+					 }
+				 }
+
+				of.close();
+
+
+
+
+				 stop = func[center][center];
+				 jacobiCounter++;
+	//			 cout << jacobiCounter << ")  " << "Voltage - " << setprecision(15) << func[(int)(n/2)][(int)(n/2)]  << "  =  " << innerVoltage - func[(int)(n/2)][(int)(n/2)] << endl;
+
+	}
+
+	cout << "All DooOOOOooOOooOOooOne" << endl;
+	//of.close();
+	 return 0;
+}
+
+int gaussSeidel()
+{
+	double accuracy = 0.0000000000001;
+	int x = 129;
+	int y = 129;
+	int n = 129;
+	int center = n/2;
+	int crossLeg = center/4;
+	int periodic = 0;
+	double func[x][y];
+	double boundaryVoltage = 0;
+	double innerVoltage = 10;
+
+	cout <<"The middle of the cross is @: " << center << " , " << center << endl;
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+		 }
+	 }
+
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining inner (non-boundary) values
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 func[0][iy] = boundaryVoltage;
+		 func[n-1][iy] = boundaryVoltage;
+
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+
+		 func[ix][0] = boundaryVoltage;
+		 func[ix][n-1] = boundaryVoltage;
+	 }
+
+	 //define cross of inner voltage
+	 for(int i=0; i<=crossLeg; i++)
+	 {
+		 //right&left horizontal inner voltage legs
+			 donotcompute[center][center+i] = true;
+			 donotcompute[center][center-i] = true;
+
+			 func[center+i][center] = innerVoltage;
+			 func[center-i][center] = innerVoltage;
+
+		 //upper&lower vertical inner voltage legs
+			 donotcompute[center+i][center] = true;
+			 donotcompute[center-i][center] = true;
+
+			 func[center][center+i] = innerVoltage;
+			 func[center][center-i] = innerVoltage;
+
+	 }
+
+
+	 int elements = 0;
+	 int gaussSeidelCounter = 0;
+	 double stop = 0;
+	 ofstream of;
+
+
+	while(innerVoltage != 3)
+	{
+
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 func[ix][iy] = 0.25*(func[ix+1][iy]+func[ix-1][iy]+func[ix][iy+1]+func[ix][iy-1]);
+							 }
+					 }
+
+				 }
+
+
+				//data output
+				of.open(make_filename( "/home/dk0r/csv/g/gaussSeidel", ".csv" ).c_str());
+
+
+				for(int i=0; i<n ;i++)
+				 {
+					 for(int j=0; j<n ;j++)
+					 {
+							of << i << "," << j << "," << func[i][j] << "\n";
+					 }
+				 }
+
+			of.close();
+
+
+
+
+				 stop = func[center][center];
+				 gaussSeidelCounter++;
+	//			 cout << jacobiCounter << ")  " << "Voltage - " << setprecision(15) << func[(int)(n/2)][(int)(n/2)]  << "  =  " << innerVoltage - func[(int)(n/2)][(int)(n/2)] << endl;
+
+	}
+
+	cout << "All DooOOOOooOOooOOooOne" << endl;
+	of.close();
+	 return 0;
+}
+
+
+int SOR(double omega)
+{
+	int x = 129;
+	int y = 129;
+	int n = 129;
+	int center = n/2;
+	int crossLeg = center/4;
+	int periodic = 0;
+	double func[x][y];
+	double sor[x][y];
+	double old;
+	double boundaryVoltage = 0;
+	double innerVoltage = 10;
+
+	cout <<"The middle of the cross is @: " << center << " , " << center << endl;
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+			 sor[ix][iy] = 0.0;
+		 }
+	 }
+
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining inner (non-boundary) values
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 func[0][iy] = boundaryVoltage;
+		 func[n-1][iy] = boundaryVoltage;
+
+		 sor[0][iy] = boundaryVoltage;
+		 sor[n-1][iy] = boundaryVoltage;
+
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+
+		 func[ix][0] = boundaryVoltage;
+		 func[ix][n-1] = boundaryVoltage;
+
+		 sor[ix][0] = boundaryVoltage;
+		 sor[ix][n-1] = boundaryVoltage;
+	 }
+
+	 //define cross of inner voltage
+	 for(int i=0; i<=crossLeg; i++)
+	 {
+		 //right&left horizontal inner voltage legs
+			 donotcompute[center][center+i] = true;
+			 donotcompute[center][center-i] = true;
+
+			 func[center+i][center] = innerVoltage;
+			 func[center-i][center] = innerVoltage;
+
+			 sor[center+i][center] = innerVoltage;
+			 sor[center-i][center] = innerVoltage;
+
+		 //upper&lower vertical inner voltage legs
+			 donotcompute[center+i][center] = true;
+			 donotcompute[center-i][center] = true;
+
+			 func[center][center+i] = innerVoltage;
+			 func[center][center-i] = innerVoltage;
+
+			 sor[center][center+i] = innerVoltage;
+			 sor[center][center-i] = innerVoltage;
+
+	 }
+
+
+	 int elements = 0;
+
+	 ofstream of;
+
+
+	while(innerVoltage != 3)
+	{
+
+				 for(int iy=0; iy<n ;iy++)
+				 {
+					 for(int ix=0; ix<n ;ix++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 func[ix][iy] = 0.25*(func[ix+1][iy]+func[ix-1][iy]+func[ix][iy+1]+func[ix][iy-1]);
+								 sor[ix][iy] = func[ix][iy]; //old + func[ix][iy] - old;
+							 }
+					 }
+
+				 }
+
+
+/*
+				 //data output
+				of.open(make_filename( "/home/dk0r/csv/SOR/sor", ".csv" ).c_str());
+
+
+				for(int i=0; i<n ;i++)
+				 {
+					 for(int j=0; j<n ;j++)
+					 {
+							of << i << "," << j << "," << sor[i][j] << "\n";
+					 }
+				 }
+
+				of.close();
+*/
+
+
+
+					//data output
+					of.open(make_filename( "/home/dk0r/csv/SOR/sor", ".csv" ).c_str());
+
+					for(int i=0; i<n ;i++)
+					 {
+							 for(int j=0; j<n ;j++)
+							 {
+									 elements++;
+
+									 if(elements%n == 0)
+									 {
+										 of << sor[i][j] << "\n";
+									 }
+
+									 if(elements%n != 0)
+									 {
+										 of << sor[i][j] <<",";
+									 }
+							 }
+					 }
+
+					//make_filename( "body", ".txt" ).c_str()
+
+					 of << "\n" << "\n";
+					 of.close();
+
+
+	//			 cout << jacobiCounter << ")  " << "Voltage - " << setprecision(15) << func[(int)(n/2)][(int)(n/2)]  << "  =  " << innerVoltage - func[(int)(n/2)][(int)(n/2)] << endl;
+
+	}
+
+	cout << "All DooOOOOooOOooOOooOne" << endl;
+	//of.close();
+	 return 0;
+}
+
+
+int main()
+{
+
+	//jacobi();
+
+
+	//gaussSeidel();
+
+	SOR(1.0);
+
+	return 0;
+}

@@ -1,0 +1,149 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <nr3.h>
+#include <rk4.h>
+
+using namespace std;
+
+
+int test()
+{
+	int x = 5;
+	int y = 5;
+	int n = 5;
+	int periodic = 0;
+	double func[x][y];
+	double voltage = 10;
+
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 func[ix][iy] = 0.0;
+		 }
+	 }
+
+
+
+	 //defines: 1. upper and lower horizontal boundary conditions
+	 //         2. remaining non-boundaries
+	 for(int iy=0; iy<n; iy++)
+	 {
+		 if(periodic==0)
+		 {
+			 donotcompute[0][iy] = true;
+			 donotcompute[n-1][iy] = true;
+		 }
+
+		 func[0][iy] = voltage;
+		 func[n-1][iy] = voltage;
+	 }
+
+
+	 //defines left and right boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+		 func[ix][0] = voltage;
+		 func[ix][n-1] = voltage;
+	 }
+
+
+	 ofstream ofInitial;
+	 ofInitial.open("func.csv");
+	 int elements = 0;
+	 int counter = 0;
+
+do{
+			 for(int iy=0; iy<n ;iy++)
+			 {
+//				 cout <<"Back @ Top Loop" << endl;
+
+				 for(int ix=0; ix<n ;ix++)
+				 { //cout << "Entering Bottom Loop" << endl;
+						 if(donotcompute[ix][iy]==false)
+						 {
+							 func[ix][iy] = 0.25*(func[ix+1][iy]+func[ix-1][iy]+func[ix][iy+1]+func[ix][iy-1]);
+						 }
+				 }
+
+			 }
+
+counter++;
+
+	 for(int i=0; i<n ;i++)
+	 {
+			 for(int j=0; j<n ;j++)
+			 {
+					 elements++;
+
+					 if(elements%n == 0)
+					 {
+						 ofInitial << func[i][j] << "\n";
+					 }
+
+					 if(elements%n != 0)
+					 {
+						 ofInitial << func[i][j] <<",";
+					 }
+			 }
+	 }
+
+
+} while(func[(int)(n/2)-1][(int)(n/2)-1]);
+
+
+/*
+	 //jacobian relaxation
+	 for(int ix=0; ix<n; x++)
+	 {
+		 for(int iy=0; iy<n; iy++)
+		 {
+			 if(donotcompute[ix][iy]==false)
+			{
+			 func[ix][iy] = 0.25*(func[ix+1][iy]+func[ix-1][iy]+func[ix][iy+1]+func[ix][iy-1]);
+			}
+		 }
+	}
+
+
+
+	 if(func[int((n/2)-1)][int((n/2)-1)] == voltage)
+	 			 {
+	 				 cout << "EntErIng WrIte SeQuEnCe" << endl;
+	 					 for(int i=0; i<n ;i++)
+	 					 {
+	 							 for(int j=0; j<n ;j++)
+	 							 {
+	 									 elements++;
+
+	 									 if(elements%100 == 0)
+	 									 {
+	 										 ofInitial << func[i][j] << "\n";
+	 									 }
+
+	 									 if(elements%100 != 0)
+	 									 {
+	 										 ofInitial << func[i][j] <<",";
+	 									 }
+	 							 }
+	 					 }
+	 cout <<"gonna break" << endl;
+	 					 break;
+	 			 }
+*/
+	 ofInitial.close();
+	 return 0;
+}
+
+int main()
+{
+	test();
+}

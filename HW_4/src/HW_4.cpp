@@ -24,6 +24,8 @@ int x = 129;
 int y = 129;
 int n = 129;
 double sorCounter = 0;
+int tempCounter = 0;
+double constraint = 0.00001;
 
 int jacobi()
 {
@@ -167,7 +169,6 @@ int jacobi()
 	 return 0;
 }
 
-
 int gaussSeidel()
 {
 	double accuracy = 0.0000000000001;
@@ -290,9 +291,9 @@ int gaussSeidel()
 	 return 0;
 }
 
-
-double SOR(double omega, double constraint)
+double SOR(double val)
 {
+	double omega = val;
 	int center = n/2;
 	int crossLeg = center/4;
 	int periodic = 0;
@@ -330,6 +331,7 @@ double SOR(double omega, double constraint)
 			 donotcompute[0][iy] = true;
 			 donotcompute[n-1][iy] = true;
 		 }
+
 
 		 func[0][iy] = boundaryVoltage;
 		 func[n-1][iy] = boundaryVoltage;
@@ -437,7 +439,7 @@ double SOR(double omega, double constraint)
 				{
 					stop = true;
 					cout << "Accuracy met @ Iteration# " << sorCounter << ", w=" << omega << endl;
-					//ac << omega << "," << accuracy << endl;
+
 				}
 
 
@@ -541,30 +543,187 @@ double SOR(double omega, double constraint)
 
 	cout << "Iteration# " << sorCounter << ", w=" << omega << ")  " << accuracy << " <= " << constraint << "\n" << "\n";
 
-	return accuracy;
+	return sorCounter;
 }
 
-
-int main()
+double leapFrog()
 {
 
-	//jacobi();
+	double temp[x][y];
+	double original[x][y];
+	double outterTemp = 0;
+	double innerTemp = 10;
+
+	bool donotcompute[x][y];
+
+	//initializes grid
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 for (int iy=0; iy<n; iy++)
+		 {
+			 donotcompute[ix][iy] = false;
+			 temp[ix][iy] = 0.0;
+			 original[ix][iy] = 0.0;
+		 }
+	 }
 
 
-	//gaussSeidel();
+/*
+	 //defines: An upper horizontal temp
+	 for(int iy=1; iy<(n-1); iy++)
+	 {
+		 donotcompute[0][iy] = true;
 
-	double constraint =0.01;
+		 temp[0][iy] = innerTemp;
+		 original[0][iy] = innerTemp;
+	 }
+*/
 
-	ofstream ac;
-	ac.open("/home/dk0r/csv/accuracy.csv");
 
-	for(double val=1; val<2; val+=0.01)
+	 //defines: A lower horizontal temp
+	 for(int iy=1; iy<(n-1); iy++)
+	 {
+		 donotcompute[n-1][iy] = true;
+
+		 temp[n-1][iy] = innerTemp;
+		 original[n-1][iy] = innerTemp;
+	 }
+
+
+	 //defines left and right vertical boundary conditions
+	 for(int ix=0; ix<n; ix++)
+	 {
+		 donotcompute[ix][0] = true;
+		 donotcompute[ix][n-1] = true;
+
+		 temp[ix][0] = outterTemp;
+		 temp[ix][n-1] = outterTemp;
+
+		 original[ix][0] = outterTemp;
+		 original[ix][n-1] = outterTemp;
+	 }
+
+	 int elements = 0;
+
+	 ofstream of;
+	 bool stop = false;
+	 double accuracy = 0;
+	 double sumofsquares = 0;
+	 tempCounter = 0;
+
+
+
+	while(stop != true)
 	{
-	ac << val << "," << setprecision(10) << SOR(val, constraint) << endl;
+
+			double eta = 0.2; //0.136147039;
+
+
+
+
+				 for(int ix=(n-1); ix>=0 ;ix--)
+				 {
+					 for(int iy=0; iy<n ;iy++)
+					 { //cout << "Entering Bottom Loop" << endl;
+							 if(donotcompute[ix][iy]==false)
+							 {
+								 original[ix][iy] = temp[ix][iy];
+								 temp[ix][iy] = temp[ix+1][iy] + eta *( temp[ix+1][iy+1] + temp[ix+1][iy-1] - 2*temp[ix+1][iy] );
+							 }
+					 }
+
+				 }
+
+					if(tempCounter%500==0)
+					{
+						of.open("/home/dk0r/csv/temp/temp.csv");
+
+						for(int i=0; i<n ;i++)
+						 {
+								 for(int j=0; j<n ;j++)
+								 {
+										 elements++;
+
+										 if(elements%n == 0)
+										 {
+											 of << temp[i][j] << "\n";
+										 }
+
+										 if(elements%n != 0)
+										 {
+											 of << temp[i][j] <<",";
+										 }
+								 }
+						 }
+
+						 of << "\n" << "\n";
+						 of.close();
+					}
+
+				 tempCounter++;
+
+/*
+				 ///////////////////////When to stop
+				for(int i=0; i<n; i++)
+				{
+					for(int j=0; j<n; j++)
+					{
+						sumofsquares += pow( (temp[i][j] - original[i][j]), 2 ) ;
+					}
+				}
+
+				accuracy = sqrt(sumofsquares);
+				sumofsquares = 0;
+
+				if(accuracy <= constraint)
+				{
+					stop = true;
+					cout << "Accuracy met @ Iteration# " << tempCounter << endl;
+				}
+
+
+
+				if(tempCounter >= 10000)
+				{
+					stop = true;
+					accuracy = 0;
+					cout << "5000 iterations reached. Terminated @ " << tempCounter << "th iteration" << endl;
+					//ac << omega << "," << "NA" << endl;
+				}
+
+*/
+
+
+				 //data output
+				of.open(make_filename( "/home/dk0r/csv/temp/temp", ".csv" ).c_str());
+
+
+				for(int i=0; i<n ;i++)
+				 {
+					 for(int j=0; j<n ;j++)
+					 {
+						of << i << "," << j << "," << temp[i][j] << "\n";
+					 }
+				 }
+
+				of.close();
 	}
 
 
 
+	cout << "Iteration# " << tempCounter << ")  " << accuracy << " <= " << constraint << "\n" << "\n";
 
+	return sorCounter;
+}
+
+int main()
+{
+	ofstream ai;
+	ai.open("/home/dk0r/csv/optimal.csv");
+	 for(double i=1.5; i<3; i+=0.1)
+	    {
+	        ai << SOR(i) <<","<< i << endl;
+	    }
+	    return 0;
 	return 0;
 }
