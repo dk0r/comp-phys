@@ -25,7 +25,7 @@ int y = 129;
 int n = 129;
 double sorCounter = 0;
 int tempCounter = 0;
-double constraint = 0.00001;
+double constraint = 0.01;
 
 int jacobi()
 {
@@ -444,7 +444,7 @@ double SOR(double val)
 
 
 
-				if(sorCounter >= 5000)
+				if(sorCounter >= 12000)
 				{
 					stop = true;
 					accuracy = 0;
@@ -616,7 +616,7 @@ double leapFrog()
 	while(stop != true)
 	{
 
-			double eta = 0.2; //0.136147039;
+			double eta = .2145;
 
 
 
@@ -711,19 +711,22 @@ double leapFrog()
 
 
 
-	cout << "Iteration# " << tempCounter << ")  " << accuracy << " <= " << constraint << "\n" << "\n";
+	//cout << "Iteration# " << tempCounter << ")  " << accuracy << " <= " << constraint << "\n" << "\n";
 
 	return sorCounter;
 }
 
 int main()
 {
+	/*
 	ofstream ai;
 	ai.open("/home/dk0r/csv/optimal.csv");
-	 for(double i=1.5; i<3; i+=0.1)
+	 for(double i=1.1; i<3; i+=0.01)
 	    {
 	        ai << SOR(i) <<","<< i << endl;
 	    }
-	    return 0;
+	*/
+	leapFrog();
+
 	return 0;
 }
