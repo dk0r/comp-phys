@@ -27,8 +27,37 @@ using namespace std;
 	double M2 = 1;	 //mass of Mass-2
 	double R2 = 1; //pendulum length
 
+
+	double h=0.01;       //time step size      0.01
+	int kmax=3000;  //max iterations        1000      100 in Mathematica
+
+
+	//accuracy for determining when axes cross
+	double crossAcc = 0.05;
+	double repeatAcc = 0.05;
+	double timeAcc = 0.2;
+
+	//
+	double prevX = 0;
+	double prevY = 0;
+	double prevTime = 0;
+
+	//Number of Octaves (limits range of scale)
+	int octaves = 1;
+	//Total number of notes
+	int notes = octaves*12 + 1;
+
+	//Length of side of pendulum container
+	double radius = R1+R2;
+
+	//Note interval size
+	double interval = 2*radius/notes;
+
+
+
 	//Global Stepsize Counter (dt)
 	double globStep = 0;
+
 
 
 
@@ -52,7 +81,6 @@ double Re(double x, double y, double exp)
 
 		return r;
 	}
-
 
 
 void pendDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
@@ -99,6 +127,137 @@ void pendDerivs(const Doub x, VecDoub_I & y, VecDoub_O & dydx)
 	 */
 }
 
+
+
+
+double xNotes(double pos)
+{
+	int note = 91;
+	double y = pos;
+
+	cout << "xNotes @  y ~ " << pos << endl;
+
+	if(y <= radius && y >= radius - interval*0 - interval*1)
+		note = 73;
+
+	if(y < radius - interval*1 && y >= radius - interval*2)
+		note = 45;
+
+	if(y < radius - interval*2 && y >= radius - interval*3)
+		note = 44;
+
+	if(y < radius - interval*3 && y >= radius - interval*4)
+		note = 37;
+
+	if(y < radius - interval*4 && y >= radius - interval*5)
+		note = 64; //37
+
+	if(y < radius - interval*5 && y >= radius - interval*6)
+		note = 63;
+
+
+
+
+	if(y < radius - interval*6 && y >= radius - interval*7)
+		note = 61;
+
+
+
+
+	if(y < radius - interval*7 && y >= radius - interval*8)
+		note = 57;
+
+	if(y < radius - interval*8 && y >= radius - interval*9)
+		note = 56;
+
+	if(y < radius - interval*9 && y >= radius - interval*10)
+		note = 54;
+
+	if(y < radius - interval*10 && y >= radius - interval*11)
+		note = 52;
+
+	if(y < radius - interval*11 && y >= radius - interval*12)
+		note = 51;
+
+	if(y < radius - interval*12 && y >= radius - interval*13)
+		note = 68;
+
+		return note;
+}
+
+double yNotes(double pos)
+{
+	double x = pos;
+
+	int note = 91;
+
+
+	if(x >= 0)
+	{
+
+
+		if(x >= 5.5*interval && x < radius )
+		note = 69;
+
+
+		if(x >= 4.5*interval && x < (radius - interval) )
+		note = 69;
+
+
+		if(x >= 3.5*interval && x < (radius - 2*interval) )
+		note = 68;
+
+
+		if(x >= 2.5*interval && x < (radius - 3*interval) )
+		note = 37;
+
+
+		if(x >= 1.5*interval && x < (radius - 4*interval) )
+		note = 64;
+
+		if(x >= 0.5*interval && x < (radius - 5*interval) )
+		note = 63;
+
+
+		if(x >= 0 && x < (radius - 6*interval) )
+		note = 61;
+
+		return note;
+	}
+
+	if(x < 0)
+	{
+		x = fabs(x);
+
+
+		if(x >= 0 && x < (radius - 6*interval) )
+		note = 61;
+
+		if(x >= 0.5*interval && x < (radius - 5*interval) )
+		note = 57;
+
+		if(x >= 1.5*interval && x < (radius - 4*interval) )
+		note = 56;
+
+		if(x >= 2.5*interval && x < (radius - 3*interval) )
+		note = 54;
+
+		if(x >= 3.5*interval && x < (radius - 2*interval) )
+		note = 52;
+
+		if(x >= 4.5*interval && x < (radius - interval) )
+		note = 51;
+
+		if(x >= 5.5*interval && x < radius )
+		note = 49;
+
+		return note;
+	}
+
+}
+
+
+
 void doublePend()
 {
 		VecDoub y(4);
@@ -106,23 +265,21 @@ void doublePend()
 		VecDoub yout(4);
 
 		double x;
-		double xmin = 0;      //minimum starting position (units: au)
-		int kmax=2000;  //max iterations (units: days)
-		double h=0.02;       //time step size (units: days)
+		double xmin = 0;      //minimum starting position
 
-		///Initial Conditions:
+	///Initial Conditions:
 
 	  //Mass-1
 		//Angular-Position
-		y[0] = (4*atan(1))+0.011;
+		y[0] = (3)*atan(1);//(4*atan(1))+0.011;
 		//Angular-Velocity
 		y[1] = 0;
 
 	  //Mass-2
 		//Angular-Position
-		y[2] = (4*atan(1))+0.011;
+		y[2] = (3)*atan(1);//(4*atan(1))+0.011;
 		//Angular-Velocity
-		y[3] = .5;
+		y[3] = 0;
 
 
 		pendDerivs(xmin, y, dydx);
@@ -133,26 +290,13 @@ void doublePend()
 		ofPositionM2.open("M2_position.csv");
 		ofMidi.open("midi.csv");
 
-
-
-
-
-
+		//midi Counter for midi[midiCount][] matrix;
+		int midiCount = 0;
 
 
 
 		for(int k=0; k < kmax; k++)
 		{
-
-			//accuracy for determining when axes cross
-			double xAcc = 0.009;
-			double yAcc = 0.009;
-
-			//track time-stepping for midi note play time
-
-			//S!@#TG@$HG@$GH@$@ 0.002 SeConDs ?!?!?!?!?
-			globStep += h; //S!@#TG@$HG@$GH@$@ 0.002 SeConDs ?!?!?!?!?//S!@#TG@$HG@$GH@$@ 0.002 SeConDs ?!?!?!?!?
-			//S!@#TG@$HG@$GH@$@ 0.002 SeConDs ?!?!?!?!?
 
 			//?????
 			x=xmin+k*h;
@@ -170,144 +314,74 @@ void doublePend()
 				 << "    Yj = " << yout[6] << "    Y'j= " << yout[7] << endl << endl;
 			 */
 
-
 			//Stores x and y positions of Mass-1 & Mass-2
 			double x1 =  R1*sin(y[0]);
 			double y1 = -R1*cos(y[0]);
 			double x2 = ( R1*sin(y[0]) + R2*sin(y[2]) );
 			double y2 = ( -R1*cos(y[0]) - R2*cos(y[2]) );
 
-
-
-			//midi Counter for midi[midiCount][] matrix;
-			int midiCount = 0;
-
-
 			//Midi matrix
 			double midi[kmax][6];
-
-			//Initializes Midi matrix
-			for(int i=0; i<kmax; i++)
-			{
-				for(int j=0; j<6; j++)
-				{
-					midi[i][j] = 0;
-				}
-			}
-
-
-
-
-
-			//Number of Octaves (limits range of scale)
-			int octaves = 1;
-
-			//Total number of notes
-			int notes = octaves*12 + 1;
-
-
-			//interval counter for knowing which interval to relate to the Notes[i] matrix
-			int intCounter = 0;
-
-			//Notes matrix filled w/ note#'s
-			int Notes[notes];
-
-			//Defines notes in matrix
-			for(int i=0; i<notes; i++)
-			{
-				Notes[i] = 60 - i; //Middle C @ top to something Low
-			}
-
-
-
-
-			//holds previous iterations value of hint (the 1/2 interval size)
-			double prev = 0;
-
-
-
-
-
-			//Length of side of pendulum container
-			double side = 2*(R1+R2);
-			double halfSide = R1+R2;
-
-
-			//Note interval size
-			double interval = side/notes;
-			//double halfInt = (R1+R2)/notes;
-
-
 
 
 			//Determines whether X or Y axes crossed and assigns note# depending on
 			//interval where crossing occurred.
 
-			for(double i=halfSide; i >= -1*halfSide; i = i - interval )
-			{
+			//tracks time-stepping for midi note play time
+			globStep += h;
 
-				//X-Axis Crossings (Both masses have ~~ same Y positions)
-				if(fabs(y1-y2) <= xAcc)
+
+		//X-Axis Crossings (Both masses have ~~ same Y positions)
+			if( (fabs(y1-y2) <= crossAcc) && (fabs(globStep-prevTime) > timeAcc) )
 				{
+					prevTime = globStep;
 
-					cout << "X-Axis Crossing where y1 ~~ y2 @ " << y1 << "," << y2 << "\n";
-
-					if(y1 <= i  &&  y1 >= i-interval)
-					{
+					//	cout << "X-Cross @" << globStep << "steps. y1~y2 @ " << y1 << "," << y2 << "\n";
+					//	cout <<"Entering X-Axis Midi.  midiCount = " << midiCount << " globStep = " << globStep
+					//		 << "  midi-note: " << xNotes[y1] << endl << endl;
 						//Defines midi note found in interval in above if() line.
 
 						midi[midiCount][0] = 1; //track #
 						midi[midiCount][1] = 1; //channel #
-						midi[midiCount][2] = Notes[intCounter]; //midi note #
-					  //midi[midiCount][3] volume velocity specified in matlab
+						midi[midiCount][2] = xNotes(x2); //midi note #
+					    midi[midiCount][3] = 0; //volume velocity: to be specified in matlab
 						midi[midiCount][4] = globStep; //time which note will be played
 						midi[midiCount][5] = 0.5; //duration of each note
+
+						ofMidi << midi[midiCount][0] << "," << midi[midiCount][1] << "," << midi[midiCount][2] << "," << midi[midiCount][3] << "," << midi[midiCount][4] << "," << midi[midiCount][5] << endl;
+
 						midiCount++;
-					}
 
 				}
 
 
-
-
-				//Y-Axis Crossings (Both masses have ~~ same X positions)
-				if(fabs(x1-x2) <= yAcc)
+			//Y-Axis Crossings (Both masses have ~~ same X positions)
+				if( (fabs(x1-x2) <= crossAcc) && (fabs(globStep-prevTime) > timeAcc) )
 				{
-					cout << "Y-Axis Crossing where x1 ~~ x2 @ " << x1 << "," << x2 << "\n";
+					prevTime = globStep;
 
-					if(x1 < i  &&  x1 >= i-interval)
-					{
+						cout << "Y-Cross @" << globStep << "steps. x1~x2 @ " << x1 << "," << x2 << "\n";
+						cout <<"Entering Y-Axis Midi.  midiCount = " << midiCount << " globStep = " << globStep
+								<< "  midi-note: " << yNotes(y1) << endl << endl;
 						//Defines midi note found in interval in above if() line.
 
 						midi[midiCount][0] = 1; //track #
 						midi[midiCount][1] = 1; //channel #
-						midi[midiCount][2] = Notes[intCounter]; //midi note #
+						midi[midiCount][2] = yNotes(y2); //midi note #
 					  //midi[midiCount][3] volume velocity specified in matlab
 						midi[midiCount][4] = globStep; //time which note will be played
 						midi[midiCount][5] = 0.5; //duration of each note
-						midiCount++;
-					}
 
+						ofMidi << midi[midiCount][0] << "," << midi[midiCount][1] << "," << midi[midiCount][2] << "," << midi[midiCount][3] << "," << midi[midiCount][4] << "," << midi[midiCount][5] <<  endl;
+
+						midiCount++;
 
 				}
-
-				//MoVe ThIs prev=i; To BoTtOm Of ThIs LoOOoOooOOOOOooOOOOOoOOOp
-				prev = i;
-				intCounter++;
-
-			}
 
 
 			//file output streams
 			ofPositionM1 << R1*sin(y[0]) << "," << -R1*cos(y[0]) << endl;
 			ofPositionM2 << R1*sin(y[0]) + R2*sin(y[2]) << "," << (-R1*cos(y[0]) - R2*cos(y[2])) << endl;
-			for(int i=0; i<kmax; i++)
-			{
-				if(midi[i][0] != 1)
-				{
-					ofMidi << midi[i][0] << "," << midi[i][1] << "," << midi[i][2] << "," << midi[i][3] << "," << midi[i][4] << "," << midi[i][5] << endl;
-				}
-			}
 
 
 			y = yout;
